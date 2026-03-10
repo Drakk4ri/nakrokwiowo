@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nakrokwiowo – Izolacja PIR/PUR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --surface2: #f0ede6;
+      --border: #ddd9ce;
+      --gold: #a07828;
+      --gold-light: #c49a3c;
+      --gold-dim: #c4a96a;
+      --text: #1a1710;
+      --text-muted: #6b6550;
+      --red: #c0392b;
+      --green: #2e8b5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(247,245,240,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: #fff !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(160,120,40,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(160,120,40,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
+      background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-left { position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.8rem;
+      border-radius: 2px;
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+      display: block;
+    }
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border: none; border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+
+    .hero-right {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .hero-visual {
+      width: 340px; height: 340px;
+      position: relative;
+    }
+    .roof-icon {
+      width: 100%; height: 100%;
+    }
+    .hero-stats {
+      position: absolute; bottom: -1rem; left: -2rem;
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 0.7rem 1.2rem;
+      border-radius: 2px;
+      animation: fadeSlide 0.8s ease forwards;
+      opacity: 0;
+    }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; margin-left: 1.5rem; }
+    .stat-card:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 5rem 3rem; }
+    .section-tag {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem;
+    }
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── PRODUCTS ── */
+    #produkty { background: var(--surface); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .product-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .product-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+    .product-card:hover::before { transform: scaleX(1); }
+    .product-badge {
+      display: inline-block; font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; background: var(--gold); color: var(--bg);
+      padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .product-badge.popular { background: var(--green); }
+    .product-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .product-thick { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .product-lambda {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;
+    }
+    .product-lambda span { color: var(--gold); font-weight: 700; }
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; color: var(--text);
+      margin: 1.2rem 0 0.2rem;
+    }
+    .product-price-unit { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .btn-inquiry {
+      width: 100%;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.7rem;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-inquiry:hover { background: var(--gold); color: #fff; }
+
+    /* ── KALKULATOR ── */
+    #kalkulator { background: var(--bg); }
+    .calc-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+    .calc-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a876e' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .btn-calc {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      border-radius: 2px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .btn-calc:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* wyniki */
+    .calc-results {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: sticky; top: 6rem;
+    }
+    .results-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-row:last-of-type { border-bottom: none; }
+    .result-label { font-size: 0.85rem; color: var(--text-muted); }
+    .result-value { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .result-value.highlight {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+    }
+    .result-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      padding: 0.8rem;
+      background: var(--surface2);
+      border-radius: 2px;
+      border-left: 2px solid var(--gold-dim);
+    }
+    .btn-quote {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      border-radius: 2px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s;
+      display: none;
+    }
+    .btn-quote:hover { background: var(--gold-light); }
+    .results-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .results-empty svg { opacity: 0.2; margin-bottom: 1rem; }
+
+    /* ── ROOF TYPE TILES ── */
+    .roof-type-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    }
+    .roof-tile {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.8rem 0.5rem 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+      color: var(--text-muted);
+    }
+    .roof-tile svg { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; }
+    .roof-tile span { font-size: 0.75rem; letter-spacing: 0.05em; }
+    .roof-tile:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .roof-tile.active { border-color: var(--gold); background: rgba(160,120,40,0.06); color: var(--gold); }
+
+    /* ── ANGLE SLIDER ── */
+    .angle-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+    input[type="range"] {
+      width: 100%; accent-color: var(--gold);
+      height: 4px; cursor: pointer;
+    }
+
+    /* ── RESULTS SECTIONS ── */
+    .results-section-label {
+      font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.2rem; margin-top: 0.5rem;
+    }
+    .result-total-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 1.2rem 1.4rem;
+      margin: 1.4rem 0 0.5rem;
+    }
+    .result-total-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .result-total-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--gold); line-height: 1; }
+    .result-total-vat { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* ── DIAGRAM DACHU ── */
+    .roof-diagram {
+      margin-top: 1.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.2rem;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .roof-diagram-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+
+    /* ── BLOG ── */
+    #blog { background: var(--surface); }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .blog-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+      cursor: pointer;
+    }
+    .blog-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+    .blog-img {
+      height: 160px;
+      background: linear-gradient(135deg, var(--surface2) 0%, var(--border) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+    .blog-body { padding: 1.5rem; }
+    .blog-cat { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .blog-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.4; }
+    .blog-date { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── KONTAKT ── */
+    #kontakt { background: var(--bg); }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+    .contact-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+    .contact-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .contact-detail {
+      display: flex; gap: 0.8rem; align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .contact-detail-icon { color: var(--gold); font-size: 1.1rem; margin-top: 0.1rem; }
+    .contact-detail-text { font-size: 0.9rem; color: var(--text-muted); }
+    .contact-detail-text strong { color: var(--text); display: block; font-size: 0.95rem; }
+
+    .contact-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+    }
+    .contact-form .form-group input,
+    .contact-form .form-group textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .contact-form .form-group input:focus,
+    .contact-form .form-group textarea:focus { outline: none; border-color: var(--gold); }
+    .contact-form textarea { min-height: 120px; }
+    .btn-send {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      padding: 1rem;
+      border-radius: 2px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn-send:hover { background: var(--gold-light); }
+
+    /* ── SUCCESS MESSAGE ── */
+    .success-msg {
+      display: none;
+      background: rgba(76,175,125,0.1);
+      border: 1px solid var(--green);
+      border-radius: 2px;
+      padding: 1rem;
+      color: var(--green);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .footer-logo span { color: var(--text-muted); }
+    footer p { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── SCROLL ANIMATION ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero-right { display: none; }
+      section { padding: 3.5rem 1.5rem; }
+      .calc-wrapper, .contact-wrapper { grid-template-columns: 1fr; }
+      .calc-results { position: static; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">NAKROKWIOWO<span>.PL</span></a>
+  <ul>
+    <li><a href="#produkty">Produkty</a></li>
+    <li><a href="#kalkulator">Kalkulator</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#kontakt" class="nav-cta">Zapytaj o wycenę</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Specjalista izolacji nakrokwiowej</div>
+    <h1>CIEPŁY DACH<em>TO NASZA<br>SPECJALNOŚĆ</em></h1>
+    <p class="hero-desc">Płyty PIR/PUR nakrokwiowe najwyższej jakości. Wylicz koszt izolacji swojego dachu w 30 sekund i zamów bezpłatną wycenę.</p>
+    <div class="hero-btns">
+      <a href="#kalkulator" class="btn-primary">Oblicz koszt dachu</a>
+      <a href="#kontakt" class="btn-secondary">Bezpłatna wycena</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <svg class="roof-icon" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Dach główny -->
+        <polygon points="170,40 310,180 30,180" fill="none" stroke="#2e2c24" stroke-width="1.5"/>
+        <polygon points="170,40 310,180 30,180" fill="rgba(200,168,75,0.04)"/>
+        <!-- Linie krokwi -->
+        <line x1="170" y1="40" x2="100" y2="180" stroke="#2e2c24" stroke-width="1"/>
+        <line x1="170" y1="40" x2="240" y2="180" stroke="#2e2c24" stroke-width="1"/>
+        <line x1="170" y1="40" x2="170" y2="180" stroke="#2e2c24" stroke-width="1"/>
+        <!-- Warstwa PIR – podświetlona -->
+        <polygon points="170,55 295,178 45,178" fill="rgba(200,168,75,0.12)" stroke="#c8a84b" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- Opis warstwy -->
+        <text x="170" y="130" text-anchor="middle" fill="#c8a84b" font-size="11" font-family="DM Sans, sans-serif" letter-spacing="2">PIR / PUR</text>
+        <text x="170" y="146" text-anchor="middle" fill="#8a876e" font-size="9" font-family="DM Sans, sans-serif">izolacja nakrokwiowa</text>
+        <!-- Ściana -->
+        <rect x="30" y="180" width="280" height="80" fill="none" stroke="#2e2c24" stroke-width="1.5"/>
+        <!-- Okno -->
+        <rect x="90" y="200" width="50" height="40" fill="rgba(200,168,75,0.05)" stroke="#2e2c24" stroke-width="1"/>
+        <rect x="200" y="200" width="50" height="40" fill="rgba(200,168,75,0.05)" stroke="#2e2c24" stroke-width="1"/>
+        <!-- Drzwi -->
+        <rect x="145" y="220" width="50" height="40" fill="rgba(200,168,75,0.03)" stroke="#2e2c24" stroke-width="1"/>
+        <!-- Dekoracyjne koło -->
+        <circle cx="170" cy="170" r="130" stroke="rgba(200,168,75,0.06)" stroke-width="1" stroke-dasharray="4,8"/>
+        <circle cx="170" cy="170" r="155" stroke="rgba(200,168,75,0.03)" stroke-width="1" stroke-dasharray="2,12"/>
+      </svg>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-num">λ 0.022</div>
+          <div class="stat-label">Współczynnik przewodzenia</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Lat trwałości izolacji</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">A+</div>
+          <div class="stat-label">Klasa energetyczna budynku</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUKTY -->
+<section id="produkty">
+  <div class="reveal">
+    <div class="section-tag">Nasza oferta</div>
+    <h2>PŁYTY PIR/PUR</h2>
+    <p class="section-sub">Najlepsza izolacja nakrokwiowa dostępna na rynku. Wybierz grubość dopasowaną do Twoich potrzeb.</p>
+  </div>
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-badge">Podstawowa</div>
+      <div class="product-name">PIR Nakrokwiowy</div>
+      <div class="product-thick">Grubość: 100 mm</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Opór cieplny R: <span>4.55 m²K/W</span></div>
+      <div class="product-price">89 <small>zł</small></div>
+      <div class="product-price-unit">za m² (netto)</div>
+      <button class="btn-inquiry" onclick="scrollToContact('PIR 100mm')">Zapytaj o wycenę →</button>
+    </div>
+    <div class="product-card">
+      <div class="product-badge popular">Najpopularniejsza</div>
+      <div class="product-name">PIR Nakrokwiowy</div>
+      <div class="product-thick">Grubość: 120 mm</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Opór cieplny R: <span>5.45 m²K/W</span></div>
+      <div class="product-price">105 <small>zł</small></div>
+      <div class="product-price-unit">za m² (netto)</div>
+      <button class="btn-inquiry" onclick="scrollToContact('PIR 120mm')">Zapytaj o wycenę →</button>
+    </div>
+    <div class="product-card">
+      <div class="product-badge">Premium</div>
+      <div class="product-name">PIR Nakrokwiowy</div>
+      <div class="product-thick">Grubość: 160 mm</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Opór cieplny R: <span>7.27 m²K/W</span></div>
+      <div class="product-price">138 <small>zł</small></div>
+      <div class="product-price-unit">za m² (netto)</div>
+      <button class="btn-inquiry" onclick="scrollToContact('PIR 160mm')">Zapytaj o wycenę →</button>
+    </div>
+    <div class="product-card">
+      <div class="product-badge">Pasywna</div>
+      <div class="product-name">PIR Nakrokwiowy</div>
+      <div class="product-thick">Grubość: 200 mm</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Opór cieplny R: <span>9.09 m²K/W</span></div>
+      <div class="product-price">172 <small>zł</small></div>
+      <div class="product-price-unit">za m² (netto)</div>
+      <button class="btn-inquiry" onclick="scrollToContact('PIR 200mm')">Zapytaj o wycenę →</button>
+    </div>
+  </div>
+</section>
+
+<!-- KALKULATOR -->
+<section id="kalkulator">
+  <div class="reveal">
+    <div class="section-tag">Narzędzie</div>
+    <h2>KALKULATOR IZOLACJI</h2>
+    <p class="section-sub">Podaj wymiary swojego dachu, a my wyliczymy orientacyjną ilość materiału, koszt dostawy i montażu.</p>
+  </div>
+  <div class="calc-wrapper reveal">
+    <!-- FORMULARZ -->
+    <div class="calc-form">
+
+      <!-- Typ dachu – wizualne kafelki -->
+      <div class="form-group">
+        <label>Typ dachu</label>
+        <div class="roof-type-grid">
+          <div class="roof-tile active" data-type="dwuspadowy" onclick="selectRoof(this)">
+            <svg viewBox="0 0 80 60"><polygon points="40,8 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Dwuspadowy</span>
+          </div>
+          <div class="roof-tile" data-type="czterospadowy" onclick="selectRoof(this)">
+            <svg viewBox="0 0 80 60"><polygon points="40,8 68,38 40,48 12,38" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Czterospadowy</span>
+          </div>
+          <div class="roof-tile" data-type="jednospadowy" onclick="selectRoof(this)">
+            <svg viewBox="0 0 80 60"><polygon points="8,12 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Jednospadowy</span>
+          </div>
+          <div class="roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
+            <svg viewBox="0 0 80 60"><polygon points="40,8 72,36 40,48 8,36" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><polygon points="40,8 72,36 72,44 40,56 8,44 8,36" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/></svg>
+            <span>Kopertowy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Długość budynku (m)</label>
+          <input type="number" id="length" placeholder="np. 12" min="1" max="200" step="0.1"/>
+        </div>
+        <div class="form-group">
+          <label>Szerokość budynku (m)</label>
+          <input type="number" id="width" placeholder="np. 8" min="1" max="200" step="0.1"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Kąt nachylenia dachu: <strong id="angleDisplay">30°</strong></label>
+        <input type="range" id="angleSlider" min="10" max="60" value="30" step="5" oninput="updateAngle(this.value)"/>
+        <div class="angle-labels"><span>10° łagodny</span><span>60° stromy</span></div>
+      </div>
+
+      <div class="form-group">
+        <label>Grubość izolacji PIR</label>
+        <select id="thickness">
+          <option value="100">100 mm – 89 zł/m²</option>
+          <option value="120" selected>120 mm – 105 zł/m² (najpopularniejsza)</option>
+          <option value="160">160 mm – 138 zł/m²</option>
+          <option value="200">200 mm – 172 zł/m²</option>
+        </select>
+      </div>
+
+      <button class="btn-calc" onclick="calculate()">OBLICZ KOSZT IZOLACJI</button>
+
+      <!-- Mini diagram -->
+      <div class="roof-diagram" id="roofDiagram">
+        <div class="roof-diagram-title" id="roofDiagramTitle">Podgląd – dach dwuspadowy · 30°</div>
+        <svg id="roofSvg" viewBox="0 0 300 160" width="100%" style="max-width:300px">
+          <defs>
+            <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="8" stroke="#a07828" stroke-width="1" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <polygon id="roofPolyFill" points="150,25 275,125 25,125" fill="url(#hatch)"/>
+          <polygon id="roofPolyStroke" points="150,25 275,125 25,125" fill="none" stroke="#a07828" stroke-width="2"/>
+          <rect x="25" y="125" width="250" height="20" fill="rgba(160,120,40,0.06)" stroke="#c4a96a" stroke-width="1"/>
+          <text id="roofLabel" x="150" y="90" text-anchor="middle" fill="#6b6550" font-size="11" font-family="DM Sans,sans-serif">warstwa PIR</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- WYNIKI -->
+    <div class="calc-results">
+      <div class="results-title">WYNIK KALKULACJI</div>
+      <div id="resultsEmpty" class="results-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <p>Wprowadź wymiary dachu<br>i kliknij „Oblicz"</p>
+      </div>
+      <div id="resultsContent" style="display:none">
+
+        <!-- Dane techniczne -->
+        <div class="results-section-label">Dane techniczne</div>
+        <div class="result-row">
+          <span class="result-label">Powierzchnia rzutu poziomego</span>
+          <span class="result-value" id="resFootprint">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Powierzchnia połaci dachu</span>
+          <span class="result-value" id="resSurface">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Ilość materiału PIR (+10% odpad)</span>
+          <span class="result-value" id="resMaterial">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Wybrana grubość</span>
+          <span class="result-value" id="resThickness">–</span>
+        </div>
+
+        <!-- Kosztorys -->
+        <div class="results-section-label" style="margin-top:1.2rem">Kosztorys orientacyjny</div>
+        <div class="result-row">
+          <span class="result-label">Materiał PIR</span>
+          <span class="result-value" id="resMaterialCost">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Dostawa</span>
+          <span class="result-value" id="resDelivery">–</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Montaż</span>
+          <span class="result-value" id="resMontaz">–</span>
+        </div>
+
+        <!-- Suma -->
+        <div class="result-total-box">
+          <div class="result-total-label">ŁĄCZNY KOSZT NETTO</div>
+          <div class="result-total-value" id="resTotalNetto">–</div>
+          <div class="result-total-vat" id="resTotalBrutto">– brutto (z VAT 23%)</div>
+        </div>
+
+        <div class="result-note">
+          ⚠️ Wynik jest orientacyjny. Ceny dostawy i montażu zależą od lokalizacji i złożoności dachu. Skontaktuj się z nami po dokładną wycenę.
+        </div>
+        <button class="btn-quote" id="btnQuote" onclick="scrollToContactCalc()">ZAMÓW DOKŁADNĄ WYCENĘ →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="reveal">
+    <div class="section-tag">Wiedza i porady</div>
+    <h2>BLOG DEKARKI</h2>
+    <p class="section-sub">Praktyczne porady dotyczące izolacji dachu – dla inwestorów i profesjonalistów.</p>
+  </div>
+  <div class="blog-grid reveal">
+    <div class="blog-card">
+      <div class="blog-img">🏠</div>
+      <div class="blog-body">
+        <div class="blog-cat">Izolacja</div>
+        <div class="blog-title">PIR vs wełna mineralna – co wybrać na dach nakrokwiowy?</div>
+        <div class="blog-date">15 marca 2025</div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img">🌡️</div>
+      <div class="blog-body">
+        <div class="blog-cat">Energooszczędność</div>
+        <div class="blog-title">Jak grubość izolacji wpływa na koszty ogrzewania?</div>
+        <div class="blog-date">2 marca 2025</div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-img">🔧</div>
+      <div class="blog-body">
+        <div class="blog-cat">Montaż</div>
+        <div class="blog-title">Montaż płyt PIR krok po kroku – poradnik dla wykonawców</div>
+        <div class="blog-date">18 lutego 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="reveal">
+    <div class="section-tag">Kontakt</div>
+    <h2>ZAPYTAJ O WYCENĘ</h2>
+    <p class="section-sub">Wypełnij formularz, a odezwiemy się w ciągu 24 godzin z indywidualną ofertą.</p>
+  </div>
+  <div class="contact-wrapper reveal">
+    <div class="contact-info">
+      <h3>Jesteśmy do Twojej dyspozycji</h3>
+      <p>Specjalizujemy się wyłącznie w izolacji nakrokwiowej PIR/PUR. Doradzamy w doborze grubości, pomagamy wyliczyć materiał i organizujemy dostawę.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text">
+          <strong>+48 000 000 000</strong>
+          Pon–Pt, 8:00–17:00
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="45272c30372a052b242e372a2e322c2a322a6b3529">[email&#160;protected]</a></strong>
+          Odpowiadamy w ciągu 24h
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <strong>Polska</strong>
+          Obsługujemy cały kraj
+        </div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label>Imię i nazwisko</label>
+        <input type="text" id="contactName" placeholder="Jan Kowalski"/>
+      </div>
+      <div class="form-group">
+        <label>Telefon lub e-mail</label>
+        <input type="text" id="contactContact" placeholder="jan@example.com lub 600 000 000"/>
+      </div>
+      <div class="form-group">
+        <label>Zainteresowany produktem</label>
+        <input type="text" id="contactProduct" placeholder="np. PIR 120mm"/>
+      </div>
+      <div class="form-group">
+        <label>Wiadomość (opcjonalnie)</label>
+        <textarea id="contactMsg" placeholder="Opisz swój projekt, podaj wymiary dachu lub zadaj pytanie..."></textarea>
+      </div>
+      <button class="btn-send" onclick="sendForm()">WYŚLIJ ZAPYTANIE</button>
+      <div class="success-msg" id="successMsg">✅ Dziękujemy! Odezwiemy się w ciągu 24 godzin.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NAKROKWIOWO<span>.PL</span></div>
+  <p>© 2025 Nakrokwiowo.pl · Izolacja PIR/PUR nakrokwiowa</p>
+  <p>Wszystkie ceny netto, bez VAT</p>
+</footer>
+
+<script>
+  // ══════════════════════════════════════════════════
+  // KONFIGURACJA – tutaj admin zmienia ceny
+  // ══════════════════════════════════════════════════
+  const PRICES = { 100: 89, 120: 105, 160: 138, 200: 172 }; // zł netto / m²
+  const MONTAZ_PER_M2  = 35;   // zł netto / m² – koszt montażu
+  const DOSTAWA_BASE   = 400;  // zł netto – dostawa bazowa
+  const DOSTAWA_PER_M2 = 2;    // zł netto / m² – zmienny koszt dostawy
+  const VAT = 0.23;
+
+  // ══════════════════════════════════════════════════
+  // STAN APLIKACJI
+  // ══════════════════════════════════════════════════
+  let selectedRoof = 'dwuspadowy';
+
+  // ══════════════════════════════════════════════════
+  // SCROLL REVEAL
+  // ══════════════════════════════════════════════════
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // ══════════════════════════════════════════════════
+  // WYBÓR TYPU DACHU
+  // ══════════════════════════════════════════════════
+  function selectRoof(el) {
+    document.querySelectorAll('.roof-tile').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    selectedRoof = el.dataset.type;
+    updateDiagram(selectedRoof, parseInt(document.getElementById('angleSlider').value));
+  }
+
+  // ══════════════════════════════════════════════════
+  // SUWAK KĄTA
+  // ══════════════════════════════════════════════════
+  function updateAngle(val) {
+    document.getElementById('angleDisplay').textContent = val + '°';
+    updateDiagram(selectedRoof, parseInt(val));
+  }
+
+  // ══════════════════════════════════════════════════
+  // DIAGRAM SVG
+  // ══════════════════════════════════════════════════
+  function updateDiagram(type, angle) {
+    const fill   = document.getElementById('roofPolyFill');
+    const stroke = document.getElementById('roofPolyStroke');
+    const label  = document.getElementById('roofLabel');
+    const title  = document.getElementById('roofDiagramTitle');
+
+    // peak przesuwa się w górę wraz z kątem
+    const peak = Math.max(15, 115 - (angle - 10) * 1.6);
+
+    const shapes = {
+      dwuspadowy:    `150,${peak} 275,125 25,125`,
+      jednospadowy:  `25,${peak} 275,125 25,125`,
+      czterospadowy: `150,${peak} 265,105 150,125 35,105`,
+      kopertowy:     `150,${peak} 265,95 150,125 35,95`,
+    };
+    const names = {
+      dwuspadowy: 'Dach dwuspadowy',
+      jednospadowy: 'Dach jednospadowy',
+      czterospadowy: 'Dach czterospadowy',
+      kopertowy: 'Dach kopertowy',
+    };
+
+    const pts = shapes[type] || shapes.dwuspadowy;
+    fill.setAttribute('points', pts);
+    stroke.setAttribute('points', pts);
+    label.textContent = 'warstwa PIR';
+    title.textContent = `Podgląd – ${names[type].toLowerCase()} · ${angle}°`;
+  }
+
+  // ══════════════════════════════════════════════════
+  // OBLICZENIA GEOMETRYCZNE
+  // ══════════════════════════════════════════════════
+  function calcRoofSurface(type, L, W, angleDeg) {
+    const rad = angleDeg * Math.PI / 180;
+    const cosA = Math.cos(rad);
+
+    switch(type) {
+      case 'dwuspadowy':
+        // Dwie połacie prostokątne
+        // Szerokość połaci = (W/2) / cos(kąt)
+        return L * (W / cosA);
+
+      case 'jednospadowy':
+        // Jedna połać prostokątna
+        return L * (W / cosA);
+
+      case 'czterospadowy':
+        // Dwie połacie trapezowe (długie) + dwie trójkątne (krótkie)
+        // Przybliżenie: rzut * 1/cos(kąt), analogicznie jak dwuspadowy
+        return (L * W) / cosA;
+
+      case 'kopertowy':
+        // Cztery połacie trójkątne/trapezowe
+        // Kopertowy = czterospadowy z równą długością i szerokością proporcją
+        return (L * W) / cosA * 1.05; // +5% na bardziej złożony kształt
+
+      default:
+        return (L * W) / cosA;
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  // GŁÓWNA FUNKCJA KALKULATORA
+  // ══════════════════════════════════════════════════
+  function calculate() {
+    const L         = parseFloat(document.getElementById('length').value);
+    const W         = parseFloat(document.getElementById('width').value);
+    const angle     = parseInt(document.getElementById('angleSlider').value);
+    const thickness = parseInt(document.getElementById('thickness').value);
+    const priceM2   = PRICES[thickness];
+
+    // Walidacja
+    if (!L || !W || L <= 0 || W <= 0) {
+      document.getElementById('length').style.borderColor = '#c0392b';
+      document.getElementById('width').style.borderColor  = '#c0392b';
+      setTimeout(() => {
+        document.getElementById('length').style.borderColor = '';
+        document.getElementById('width').style.borderColor  = '';
+      }, 2000);
+      return;
+    }
+
+    // Obliczenia
+    const footprint    = L * W;
+    const roofSurface  = calcRoofSurface(selectedRoof, L, W, angle);
+    const materialM2   = roofSurface * 1.10;           // +10% odpad
+
+    const costMaterial = materialM2 * priceM2;
+    const costDostawa  = DOSTAWA_BASE + materialM2 * DOSTAWA_PER_M2;
+    const costMontaz   = materialM2 * MONTAZ_PER_M2;
+    const totalNetto   = costMaterial + costDostawa + costMontaz;
+    const totalBrutto  = totalNetto * (1 + VAT);
+
+    // Formatowanie liczb po polsku
+    const fmt = n => Math.round(n).toLocaleString('pl-PL') + ' zł';
+
+    // Wyświetl wyniki
+    document.getElementById('resultsEmpty').style.display   = 'none';
+    document.getElementById('resultsContent').style.display = 'block';
+
+    document.getElementById('resFootprint').textContent    = footprint.toFixed(1) + ' m²';
+    document.getElementById('resSurface').textContent      = roofSurface.toFixed(1) + ' m²';
+    document.getElementById('resMaterial').textContent     = materialM2.toFixed(1) + ' m²';
+    document.getElementById('resThickness').textContent    = thickness + ' mm';
+    document.getElementById('resMaterialCost').textContent = fmt(costMaterial) + ' netto';
+    document.getElementById('resDelivery').textContent     = fmt(costDostawa) + ' netto';
+    document.getElementById('resMontaz').textContent       = fmt(costMontaz) + ' netto';
+    document.getElementById('resTotalNetto').textContent   = fmt(totalNetto);
+    document.getElementById('resTotalBrutto').textContent  = fmt(totalBrutto) + ' brutto (z VAT 23%)';
+    document.getElementById('btnQuote').style.display      = 'block';
+
+    // Wypełnij formularz kontaktowy
+    document.getElementById('contactProduct').value = `PIR ${thickness}mm`;
+    document.getElementById('contactMsg').value =
+      `Typ dachu: ${selectedRoof}, wymiary: ${L}×${W} m, kąt: ${angle}°\n` +
+      `Powierzchnia połaci: ~${roofSurface.toFixed(0)} m²\n` +
+      `Orientacyjny koszt: ~${fmt(totalNetto)} netto`;
+
+    // Animacja wyników
+    document.querySelector('.calc-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ══════════════════════════════════════════════════
+  // SCROLL TO CONTACT
+  // ══════════════════════════════════════════════════
+  function scrollToContact(product) {
+    document.getElementById('contactProduct').value = product;
+    document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+  }
+  function scrollToContactCalc() {
+    document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ══════════════════════════════════════════════════
+  // FORMULARZ KONTAKTOWY
+  // ══════════════════════════════════════════════════
+  function sendForm() {
+    const name    = document.getElementById('contactName').value.trim();
+    const contact = document.getElementById('contactContact').value.trim();
+    if (!name || !contact) {
+      alert('Proszę podać imię i dane kontaktowe.');
+      return;
+    }
+    // Tu w przyszłości: fetch('/api/contact', { method: 'POST', body: JSON.stringify({...}) })
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('contactName').value    = '';
+    document.getElementById('contactContact').value = '';
+    document.getElementById('contactProduct').value = '';
+    document.getElementById('contactMsg').value     = '';
+  }
+</script>-e 
+</body>
+</html>
