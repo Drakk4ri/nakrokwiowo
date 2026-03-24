@@ -450,11 +450,48 @@
     }
     .roof-diagram-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
 
+    /* ── SOCIAL PROOF (ukryte – aktywować po zebraniu opinii) ── */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .review-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.8rem;
+      position: relative;
+    }
+    .review-card::before {
+      content: '"';
+      position: absolute; top: 1rem; right: 1.2rem;
+      font-size: 4rem; line-height: 1;
+      color: var(--gold); opacity: 0.15;
+      font-family: Georgia, serif;
+    }
+    .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.8rem; letter-spacing: 2px; }
+    .review-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .review-name { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+    .review-location { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-top: 3rem;
+      background: var(--gold);
+      border-radius: 4px; padding: 2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-big { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: #fff; line-height: 1; }
+    .stat-desc { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.3rem; }
+    @media (max-width: 600px) {
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+    }
+
     /* ── BLOG ── */
     #blog { background: var(--surface); }
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
     }
@@ -463,20 +500,114 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       overflow: hidden;
-      transition: border-color 0.25s, transform 0.2s;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
     }
-    .blog-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+    .blog-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     .blog-img {
-      height: 160px;
+      height: 140px;
       background: linear-gradient(135deg, var(--surface2) 0%, var(--border) 100%);
       display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
+      font-size: 2.8rem;
     }
-    .blog-body { padding: 1.5rem; }
+    .blog-body { padding: 1.4rem; }
     .blog-cat { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
-    .blog-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.4; }
-    .blog-date { font-size: 0.75rem; color: var(--text-muted); }
+    .blog-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; line-height: 1.45; }
+    .blog-date { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* ── ARTICLE MODAL ── */
+    .article-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(26,23,16,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+    }
+    .article-overlay.open { display: block; }
+    .article-modal {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.96);
+      width: min(780px, 94vw); max-height: 86vh;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow-y: auto;
+      z-index: 201;
+      transition: transform 0.25s, opacity 0.25s;
+      opacity: 0;
+    }
+    .article-modal.open { display: block; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    .article-close {
+      position: sticky; top: 0;
+      display: flex; align-items: center; gap: 0.4rem;
+      background: var(--surface);
+      border: none; border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; letter-spacing: 0.06em;
+      padding: 0.9rem 1.5rem;
+      cursor: pointer; width: 100%;
+      text-align: left;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+    .article-close:hover { color: var(--gold); }
+    .article-content {
+      padding: 2.5rem;
+    }
+    .article-content h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.04em;
+      line-height: 1.1; margin-bottom: 1.2rem;
+      color: var(--text);
+    }
+    .article-content h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.04em;
+      margin: 2rem 0 0.6rem;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 1rem; font-weight: 700;
+      margin: 1.5rem 0 0.5rem;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 0.95rem; line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .article-content strong { color: var(--text); }
+    .article-meta {
+      font-size: 0.75rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-highlight {
+      background: var(--surface2);
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.2rem;
+      border-radius: 2px;
+      margin: 1.2rem 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .article-cta {
+      padding: 1.5rem 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+      text-align: center;
+    }
+    .article-cta p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+
+    @media (max-width: 480px) {
+      .blog-grid { grid-template-columns: 1fr; }
+      .article-content { padding: 1.5rem; }
+      .article-cta { padding: 1.2rem 1.5rem; }
+      .article-content h1 { font-size: 1.5rem; }
+    }
 
     /* ── KONTAKT ── */
     #kontakt { background: var(--bg); }
@@ -572,15 +703,88 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
+    /* ── HAMBURGER MENU ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+      background: none; border: none;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed; top: 60px; left: 0; right: 0;
+      background: rgba(247,245,240,0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      flex-direction: column; gap: 1.2rem;
+      z-index: 99;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: var(--text); text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-mobile a:last-child { border-bottom: none; color: var(--gold); font-weight: 700; }
+
+    /* ── TABLET (max 900px) ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       nav ul { display: none; }
+      .nav-hamburger { display: flex; }
       .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
       .hero-right { display: none; }
       section { padding: 3.5rem 1.5rem; }
       .calc-wrapper, .contact-wrapper { grid-template-columns: 1fr; }
       .calc-results { position: static; }
       footer { flex-direction: column; text-align: center; }
+      .roof-type-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── TELEFON (max 480px) ── */
+    @media (max-width: 480px) {
+      nav { padding: 0.9rem 1rem; }
+      .nav-logo { font-size: 1.2rem; }
+
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+
+      .hero { padding: 6rem 1rem 2.5rem; }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; }
+
+      section { padding: 2.5rem 1rem; }
+
+      .products-grid { grid-template-columns: 1fr; }
+
+      .calc-form, .calc-results { padding: 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .roof-type-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+      .roof-tile { padding: 0.6rem 0.3rem 0.4rem; }
+      .roof-tile svg { width: 44px; height: 33px; }
+      .roof-tile span { font-size: 0.68rem; }
+
+      .result-total-value { font-size: 1.9rem; }
+
+      .blog-grid { grid-template-columns: 1fr; }
+
+      .contact-wrapper { gap: 2rem; }
+      .contact-form { padding: 1.5rem; }
+
+      footer { padding: 1.5rem 1rem; gap: 0.5rem; }
+      footer p { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -595,7 +799,18 @@
     <li><a href="#blog">Blog</a></li>
     <li><a href="#kontakt" class="nav-cta">Zapytaj o wycenę</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile" id="navMobile">
+  <a href="#produkty" onclick="closeMenu()">Produkty</a>
+  <a href="#kalkulator" onclick="closeMenu()">Kalkulator</a>
+  <a href="#blog" onclick="closeMenu()">Blog</a>
+  <a href="#kontakt" onclick="closeMenu()">Zapytaj o wycenę →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -843,40 +1058,148 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════════
+     SOCIAL PROOF – ukryte, aktywować po zebraniu opinii
+     Aby pokazać: zmień display:none na display:block
+     w div#social-proof poniżej
+     ══════════════════════════════════════════════ -->
+<div id="social-proof" style="display:none">
+<section id="opinie" style="background:var(--surface)">
+  <div class="reveal">
+    <div class="section-tag">Zaufali nam</div>
+    <h2>CO MÓWIĄ KLIENCI</h2>
+    <p class="section-sub">Opinie inwestorów i wykonawców którzy wybrali izolację nakrokwiową Recticel.</p>
+  </div>
+  <div class="reviews-grid reveal">
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">„Profesjonalna obsługa i szybka dostawa. Płyty Recticel Powerroof zamontowane sprawnie, bez problemów. Polecam każdemu kto szuka solidnej izolacji nakrokwiowej."</div>
+      <div class="review-author">
+        <div class="review-name">Jan K.</div>
+        <div class="review-location">Wrocław · Dach dwuspadowy 140 m²</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">„Kalkulator na stronie bardzo pomógł w szacowaniu kosztów. Końcowa wycena była zbliżona do kalkulatora. Materiał wysokiej jakości, dostawa zgodnie z terminem."</div>
+      <div class="review-author">
+        <div class="review-name">Firma Dekarska XYZ</div>
+        <div class="review-location">Dolny Śląsk · Realizacja komercyjna</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">„Wybrałam PIR 160mm i nie żałuję. Pierwsze rachunki za ogrzewanie po remoncie dachu były o 35% niższe niż rok wcześniej. Świetny wybór i świetna obsługa."</div>
+      <div class="review-author">
+        <div class="review-name">Marta W.</div>
+        <div class="review-location">Opole · Dom pasywny, remont dachu</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pasek statystyk -->
+  <div class="stats-bar reveal">
+    <div class="stat-item">
+      <div class="stat-big">98%</div>
+      <div class="stat-desc">zadowolonych klientów</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-big">48h</div>
+      <div class="stat-desc">średni czas realizacji wyceny</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-big">X+</div>
+      <div class="stat-desc">zrealizowanych projektów</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-big">PL</div>
+      <div class="stat-desc">obsługujemy cały kraj</div>
+    </div>
+  </div>
+</section>
+</div>
+<!-- ══ KONIEC SOCIAL PROOF ══ -->
+
 <!-- BLOG -->
 <section id="blog">
   <div class="reveal">
     <div class="section-tag">Wiedza i porady</div>
-    <h2>BLOG DEKARKI</h2>
-    <p class="section-sub">Praktyczne porady dotyczące izolacji dachu – dla inwestorów i profesjonalistów.</p>
+    <h2>BLOG</h2>
+    <p class="section-sub">Praktyczne porady dotyczące izolacji nakrokwiowej PIR – dla inwestorów i wykonawców.</p>
   </div>
   <div class="blog-grid reveal">
-    <div class="blog-card">
-      <div class="blog-img">🏠</div>
-      <div class="blog-body">
-        <div class="blog-cat">Izolacja</div>
-        <div class="blog-title">PIR vs wełna mineralna – co wybrać na dach nakrokwiowy?</div>
-        <div class="blog-date">15 marca 2025</div>
-      </div>
-    </div>
-    <div class="blog-card">
+
+    <div class="blog-card" onclick="openArticle(0)">
       <div class="blog-img">🌡️</div>
       <div class="blog-body">
-        <div class="blog-cat">Energooszczędność</div>
-        <div class="blog-title">Jak grubość izolacji wpływa na koszty ogrzewania?</div>
-        <div class="blog-date">2 marca 2025</div>
+        <div class="blog-cat">Izolacja · Mostki termiczne</div>
+        <div class="blog-title">Dlaczego izolacja nakrokwiowa eliminuje mostki termiczne – i dlaczego to ważniejsze niż grubość wełny?</div>
+        <div class="blog-date">16 marca 2026 · 4 min czytania</div>
       </div>
     </div>
-    <div class="blog-card">
-      <div class="blog-img">🔧</div>
+
+    <div class="blog-card" onclick="openArticle(1)">
+      <div class="blog-img">🏠</div>
       <div class="blog-body">
-        <div class="blog-cat">Montaż</div>
-        <div class="blog-title">Montaż płyt PIR krok po kroku – poradnik dla wykonawców</div>
-        <div class="blog-date">18 lutego 2025</div>
+        <div class="blog-cat">Remont · Montaż</div>
+        <div class="blog-title">Remont dachu bez rozbiórki poddasza – jak działa izolacja nakrokwiowa od zewnątrz?</div>
+        <div class="blog-date">10 marca 2026 · 3 min czytania</div>
       </div>
     </div>
+
+    <div class="blog-card" onclick="openArticle(2)">
+      <div class="blog-img">🔍</div>
+      <div class="blog-body">
+        <div class="blog-cat">Produkty · Recticel</div>
+        <div class="blog-title">Recticel Powerroof vs Euroroof – który produkt wybrać na dach skośny?</div>
+        <div class="blog-date">3 marca 2026 · 4 min czytania</div>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="openArticle(3)">
+      <div class="blog-img">📐</div>
+      <div class="blog-body">
+        <div class="blog-cat">Energooszczędność · Dobór grubości</div>
+        <div class="blog-title">Dom energooszczędny – jaka grubość PIR nakrokwiowego naprawdę wystarczy?</div>
+        <div class="blog-date">24 lutego 2026 · 4 min czytania</div>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="openArticle(4)">
+      <div class="blog-img">💰</div>
+      <div class="blog-body">
+        <div class="blog-cat">Inwestycja · Zwrot kosztów</div>
+        <div class="blog-title">Izolacja nakrokwiowa – nowy dom czy remont? Kiedy to się naprawdę opłaca?</div>
+        <div class="blog-date">17 lutego 2026 · 4 min czytania</div>
+      </div>
+    </div>
+
+    <div class="blog-card" onclick="openArticle(5)">
+      <div class="blog-img">⚠️</div>
+      <div class="blog-body">
+        <div class="blog-cat">Błędy · Porady praktyczne</div>
+        <div class="blog-title">Najczęstsze błędy przy izolacji dachu i jak ich uniknąć</div>
+        <div class="blog-date">10 lutego 2026 · 5 min czytania</div>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- MODAL ARTYKUŁU -->
+<div class="article-overlay" id="articleOverlay" onclick="closeArticle()"></div>
+<div class="article-modal" id="articleModal">
+  <button class="article-close" onclick="closeArticle()">✕ Zamknij</button>
+  <div class="article-content" id="articleContent"></div>
+  <div class="article-cta">
+    <p>Masz pytania dotyczące izolacji swojego dachu?</p>
+    <button class="btn-primary" onclick="closeArticle(); scrollToContactCalc()">Zapytaj o bezpłatną wycenę →</button>
+  </div>
+</div>
 
 <!-- KONTAKT -->
 <section id="kontakt">
@@ -942,6 +1265,202 @@
 </footer>
 
 <script>
+  // ══════════════════════════════════════════════════
+  // ARTYKUŁY BLOGOWE
+  // ══════════════════════════════════════════════════
+  const ARTICLES = [
+    {
+      cat: 'Izolacja · Mostki termiczne',
+      date: '16 marca 2026 · 4 min czytania',
+      title: 'Dlaczego izolacja nakrokwiowa eliminuje mostki termiczne – i dlaczego to ważniejsze niż grubość wełny?',
+      content: `
+        <p>Większość inwestorów skupia się na jednym pytaniu: ile centymetrów izolacji dać na dach? Tymczasem równie ważne – a często ważniejsze – jest to, <strong>gdzie</strong> i <strong>jak</strong> ta izolacja jest ułożona. Mostki termiczne potrafią zniweczyć nawet najgrubszą warstwę wełny mineralnej.</p>
+
+        <h2>Czym są mostki termiczne i dlaczego są problemem?</h2>
+        <p>Mostek termiczny to miejsce w przegrodzie budowlanej, gdzie ciepło ucieka znacznie szybciej niż przez pozostałą część konstrukcji. W tradycyjnym dachu z izolacją między krokwiami każda krokiew jest takim właśnie mostkiem – drewno przewodzi ciepło kilkanaście razy lepiej niż wełna mineralna.</p>
+        <p>W typowym domu jednorodzinnym krokwie zajmują około 15–20% powierzchni dachu, co oznacza że przez te „zimne linie" ucieka nieproporcjonalnie duża ilość energii. Efekty to nie tylko wyższe rachunki, ale też ryzyko kondensacji wilgoci i zagrzybienia konstrukcji.</p>
+
+        <h2>Jak działa izolacja nakrokwiowa?</h2>
+        <p>Rozwiązaniem jest ułożenie płyt izolacyjnych <strong>na</strong> krokwiach, od zewnątrz. W ten sposób cała konstrukcja dachu – krokwie, łaty, murłaty – zostaje otulona ciągłą, nieprzerywaną warstwą izolacji. Nie ma już „zimnych linii".</p>
+        <div class="article-highlight">Płyty PIR Recticel Euroroof i Powerroof mają po obwodzie zamek typu pióro-wpust, który dodatkowo eliminuje szczeliny między płytami. Ciągłość izolacji jest zachowana w 100%.</div>
+
+        <h2>PIR vs wełna – nie tylko grubość się liczy</h2>
+        <p>Płyty PIR mają współczynnik lambda ≈ 0,022 W/mK. Wełna mineralna osiąga typowo 0,035–0,040 W/mK. Oznacza to, że <strong>12 cm PIR daje taką samą izolacyjność jak ponad 20 cm wełny mineralnej</strong> – przy jednoczesnym braku mostków termicznych.</p>
+        <p>Jeśli jednak wełnę układamy między krokwiami, przez krokwie i tak ucieka ciepło, niezależnie od grubości wełny. Możesz mieć 25 cm wełny i nadal tracić więcej ciepła niż przy 12 cm PIR nakrokwiowego.</p>
+
+        <h2>Podsumowanie</h2>
+        <p>Izolacja nakrokwiowa to nie moda – to fizyka. Ciągła warstwa PIR bez mostków termicznych jest po prostu skuteczniejsza od tradycyjnej izolacji między krokwiami, niezależnie od jej grubości. Jeśli zależy Ci na niskich rachunkach i zdrowym domu przez kolejne dekady, warto podjąć tę decyzję raz i zrobić to dobrze.</p>
+      `
+    },
+    {
+      cat: 'Remont · Montaż',
+      date: '10 marca 2026 · 3 min czytania',
+      title: 'Remont dachu bez rozbiórki poddasza – jak działa izolacja nakrokwiowa od zewnątrz?',
+      content: `
+        <p>Masz stary dom z nieocieplonym dachem. Zimą poddasze jest lodowate, latem zamienia się w saunę. Chcesz to zmienić, ale boisz się jednego: czy trzeba będzie rozbierać sufit, niszczyć wykończone wnętrze, mieszkać na budowie przez tygodnie?</p>
+        <p><strong>Odpowiedź brzmi: niekoniecznie.</strong> Izolacja nakrokwiowa od zewnątrz pozwala w wielu przypadkach całkowicie ominąć ten problem.</p>
+
+        <h2>Co to znaczy „od zewnątrz"?</h2>
+        <p>Izolacja nakrokwiowa wykonywana jest od strony zewnętrznej dachu – najczęściej przy okazji wymiany pokrycia dachowego. Dekarz zdejmuje stare dachówki lub blachę, a na odsłoniętych krokwiach układa płyty PIR. Dopiero na nie wraca nowe pokrycie.</p>
+        <div class="article-highlight">Wnętrze domu przez cały ten czas pozostaje nienaruszone. Żadnych rusztowań w środku. Żadnych rozbiórek sufitów. Żadnego kurzu i chaosu na poddaszu.</div>
+
+        <h2>Kiedy to możliwe?</h2>
+        <p>Izolacja od zewnątrz sprawdza się gdy: wymieniasz stare pokrycie dachowe, chcesz podnieść standard energetyczny bez naruszania wykończenia wnętrz, masz urządzone poddasze użytkowe, lub zależy Ci na czasie – prace zewnętrzne trwają znacznie krócej niż remont od środka.</p>
+
+        <h2>Dodatkowa zaleta: dłuższa żywotność konstrukcji</h2>
+        <p>Gdy izolacja nakrokwiowa otula całą konstrukcję dachu od zewnątrz, drewno krokwi pozostaje po ciepłej stronie. Nie jest narażone na wahania temperatury ani kondensację wilgoci. <strong>Drewno pozostaje suche – a suche drewno służy przez dziesiątki lat</strong> bez gnicia i zagrzybienia.</p>
+
+        <h2>Podsumowanie</h2>
+        <p>Remont dachu od zewnątrz z zastosowaniem izolacji nakrokwiowej PIR Recticel to rozwiązanie łączące wygodę i wysoką efektywność energetyczną. Jeśli i tak planujesz wymianę pokrycia dachowego, to idealny moment żeby przy okazji raz na zawsze rozwiązać problem ciepła w domu.</p>
+      `
+    },
+    {
+      cat: 'Produkty · Recticel',
+      date: '3 marca 2026 · 4 min czytania',
+      title: 'Recticel Powerroof vs Euroroof – który produkt wybrać na dach skośny?',
+      content: `
+        <p>Jeśli szukasz izolacji nakrokwiowej i trafiłeś na produkty Recticel, prawdopodobnie natknąłeś się na dwie nazwy: <strong>Euroroof</strong> i <strong>Powerroof</strong>. Oba to płyty PIR do izolacji nakrokwiowej dachów skośnych – ale czym się różnią i który wybrać?</p>
+
+        <h2>Czym jest Recticel Euroroof?</h2>
+        <p>Euroroof to termoizolacyjna płyta PIR przeznaczona do izolacji nakrokwiowej wszystkich dachów spadzistych. Jej wyróżnikiem jest to, że dostarczana jest jako <strong>kompletny pakiet montażowy</strong> – razem z membraną wstępnego krycia Rectivent i dedykowanymi wkrętami Rectifix.</p>
+        <div class="article-highlight">Dzięki temu wykonawca ma od razu wszystko czego potrzebuje, a montaż jest szybki i powtarzalny. Euroroof pokryta jest wielowarstwowym laminatem aluminiowym i ma krawędź pióro-wpust eliminującą mostki termiczne na złączach płyt.</div>
+        <p><strong>Kiedy wybrać Euroroof?</strong> Gdy zależy Ci na kompletnym, sprawdzonym systemie montażowym i gdy wykonawca ceni sobie szybkość i prostotę układania.</p>
+
+        <h2>Czym jest Recticel Powerroof?</h2>
+        <p>Powerroof to płyta PIR nakrokwiowa pokryta obustronnie czystym aluminium, z krawędzią pióro-wpust. Jest dedykowana do dachów skośnych, w tym – co istotne – <strong>dachów bez pełnego deskowania</strong>. To ważna różnica dla wielu starszych domów.</p>
+        <p>Powerroof sprzedawany jest bez dołączonej membrany – daje więc większą elastyczność w wyborze pozostałych elementów systemu dachowego.</p>
+        <p><strong>Kiedy wybrać Powerroof?</strong> Gdy dach nie ma pełnego deskowania lub gdy chcesz samodzielnie dobrać membranę.</p>
+
+        <h2>A co z Euroroof Max?</h2>
+        <p>Euroroof Max to nowsza wersja Euroroof z przyklejoną folią ochronną, zaprojektowana do stosowania z membraną wstępnego krycia. Oferuje jeszcze lepsze parametry montażowe i jest wyborem dla wymagających projektów.</p>
+
+        <h2>Podsumowanie</h2>
+        <p>Oba produkty zapewnią Twojemu dachu ciągłą, pozbawioną mostków termicznych warstwę izolacji. Wybór zależy od konstrukcji dachu i preferencji montażowych. Nie wiesz który pasuje do Twojego dachu? Skontaktuj się z nami – doradzimy.</p>
+      `
+    },
+    {
+      cat: 'Energooszczędność · Dobór grubości',
+      date: '24 lutego 2026 · 4 min czytania',
+      title: 'Dom energooszczędny – jaka grubość PIR nakrokwiowego naprawdę wystarczy?',
+      content: `
+        <p>„Ile centymetrów PIR dać na dach?" – to jedno z najczęstszych pytań jakie dostajemy. Odpowiedź zależy od wymagań prawnych, standardu energetycznego który chcesz osiągnąć, i budżetu.</p>
+
+        <h2>Co mówią przepisy?</h2>
+        <p>Polskie Warunki Techniczne (WT 2021) wymagają dla dachu współczynnika przenikania ciepła <strong>U ≤ 0,15 W/m²K</strong>. Dla płyt PIR Recticel z lambda ≈ 0,022 W/mK, aby osiągnąć ten wynik potrzebujesz warstwy izolacji o grubości około 14–16 cm.</p>
+
+        <h2>Jaką grubość wybrać w praktyce?</h2>
+        <div class="article-highlight">
+          <strong>100 mm</strong> – R ≈ 4,55 m²K/W. Minimalna grubość, odpowiednia przy renowacji gdzie grubość jest ograniczona konstrukcją dachu.<br><br>
+          <strong>120 mm</strong> – R ≈ 5,45 m²K/W. Najpopularniejszy wybór. Spełnia WT 2021 z zapasem, dobra relacja jakości do ceny.<br><br>
+          <strong>160 mm</strong> – R ≈ 7,27 m²K/W. Dla domów o podwyższonym standardzie energetycznym, klasy NF40.<br><br>
+          <strong>200 mm</strong> – R ≈ 9,09 m²K/W. Standard domu pasywnego. Minimalne koszty ogrzewania przez kolejne 30–40 lat.
+        </div>
+
+        <h2>Czy grubsza izolacja się opłaca?</h2>
+        <p>Przy ogrzewaniu gazowym lub pompą ciepła różnica w rachunkach między 120 mm a 160 mm może wynosić kilkaset złotych rocznie. Przy 25-letnim horyzoncie – kilka–kilkanaście tysięcy złotych oszczędności. <strong>Koszt dodatkowych 4 cm PIR zwraca się zazwyczaj w ciągu 5–8 lat.</strong></p>
+
+        <h2>Podsumowanie</h2>
+        <p>Jeśli budujesz nowy dom – wybierz minimum 120 mm, najlepiej 160 mm. Jeśli remontujesz stary dach z ograniczeniami – 100 mm z dobrym montażem i tak da ogromną poprawę w porównaniu z brakiem izolacji. Skorzystaj z naszego kalkulatora żeby sprawdzić koszt dla każdej grubości.</p>
+      `
+    },
+    {
+      cat: 'Inwestycja · Zwrot kosztów',
+      date: '17 lutego 2026 · 4 min czytania',
+      title: 'Izolacja nakrokwiowa – nowy dom czy remont? Kiedy to się naprawdę opłaca?',
+      content: `
+        <p>Izolacja nakrokwiowa PIR to inwestycja, nie koszt. Ale jak każda inwestycja – warto wiedzieć kiedy ma sens i kiedy się zwraca.</p>
+
+        <h2>Nowy dom – kiedy warto wybrać izolację nakrokwiową?</h2>
+        <p>Budując nowy dom masz pełną swobodę wyboru systemu izolacji. Izolacja nakrokwiowa PIR jest szczególnie atrakcyjna ponieważ: nie ma ograniczeń konstrukcyjnych, zachowujesz pełną przestrzeń poddasza, i budujesz raz na długo – dobra izolacja to spokój na 30–50 lat.</p>
+        <div class="article-highlight">Izolacja nakrokwiowa jest szczególnie opłacalna gdy planujesz poddasze użytkowe, gdy zależy Ci na standardzie energooszczędnym lub pasywnym, albo gdy chcesz mieć widoczną więźbę dachową jako element dekoracyjny wnętrza.</div>
+
+        <h2>Remont – kiedy ma największy sens?</h2>
+        <p>Remontując stary dom, izolacja nakrokwiowa jest najlepsza gdy <strong>i tak wymieniasz pokrycie dachowe</strong>. To moment kiedy dach jest odsłonięty i koszt ułożenia płyt PIR jest stosunkowo niski w porównaniu z całością inwestycji w nowe pokrycie.</p>
+        <p>Przy remoncie zysk jest natychmiastowy: stary dom bez izolacji traci przez dach nawet 30% ciepła. Po ociepleniu płytami PIR te straty spadają do minimum. <strong>Rachunki za ogrzewanie mogą spaść o 20–40% – już w pierwszym sezonie grzewczym.</strong></p>
+
+        <h2>Ile trwa zwrot inwestycji?</h2>
+        <p>Przy typowym domu jednorodzinnym (powierzchnia dachu 120–180 m²) koszt izolacji nakrokwiowej PIR wraz z montażem to zazwyczaj 25 000–55 000 zł w zależności od grubości. Przy oszczędnościach rzędu 2 000–5 000 zł rocznie na ogrzewaniu, <strong>zwrot następuje po 8–15 latach</strong>. Reszta okresu użytkowania domu to czysta oszczędność.</p>
+
+        <h2>A co z wartością nieruchomości?</h2>
+        <p>Domy z wysokim standardem energetycznym osiągają coraz wyższe ceny na rynku wtórnym. Kupujący coraz częściej pytają o klasę energetyczną i koszty ogrzewania. Dobra izolacja nakrokwiowa to nie tylko oszczędność na rachunkach, ale też wymierna wartość dodana przy ewentualnej sprzedaży.</p>
+
+        <h2>Podsumowanie</h2>
+        <p>Izolacja nakrokwiowa PIR opłaca się zarówno w nowym domu jak i przy remoncie – pod warunkiem że jest wykonana porządnie, z dobrego materiału. Recticel Euroroof i Powerroof to produkty sprawdzone na polskim rynku, dedykowane do tego zastosowania.</p>
+      `
+    },
+    {
+      cat: 'Błędy · Porady praktyczne',
+      date: '10 lutego 2026 · 5 min czytania',
+      title: 'Najczęstsze błędy przy izolacji dachu i jak ich uniknąć',
+      content: `
+        <p>Izolacja nakrokwiowa to inwestycja na kilkadziesiąt lat. Niestety nawet dobry materiał – jak płyty PIR Recticel – może nie dać oczekiwanych rezultatów jeśli zostanie źle zamontowany. Oto lista błędów które najczęściej widujemy na budowach i remontach – i jak ich uniknąć.</p>
+
+        <h2>Błąd 1: Za mała grubość izolacji</h2>
+        <p>Pokusa oszczędności jest zrozumiała, ale zbyt cienka izolacja to fałszywa oszczędność. Wybór 80 mm zamiast 120 mm może zaoszczędzić kilka tysięcy złotych na starcie, ale przez kolejne 20 lat będzie kosztować znacznie więcej w rachunkach za ogrzewanie.</p>
+        <div class="article-highlight">Minimum dla nowego budownictwa zgodnego z WT 2021 to warstwa zapewniająca U ≤ 0,15 W/m²K. Dla płyt PIR Recticel oznacza to w praktyce minimum 120–140 mm grubości.</div>
+
+        <h2>Błąd 2: Brak ciągłości izolacji – nieszczelne złącza</h2>
+        <p>Płyty PIR muszą być układane ze ściśle przylegającymi krawędziami. Szczeliny między płytami to mostki termiczne i drogi dla powietrza i wilgoci. Właśnie dlatego płyty Recticel Euroroof i Powerroof mają krawędź pióro-wpust – eliminuje ona szczeliny na złączach bez dodatkowego wysiłku.</p>
+        <p><strong>Jak uniknąć?</strong> Używaj płyt z zamkiem pióro-wpust i układaj je w cegiełkę (przesunięcie o pół płyty w każdym rzędzie). Złącza sąsiednich rzędów nie powinny się pokrywać.</p>
+
+        <h2>Błąd 3: Pominięcie paroizolacji lub jej zły montaż</h2>
+        <p>Izolacja nakrokwiowa PIR sama w sobie jest paroszczelna, ale w systemie dachowym musi być zachowana zasada: <strong>od strony ciepłej do zimnej opór dyfuzyjny musi rosnąć</strong>. Pominięcie paroizolacji od wewnątrz lub jej błędne ułożenie prowadzi do kondensacji wilgoci wewnątrz konstrukcji – a wilgoć niszczy drewno.</p>
+        <p><strong>Jak uniknąć?</strong> Zawsze stosuj paroizolację od strony wewnętrznej i uszczelnij wszystkie przejścia (krokwie, okna dachowe, kominy) taśmą uszczelniającą, np. Max Tape od Recticel.</p>
+
+        <h2>Błąd 4: Zły dobór produktu do konstrukcji dachu</h2>
+        <p>Nie każda płyta PIR nadaje się do każdego dachu. Recticel Powerroof przeznaczony jest między innymi do dachów bez pełnego deskowania, natomiast Euroroof dostarczany jest z membraną i dedykowanymi łącznikami jako kompletny system. Użycie nieodpowiedniego produktu może skończyć się problemami z montażem lub szczelnością dachu.</p>
+        <p><strong>Jak uniknąć?</strong> Przed zakupem skonsultuj wybór produktu z dostawcą – opisz konstrukcję dachu, kąt nachylenia i planowane pokrycie. Chętnie doradzimy.</p>
+
+        <h2>Błąd 5: Nieodpowiednie mocowanie płyt</h2>
+        <p>Płyty PIR muszą być mocowane dedykowanymi wkrętami o odpowiedniej długości – zbyt krótkie nie zapewnią stabilności, zbyt długie mogą uszkodzić konstrukcję. Nieprawidłowe rozmieszczenie łączników prowadzi do odkształceń płyt i powstawania szczelin.</p>
+        <div class="article-highlight">System Recticel Euroroof jest dostarczany z dedykowanymi wkrętami Rectifix, które są dopasowane do grubości płyty i rodzaju podłoża. To eliminuje ryzyko błędu w doborze łączników.</div>
+
+        <h2>Błąd 6: Brak wentylacji podpokryciowej</h2>
+        <p>W systemie nakrokwiowym między płytą PIR a pokryciem dachowym musi być zachowana szczelina wentylacyjna (tzw. kontrłata). Jej brak powoduje nagrzewanie się pokrycia, skracając jego żywotność, i uniemożliwia odprowadzenie ewentualnej wilgoci.</p>
+        <p><strong>Jak uniknąć?</strong> Zawsze stosuj kontrłaty o minimalnej wysokości 30–50 mm i upewnij się że szczelina wentylacyjna ma swobodny wlot przy okapie i wylot przy kalenicy.</p>
+
+        <h2>Podsumowanie</h2>
+        <p>Większość błędów przy izolacji nakrokwiowej wynika z pośpiechu, chęci oszczędności na materiale lub braku doświadczenia wykonawcy. Dobry materiał i staranny montaż to jedyna droga do izolacji która działa przez 30–50 lat bez problemów.</p>
+        <p>Masz wątpliwości dotyczące swojego projektu? Skontaktuj się z nami – pomożemy dobrać właściwy produkt i odpowiemy na wszystkie pytania przed rozpoczęciem prac.</p>
+      `
+    }
+  ];
+
+  function openArticle(index) {
+    const a = ARTICLES[index];
+    document.getElementById('articleContent').innerHTML = `
+      <div class="article-meta">${a.cat} · ${a.date}</div>
+      <h1>${a.title}</h1>
+      ${a.content}
+    `;
+    document.getElementById('articleOverlay').classList.add('open');
+    document.getElementById('articleModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeArticle() {
+    document.getElementById('articleOverlay').classList.remove('open');
+    document.getElementById('articleModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Zamknij modal klawiszem Escape
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
+
+  // ══════════════════════════════════════════════════
+  // HAMBURGER MENU
+  // ══════════════════════════════════════════════════
+  function toggleMenu() {
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('navMobile');
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('navMobile').classList.remove('open');
+  }
+
   // ══════════════════════════════════════════════════
   // KONFIGURACJA – tutaj admin zmienia ceny
   // ══════════════════════════════════════════════════
@@ -1136,6 +1655,6 @@
     document.getElementById('contactProduct').value = '';
     document.getElementById('contactMsg').value     = '';
   }
-</script>-e 
+</script>
 </body>
 </html>
