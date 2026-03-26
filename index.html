@@ -60,6 +60,33 @@
       transition: color 0.2s;
     }
     nav ul a:hover { color: var(--gold); }
+
+    /* ── SCROLL SPY – aktywna sekcja w navbarze ── */
+    nav ul a.active {
+      color: var(--gold);
+      position: relative;
+    }
+    nav ul a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+      animation: slideIn 0.2s ease;
+    }
+    @keyframes slideIn {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    /* Progress bar – pasek postępu scrollowania na górze strony */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; z-index: 101;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
     .nav-cta {
       background: var(--gold);
       color: #fff !important;
@@ -791,6 +818,7 @@
 <body>
 
 <!-- NAV -->
+<div class="scroll-progress" id="scrollProgress"></div>
 <nav>
   <a class="nav-logo" href="#">NAKROKWIOWO<span>.PL</span></a>
   <ul>
@@ -947,7 +975,7 @@
             <span>Jednospadowy</span>
           </div>
           <div class="roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 72,36 40,48 8,36" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><polygon points="40,8 72,36 72,44 40,56 8,44 8,36" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/></svg>
+            <svg viewBox="0 0 80 60"><polygon points="40,8 70,44 10,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><line x1="40" y1="8" x2="10" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><line x1="40" y1="8" x2="70" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><rect x="10" y="44" width="60" height="8" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
             <span>Kopertowy</span>
           </div>
         </div>
@@ -1448,6 +1476,40 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
 
   // ══════════════════════════════════════════════════
+  // SCROLL SPY + PROGRESS BAR
+  // ══════════════════════════════════════════════════
+  const navLinks = document.querySelectorAll('nav ul a[href^="#"]');
+  const sections = ['produkty', 'kalkulator', 'blog', 'kontakt']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  const progressBar = document.getElementById('scrollProgress');
+
+  function onScroll() {
+    // Pasek postępu
+    const scrollTop  = window.scrollY;
+    const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+    const progress   = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    // Scroll spy – znajdź aktywną sekcję
+    let active = '';
+    sections.forEach(sec => {
+      const top = sec.getBoundingClientRect().top;
+      if (top <= 120) active = sec.id;
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + active) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // uruchom od razu przy załadowaniu
+
+  // ══════════════════════════════════════════════════
   // HAMBURGER MENU
   // ══════════════════════════════════════════════════
   function toggleMenu() {
@@ -1511,25 +1573,65 @@
     const label  = document.getElementById('roofLabel');
     const title  = document.getElementById('roofDiagramTitle');
 
-    // peak przesuwa się w górę wraz z kątem
+    // peak – szczyt dachu przesuwa się w górę wraz z kątem
     const peak = Math.max(15, 115 - (angle - 10) * 1.6);
+    // boki czterospadowego/kopertowego – okapy boczne niżej niż kalenica
+    const sideY = Math.min(125, peak + (125 - peak) * 0.55);
 
     const shapes = {
+      // Trójkąt – widok z boku (profil)
       dwuspadowy:    `150,${peak} 275,125 25,125`,
+      // Trapez jednostronny – widok z boku
       jednospadowy:  `25,${peak} 275,125 25,125`,
-      czterospadowy: `150,${peak} 265,105 150,125 35,105`,
-      kopertowy:     `150,${peak} 265,95 150,125 35,95`,
+      // Czterospadowy – widok lekko z przodu i boku:
+      // szczyt (kalenica) jako linia pozioma, cztery połacie zbiegają do okapów
+      czterospadowy: `100,${peak} 200,${peak} 270,125 30,125`,
+      // Kopertowy – jak czterospadowy ale kalenica to punkt (piramida)
+      kopertowy:     `150,${peak} 270,125 30,125`,
     };
+
+    // Dodatkowe linie dla czterospadowego (linie kalenicy i narożne)
+    const extraLines = {
+      czterospadowy: [
+        // Linia kalenicy
+        [100, peak, 200, peak],
+        // Linie narożne
+        [100, peak, 30,  125],
+        [200, peak, 270, 125],
+      ],
+      kopertowy: [],
+      dwuspadowy: [],
+      jednospadowy: [],
+    };
+
     const names = {
-      dwuspadowy: 'Dach dwuspadowy',
-      jednospadowy: 'Dach jednospadowy',
+      dwuspadowy:    'Dach dwuspadowy',
+      jednospadowy:  'Dach jednospadowy',
       czterospadowy: 'Dach czterospadowy',
-      kopertowy: 'Dach kopertowy',
+      kopertowy:     'Dach kopertowy',
     };
 
     const pts = shapes[type] || shapes.dwuspadowy;
     fill.setAttribute('points', pts);
     stroke.setAttribute('points', pts);
+
+    // Usuń poprzednie linie dodatkowe
+    const svg = document.getElementById('roofSvg');
+    svg.querySelectorAll('.extra-line').forEach(el => el.remove());
+
+    // Dodaj linie dodatkowe dla czterospadowego
+    (extraLines[type] || []).forEach(([x1,y1,x2,y2]) => {
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+      line.setAttribute('stroke', '#a07828');
+      line.setAttribute('stroke-width', '1.5');
+      line.setAttribute('stroke-dasharray', '4,3');
+      line.setAttribute('opacity', '0.6');
+      line.classList.add('extra-line');
+      svg.appendChild(line);
+    });
+
     label.textContent = 'warstwa PIR';
     title.textContent = `Podgląd – ${names[type].toLowerCase()} · ${angle}°`;
   }
