@@ -4,33 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nakrokwiowo – Izolacja PIR/PUR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f7f5f0;
-      --surface: #ffffff;
-      --surface2: #f0ede6;
-      --border: #ddd9ce;
-      --gold: #a07828;
-      --gold-light: #c49a3c;
-      --gold-dim: #c4a96a;
-      --text: #1a1710;
-      --text-muted: #6b6550;
-      --red: #c0392b;
-      --green: #2e8b5a;
+      --sage:#4A7060;--sage-l:#6B9B84;--sage-d:#2E4F3E;--sage-bg:rgba(91,123,106,.07);
+      --amber:#C8850A;--amber-d:#A86D06;--amber-l:#E4A93C;--amber-bg:#FDF6E8;
+      --charcoal:#1C1C1C;--graphite:#3A3A3A;--ash:#6B7280;--silver:#9CA3AF;
+      --snow:#FAFBF9;--paper:#F5F3EE;--warm:#E8E4DD;--ivory:#F0ECE3;
+      --mint:#34855A;--danger:#C75050;
+      --r:10px;--r-lg:16px;--r-xl:24px;
+      --sh-xs:0 1px 3px rgba(10,22,40,.04);--sh-sm:0 2px 10px rgba(10,22,40,.06);--sh-md:0 8px 28px rgba(10,22,40,.07);--sh-lg:0 16px 48px rgba(10,22,40,.1);
+      --serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+      --bg:var(--snow);--surface:#fff;--surface2:var(--paper);--border:var(--warm);
+      --gold:var(--sage);--gold-light:var(--sage-l);--gold-dim:var(--sage-d);
+      --text:var(--charcoal);--text-muted:var(--ash);--green:var(--mint);--red:var(--danger);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.6;
+      background: var(--snow);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.65;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* ── NAV ── */
@@ -43,19 +48,19 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.12em;
-      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+      color: var(--sage);
       text-decoration: none;
     }
-    .nav-logo span { color: var(--text); }
+    .nav-logo span { color: var(--charcoal); }
     nav ul { list-style: none; display: flex; gap: 2.5rem; }
     nav ul a {
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.85rem;
-      letter-spacing: 0.08em;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
@@ -83,18 +88,18 @@
     .scroll-progress {
       position: fixed; top: 0; left: 0; z-index: 101;
       height: 2px; width: 0%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      background: linear-gradient(90deg, var(--sage), var(--sage-l));
       transition: width 0.1s linear;
       pointer-events: none;
     }
     .nav-cta {
-      background: var(--gold);
+      background: var(--sage);
       color: #fff !important;
       padding: 0.5rem 1.4rem;
       border-radius: 2px;
       font-weight: 700 !important;
     }
-    .nav-cta:hover { background: var(--gold-light) !important; color: #fff !important; }
+    .nav-cta:hover { background: var(--sage-d) !important; color: #fff !important; }
 
     /* ── HERO ── */
     .hero {
@@ -110,8 +115,8 @@
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(160,120,40,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(160,120,40,0.04) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,133,10,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,133,10,0.04) 0%, transparent 60%);
       pointer-events: none;
     }
     .hero-grid-bg {
@@ -126,23 +131,24 @@
       font-size: 0.72rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid var(--gold-dim);
+      color: var(--sage);
+      border: 1px solid var(--sage-l);
       padding: 0.3rem 0.8rem;
       margin-bottom: 1.8rem;
       border-radius: 2px;
     }
     h1 {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
+      font-family: var(--serif);
       font-size: clamp(3.5rem, 6vw, 6rem);
       line-height: 0.95;
-      letter-spacing: 0.04em;
+      letter-spacing: -0.02em;
       color: var(--text);
       margin-bottom: 1.5rem;
     }
     h1 em {
       font-style: normal;
-      color: var(--gold);
+      color: var(--sage);
       display: block;
     }
     .hero-desc {
@@ -154,11 +160,11 @@
     }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
-      background: var(--gold);
+      background: var(--sage);
       color: #fff;
       padding: 0.85rem 2rem;
       border: none; border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 0.9rem;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -168,14 +174,14 @@
       transition: background 0.2s, transform 0.15s;
       display: inline-block;
     }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--sage-d); transform: translateY(-1px); }
     .btn-secondary {
       background: transparent;
       color: var(--text);
       padding: 0.85rem 2rem;
       border: 1px solid var(--border);
       border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.06em;
@@ -217,19 +223,20 @@
       from { opacity: 0; transform: translateX(-20px); }
       to { opacity: 1; transform: translateX(0); }
     }
-    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--gold); line-height: 1; }
-    .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .stat-num { font-family: var(--serif); font-size: 1.6rem; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0; }
 
     /* ── SECTION SHARED ── */
     section { padding: 5rem 3rem; }
     .section-tag {
       font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.8rem;
+      color: var(--sage); margin-bottom: 0.8rem;
     }
     h2 {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
+      font-family: var(--serif);
       font-size: clamp(2rem, 4vw, 3.5rem);
-      letter-spacing: 0.05em;
+      letter-spacing: 0;
       line-height: 1;
       margin-bottom: 1rem;
     }
@@ -267,12 +274,12 @@
     .product-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
     .product-card:hover::before { transform: scaleX(1); }
     .product-badge {
-      display: inline-block; font-size: 0.65rem; letter-spacing: 0.12em;
+      display: inline-block; font-size: 0.65rem; letter-spacing: -0.02em;
       text-transform: uppercase; background: var(--gold); color: var(--bg);
       padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 1rem;
       font-weight: 700;
     }
-    .product-badge.popular { background: var(--green); }
+    .product-badge.popular { background: var(--amber); }
     .product-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
     .product-thick { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
     .product-lambda {
@@ -281,7 +288,7 @@
     }
     .product-lambda span { color: var(--gold); font-weight: 700; }
     .product-price {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
       font-size: 2rem; color: var(--text);
       margin: 1.2rem 0 0.2rem;
     }
@@ -289,19 +296,19 @@
     .btn-inquiry {
       width: 100%;
       background: transparent;
-      color: var(--gold);
-      border: 1px solid var(--gold-dim);
+      color: var(--sage);
+      border: 1px solid var(--sage-l);
       padding: 0.7rem;
       border-radius: 2px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
     }
-    .btn-inquiry:hover { background: var(--gold); color: #fff; }
+    .btn-inquiry:hover { background: var(--sage); color: #fff; }
 
     /* ── KALKULATOR ── */
     #kalkulator { background: var(--bg); }
@@ -322,7 +329,7 @@
     label {
       display: block;
       font-size: 0.78rem;
-      letter-spacing: 0.1em;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       color: var(--text-muted);
       margin-bottom: 0.5rem;
@@ -333,7 +340,7 @@
       border: 1px solid var(--border);
       border-radius: 2px;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 1rem;
       padding: 0.75rem 1rem;
       transition: border-color 0.2s;
@@ -341,7 +348,7 @@
     }
     select:focus, input[type="number"]:focus {
       outline: none;
-      border-color: var(--gold);
+      border-color: var(--sage);
     }
     select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a876e' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
 
@@ -349,19 +356,19 @@
 
     .btn-calc {
       width: 100%;
-      background: var(--gold);
+      background: var(--amber);
       color: #fff;
       border: none;
       padding: 1rem;
       border-radius: 2px;
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
       font-size: 1.3rem;
-      letter-spacing: 0.1em;
+      letter-spacing: -0.01em;
       cursor: pointer;
       transition: background 0.2s, transform 0.15s;
       margin-top: 0.5rem;
     }
-    .btn-calc:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-calc:hover { background: var(--amber-d); transform: translateY(-1px); }
 
     /* wyniki */
     .calc-results {
@@ -372,9 +379,9 @@
       position: sticky; top: 6rem;
     }
     .results-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem; letter-spacing: 0.08em;
-      color: var(--text-muted);
+      font-family: var(--serif);
+      font-size: 1.5rem; letter-spacing: -0.01em;
+      color: var(--ash);
       margin-bottom: 2rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--border);
@@ -388,7 +395,7 @@
     .result-label { font-size: 0.85rem; color: var(--text-muted); }
     .result-value { font-weight: 700; font-size: 1rem; color: var(--text); }
     .result-value.highlight {
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
       font-size: 1.6rem;
       color: var(--gold);
     }
@@ -399,24 +406,24 @@
       padding: 0.8rem;
       background: var(--surface2);
       border-radius: 2px;
-      border-left: 2px solid var(--gold-dim);
+      border-left: 2px solid var(--amber);
     }
     .btn-quote {
       width: 100%;
-      background: var(--gold);
+      background: var(--amber);
       color: #fff;
       border: none;
       padding: 1rem;
       border-radius: 2px;
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
       font-size: 1.2rem;
-      letter-spacing: 0.1em;
+      letter-spacing: -0.01em;
       cursor: pointer;
       margin-top: 1.5rem;
       transition: background 0.2s;
       display: none;
     }
-    .btn-quote:hover { background: var(--gold-light); }
+    .btn-quote:hover { background: var(--amber-d); }
     .results-empty {
       text-align: center;
       padding: 3rem 1rem;
@@ -438,9 +445,9 @@
       color: var(--text-muted);
     }
     .roof-tile svg { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; }
-    .roof-tile span { font-size: 0.75rem; letter-spacing: 0.05em; }
+    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; }
     .roof-tile:hover { border-color: var(--gold-dim); color: var(--gold); }
-    .roof-tile.active { border-color: var(--gold); background: rgba(160,120,40,0.06); color: var(--gold); }
+    .roof-tile.active { border-color: var(--gold); background: rgba(200,133,10,0.06); color: var(--gold); }
 
     /* ── ANGLE SLIDER ── */
     .angle-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
@@ -462,8 +469,8 @@
       padding: 1.2rem 1.4rem;
       margin: 1.4rem 0 0.5rem;
     }
-    .result-total-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .result-total-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--gold); line-height: 1; }
+    .result-total-label { font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .result-total-value { font-family: var(--serif); font-size: 2.4rem; color: var(--amber); line-height: 1; }
     .result-total-vat { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
 
     /* ── DIAGRAM DACHU ── */
@@ -475,7 +482,7 @@
       padding: 1.2rem;
       display: flex; flex-direction: column; align-items: center;
     }
-    .roof-diagram-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+    .roof-diagram-title { font-size: 0.72rem; letter-spacing: -0.01em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
 
     /* ── SOCIAL PROOF (ukryte – aktywować po zebraniu opinii) ── */
     .reviews-grid {
@@ -504,11 +511,11 @@
     .stats-bar {
       display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 1rem; margin-top: 3rem;
-      background: var(--gold);
+      background: var(--sage);
       border-radius: 4px; padding: 2rem;
     }
     .stat-item { text-align: center; }
-    .stat-big { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: #fff; line-height: 1; }
+    .stat-big { font-family: var(--serif); font-size: 2.2rem; color: #fff; line-height: 1; }
     .stat-desc { font-size: 0.75rem; color: rgba(255,255,255,0.8); margin-top: 0.3rem; }
     @media (max-width: 600px) {
       .stats-bar { grid-template-columns: 1fr 1fr; }
@@ -538,7 +545,7 @@
       font-size: 2.8rem;
     }
     .blog-body { padding: 1.4rem; }
-    .blog-cat { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .blog-cat { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.5rem; }
     .blog-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; line-height: 1.45; }
     .blog-date { font-size: 0.72rem; color: var(--text-muted); }
 
@@ -569,7 +576,7 @@
       background: var(--surface);
       border: none; border-bottom: 1px solid var(--border);
       color: var(--text-muted);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 0.82rem; letter-spacing: 0.06em;
       padding: 0.9rem 1.5rem;
       cursor: pointer; width: 100%;
@@ -582,14 +589,14 @@
       padding: 2.5rem;
     }
     .article-content h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem; letter-spacing: 0.04em;
+      font-family: var(--serif);
+      font-size: 2rem; letter-spacing: -0.02em;
       line-height: 1.1; margin-bottom: 1.2rem;
       color: var(--text);
     }
     .article-content h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem; letter-spacing: 0.04em;
+      font-family: var(--serif);
+      font-size: 1.3rem; letter-spacing: -0.02em;
       margin: 2rem 0 0.6rem;
       color: var(--text);
     }
@@ -605,15 +612,15 @@
     }
     .article-content strong { color: var(--text); }
     .article-meta {
-      font-size: 0.75rem; color: var(--gold);
-      letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.75rem; color: var(--sage);
+      letter-spacing: -0.01em; text-transform: uppercase;
       margin-bottom: 1.5rem;
       padding-bottom: 1.2rem;
       border-bottom: 1px solid var(--border);
     }
     .article-highlight {
       background: var(--surface2);
-      border-left: 3px solid var(--gold);
+      border-left: 3px solid var(--amber);
       padding: 1rem 1.2rem;
       border-radius: 2px;
       margin: 1.2rem 0;
@@ -646,8 +653,8 @@
       margin-top: 2rem;
     }
     .contact-info h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem; letter-spacing: 0.08em;
+      font-family: var(--serif);
+      font-size: 1.4rem; letter-spacing: -0.01em;
       margin-bottom: 1rem;
     }
     .contact-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
@@ -672,7 +679,7 @@
       border: 1px solid var(--border);
       border-radius: 2px;
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--sans);
       font-size: 0.95rem;
       padding: 0.75rem 1rem;
       transition: border-color 0.2s;
@@ -683,21 +690,33 @@
     .contact-form textarea { min-height: 120px; }
     .btn-send {
       width: 100%;
-      background: var(--gold);
+      background: var(--amber);
       color: #fff;
       border: none;
       padding: 1rem;
       border-radius: 2px;
-      font-family: 'Bebas Neue', sans-serif;
+      font-family: var(--serif);
       font-size: 1.2rem;
-      letter-spacing: 0.1em;
+      letter-spacing: -0.01em;
       cursor: pointer;
       margin-top: 0.5rem;
       transition: background 0.2s;
     }
-    .btn-send:hover { background: var(--gold-light); }
+    .btn-send:hover { background: var(--amber-d); }
+    .btn-send:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
     /* ── SUCCESS MESSAGE ── */
+    .error-msg {
+      display: none;
+      background: rgba(192,57,43,0.08);
+      border: 1px solid var(--red);
+      border-radius: 2px;
+      padding: 1rem;
+      color: var(--red);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
     .success-msg {
       display: none;
       background: rgba(76,175,125,0.1);
@@ -712,19 +731,18 @@
 
     /* ── FOOTER ── */
     footer {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
+      background: var(--charcoal);
       padding: 2rem 3rem;
       display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 1rem;
     }
     .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem; letter-spacing: 0.1em;
+      font-family: var(--serif);
+      font-size: 1.3rem; letter-spacing: -0.01em;
       color: var(--gold);
     }
-    .footer-logo span { color: var(--text-muted); }
-    footer p { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-logo span { color: rgba(255,255,255,0.5); }
+    footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
 
     /* ── SCROLL ANIMATION ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -783,7 +801,7 @@
     /* ── TELEFON (max 480px) ── */
     @media (max-width: 480px) {
       nav { padding: 0.9rem 1rem; }
-      .nav-logo { font-size: 1.2rem; }
+      .nav-logo { font-size: 1.05rem; }
 
       h1 { font-size: 2.8rem; }
       h2 { font-size: 2rem; }
@@ -856,27 +874,27 @@
     <div class="hero-visual">
       <svg class="roof-icon" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Dach główny -->
-        <polygon points="170,40 310,180 30,180" fill="none" stroke="#2e2c24" stroke-width="1.5"/>
-        <polygon points="170,40 310,180 30,180" fill="rgba(200,168,75,0.04)"/>
+        <polygon points="170,40 310,180 30,180" fill="none" stroke="#A86D06" stroke-width="1.5"/>
+        <polygon points="170,40 310,180 30,180" fill="rgba(200,133,10,0.04)"/>
         <!-- Linie krokwi -->
-        <line x1="170" y1="40" x2="100" y2="180" stroke="#2e2c24" stroke-width="1"/>
-        <line x1="170" y1="40" x2="240" y2="180" stroke="#2e2c24" stroke-width="1"/>
-        <line x1="170" y1="40" x2="170" y2="180" stroke="#2e2c24" stroke-width="1"/>
+        <line x1="170" y1="40" x2="100" y2="180" stroke="#A86D06" stroke-width="1"/>
+        <line x1="170" y1="40" x2="240" y2="180" stroke="#A86D06" stroke-width="1"/>
+        <line x1="170" y1="40" x2="170" y2="180" stroke="#A86D06" stroke-width="1"/>
         <!-- Warstwa PIR – podświetlona -->
-        <polygon points="170,55 295,178 45,178" fill="rgba(200,168,75,0.12)" stroke="#c8a84b" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <polygon points="170,55 295,178 45,178" fill="rgba(200,133,10,0.12)" stroke="#4A7060" stroke-width="1.5" stroke-dasharray="6,3"/>
         <!-- Opis warstwy -->
-        <text x="170" y="130" text-anchor="middle" fill="#c8a84b" font-size="11" font-family="DM Sans, sans-serif" letter-spacing="2">PIR / PUR</text>
-        <text x="170" y="146" text-anchor="middle" fill="#8a876e" font-size="9" font-family="DM Sans, sans-serif">izolacja nakrokwiowa</text>
+        <text x="170" y="130" text-anchor="middle" fill="#C8850A" font-size="11" font-family="var(--sans)" letter-spacing="2">PIR / PUR</text>
+        <text x="170" y="146" text-anchor="middle" fill="#8a876e" font-size="9" font-family="var(--sans)">izolacja nakrokwiowa</text>
         <!-- Ściana -->
-        <rect x="30" y="180" width="280" height="80" fill="none" stroke="#2e2c24" stroke-width="1.5"/>
+        <rect x="30" y="180" width="280" height="80" fill="none" stroke="#A86D06" stroke-width="1.5"/>
         <!-- Okno -->
-        <rect x="90" y="200" width="50" height="40" fill="rgba(200,168,75,0.05)" stroke="#2e2c24" stroke-width="1"/>
-        <rect x="200" y="200" width="50" height="40" fill="rgba(200,168,75,0.05)" stroke="#2e2c24" stroke-width="1"/>
+        <rect x="90" y="200" width="50" height="40" fill="rgba(200,133,10,0.05)" stroke="#A86D06" stroke-width="1"/>
+        <rect x="200" y="200" width="50" height="40" fill="rgba(200,133,10,0.05)" stroke="#A86D06" stroke-width="1"/>
         <!-- Drzwi -->
-        <rect x="145" y="220" width="50" height="40" fill="rgba(200,168,75,0.03)" stroke="#2e2c24" stroke-width="1"/>
+        <rect x="145" y="220" width="50" height="40" fill="rgba(200,133,10,0.03)" stroke="#A86D06" stroke-width="1"/>
         <!-- Dekoracyjne koło -->
-        <circle cx="170" cy="170" r="130" stroke="rgba(200,168,75,0.06)" stroke-width="1" stroke-dasharray="4,8"/>
-        <circle cx="170" cy="170" r="155" stroke="rgba(200,168,75,0.03)" stroke-width="1" stroke-dasharray="2,12"/>
+        <circle cx="170" cy="170" r="130" stroke="rgba(200,133,10,0.06)" stroke-width="1" stroke-dasharray="4,8"/>
+        <circle cx="170" cy="170" r="155" stroke="rgba(200,133,10,0.03)" stroke-width="1" stroke-dasharray="2,12"/>
       </svg>
       <div class="hero-stats">
         <div class="stat-card">
@@ -1016,13 +1034,13 @@
         <svg id="roofSvg" viewBox="0 0 300 160" width="100%" style="max-width:300px">
           <defs>
             <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="8" stroke="#a07828" stroke-width="1" opacity="0.3"/>
+              <line x1="0" y1="0" x2="0" y2="8" stroke="#4A7060" stroke-width="1" opacity="0.3"/>
             </pattern>
           </defs>
           <polygon id="roofPolyFill" points="150,25 275,125 25,125" fill="url(#hatch)"/>
-          <polygon id="roofPolyStroke" points="150,25 275,125 25,125" fill="none" stroke="#a07828" stroke-width="2"/>
-          <rect x="25" y="125" width="250" height="20" fill="rgba(160,120,40,0.06)" stroke="#c4a96a" stroke-width="1"/>
-          <text id="roofLabel" x="150" y="90" text-anchor="middle" fill="#6b6550" font-size="11" font-family="DM Sans,sans-serif">warstwa PIR</text>
+          <polygon id="roofPolyStroke" points="150,25 275,125 25,125" fill="none" stroke="#4A7060" stroke-width="2"/>
+          <rect x="25" y="125" width="250" height="20" fill="rgba(200,133,10,0.06)" stroke="#D4970E" stroke-width="1"/>
+          <text id="roofLabel" x="150" y="90" text-anchor="middle" fill="#6B7280" font-size="11" font-family="var(--sans)">warstwa PIR</text>
         </svg>
       </div>
     </div>
@@ -1243,14 +1261,14 @@
       <div class="contact-detail">
         <div class="contact-detail-icon">📞</div>
         <div class="contact-detail-text">
-          <strong>+48 000 000 000</strong>
+          <strong>+48 574 455 271</strong>
           Pon–Pt, 8:00–17:00
         </div>
       </div>
       <div class="contact-detail">
         <div class="contact-detail-icon">✉️</div>
         <div class="contact-detail-text">
-          <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="45272c30372a052b242e372a2e322c2a322a6b3529">[email&#160;protected]</a></strong>
+          <strong>nakrokwiowo@gmail.com</strong>
           Odpowiadamy w ciągu 24h
         </div>
       </div>
@@ -1281,6 +1299,7 @@
       </div>
       <button class="btn-send" onclick="sendForm()">WYŚLIJ ZAPYTANIE</button>
       <div class="success-msg" id="successMsg">✅ Dziękujemy! Odezwiemy się w ciągu 24 godzin.</div>
+      <div class="error-msg" id="errorMsg">⚠️ Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na nakrokwiowo@gmail.com</div>
     </div>
   </div>
 </section>
@@ -1624,7 +1643,7 @@
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', x1); line.setAttribute('y1', y1);
       line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', '#a07828');
+      line.setAttribute('stroke', '#4A7060');
       line.setAttribute('stroke-width', '1.5');
       line.setAttribute('stroke-dasharray', '4,3');
       line.setAttribute('opacity', '0.6');
@@ -1743,19 +1762,54 @@
   // ══════════════════════════════════════════════════
   // FORMULARZ KONTAKTOWY
   // ══════════════════════════════════════════════════
-  function sendForm() {
+  async function sendForm() {
     const name    = document.getElementById('contactName').value.trim();
     const contact = document.getElementById('contactContact').value.trim();
+    const product = document.getElementById('contactProduct').value.trim();
+    const msg     = document.getElementById('contactMsg').value.trim();
+
     if (!name || !contact) {
-      alert('Proszę podać imię i dane kontaktowe.');
+      document.getElementById('contactName').style.borderColor    = name    ? '' : '#c0392b';
+      document.getElementById('contactContact').style.borderColor = contact ? '' : '#c0392b';
       return;
     }
-    // Tu w przyszłości: fetch('/api/contact', { method: 'POST', body: JSON.stringify({...}) })
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('contactName').value    = '';
-    document.getElementById('contactContact').value = '';
-    document.getElementById('contactProduct').value = '';
-    document.getElementById('contactMsg').value     = '';
+
+    const btn = document.querySelector('.btn-send');
+    btn.textContent = 'WYSYŁANIE...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/xwvzyevk', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          imie_nazwisko: name,
+          kontakt:       contact,
+          produkt:       product || 'Nie podano',
+          wiadomosc:     msg     || 'Brak wiadomości',
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('successMsg').style.display = 'block';
+        document.getElementById('contactName').value    = '';
+        document.getElementById('contactContact').value = '';
+        document.getElementById('contactProduct').value = '';
+        document.getElementById('contactMsg').value     = '';
+        btn.textContent = 'WYŚLIJ ZAPYTANIE';
+        btn.disabled = false;
+        // Scroll do komunikatu sukcesu
+        document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || 'Błąd serwera');
+      }
+    } catch (err) {
+      btn.textContent = 'WYŚLIJ ZAPYTANIE';
+      btn.disabled = false;
+      document.getElementById('errorMsg').style.display = 'block';
+      console.error('Formspree error:', err);
+    }
   }
 </script>
 </body>
