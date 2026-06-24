@@ -3,7 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nakrokwiowo – Izolacja PIR Nakrokwiowa</title>
+
+  <!-- ══ SEO ══ -->
+  <title>Nakrokwiowo.pl – Izolacja nakrokwiowa PIR Recticel | Wycena online</title>
+  <meta name="description" content="Izolacja nakrokwiowa PIR Recticel – płyty Euroroof i Powerroof. Wylicz koszt ocieplenia dachu w 30 sekund naszym kalkulatorem i zamów bezpłatną wycenę. Zero mostków termicznych, λ 0,022."/>
+  <meta name="keywords" content="izolacja nakrokwiowa, PIR, Recticel, Euroroof, Powerroof, ocieplenie dachu, izolacja dachu, płyty PIR, kalkulator izolacji"/>
+  <meta name="author" content="nakrokwiowo.pl"/>
+  <link rel="canonical" href="https://nakrokwiowo.pl/"/>
+
+  <!-- ══ OPEN GRAPH (Facebook, Messenger, WhatsApp, LinkedIn) ══ -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://nakrokwiowo.pl/"/>
+  <meta property="og:title" content="Nakrokwiowo.pl – Izolacja nakrokwiowa PIR Recticel"/>
+  <meta property="og:description" content="Wylicz koszt ocieplenia dachu w 30 sekund i zamów bezpłatną wycenę. Płyty PIR Recticel – zero mostków termicznych."/>
+  <meta property="og:image" content="https://nakrokwiowo.pl/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale" content="pl_PL"/>
+  <meta property="og:site_name" content="Nakrokwiowo.pl"/>
+
+  <!-- ══ TWITTER CARD ══ -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Nakrokwiowo.pl – Izolacja nakrokwiowa PIR Recticel"/>
+  <meta name="twitter:description" content="Wylicz koszt ocieplenia dachu w 30 sekund i zamów bezpłatną wycenę."/>
+  <meta name="twitter:image" content="https://nakrokwiowo.pl/og-image.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -645,6 +668,98 @@
     }
 
     /* ── KONTAKT ── */
+
+    /* ── FAQ / Q&A ── */
+    #faq { background: var(--surface); }
+    .faq-intro {
+      max-width: 760px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .faq-intro h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .faq-intro p {
+      font-size: 1rem;
+      color: var(--ash);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .faq-intro p:last-child { margin-bottom: 0; }
+    .faq-intro strong { color: var(--charcoal); font-weight: 600; }
+    .faq-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .faq-col-title {
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage); font-weight: 600; margin-bottom: 1rem;
+      padding-bottom: 0.5rem; border-bottom: 1px solid var(--warm);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--warm);
+    }
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 1.1rem 0;
+      font-family: var(--sans);
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+    .faq-q:hover { color: var(--sage); }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .faq-icon::before, .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--amber);
+      border-radius: 1px;
+      transition: opacity 0.3s;
+    }
+    .faq-icon::before {
+      top: 9px; left: 2px; right: 2px; height: 2px;
+    }
+    .faq-icon::after {
+      left: 9px; top: 2px; bottom: 2px; width: 2px;
+    }
+    .faq-item.open .faq-icon::after { opacity: 0; }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+    .faq-a-inner {
+      padding: 0 0 1.1rem;
+      font-size: 0.92rem;
+      color: var(--ash);
+      line-height: 1.65;
+    }
+    .faq-item.open .faq-a { max-height: 400px; }
+    @media (max-width: 800px) {
+      .faq-cols { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
     #kontakt { background: var(--bg); }
     .contact-wrapper {
       display: grid;
@@ -854,6 +969,7 @@
     <li><a href="#produkty">Produkty</a></li>
     <li><a href="#kalkulator">Kalkulator</a></li>
     <li><a href="#blog">Blog</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#kontakt" class="nav-cta">Zapytaj o wycenę</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -866,6 +982,7 @@
   <a href="#produkty" onclick="closeMenu()">Produkty</a>
   <a href="#kalkulator" onclick="closeMenu()">Kalkulator</a>
   <a href="#blog" onclick="closeMenu()">Blog</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
   <a href="#kontakt" onclick="closeMenu()">Zapytaj o wycenę →</a>
 </div>
 
@@ -918,8 +1035,7 @@
       <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-price">64 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Euroroof 100mm')">Zapytaj o wycenę →</button>
     </div>
     <div class="product-card">
@@ -928,8 +1044,7 @@
       <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-price">74 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Euroroof 120mm')">Zapytaj o wycenę →</button>
     </div>
     <div class="product-card">
@@ -938,8 +1053,7 @@
       <div class="product-thick">140 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>23,04 m²</span></div>
-      <div class="product-price">85 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Euroroof 140mm')">Zapytaj o wycenę →</button>
     </div>
     <div class="product-card">
@@ -948,8 +1062,7 @@
       <div class="product-thick">160 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>20,16 m²</span></div>
-      <div class="product-price">96 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Euroroof 160mm')">Zapytaj o wycenę →</button>
     </div>
     <!-- POWERROOF -->
@@ -959,8 +1072,7 @@
       <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-price">76 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Powerroof 100mm')">Zapytaj o wycenę →</button>
     </div>
     <div class="product-card">
@@ -969,8 +1081,7 @@
       <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
       <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
       <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-price">86 <small>zł</small></div>
-      <div class="product-price-unit">za m² (netto)</div>
+      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
       <button class="btn-inquiry" onclick="scrollToContact('Powerroof 120mm')">Zapytaj o wycenę →</button>
     </div>
   </div>
@@ -1031,14 +1142,14 @@
         <label>Grubość izolacji PIR</label>
         <select id="thickness">
           <optgroup label="Recticel Euroroof (system z membraną)">
-            <option value="euroroof-100">Euroroof 100mm – 64 zł/m²</option>
-            <option value="euroroof-120" selected>Euroroof 120mm – 74 zł/m² (popularny)</option>
-            <option value="euroroof-140">Euroroof 140mm – 85 zł/m²</option>
-            <option value="euroroof-160">Euroroof 160mm – 96 zł/m²</option>
+            <option value="euroroof-100">Euroroof 100mm</option>
+            <option value="euroroof-120" selected>Euroroof 120mm (popularny)</option>
+            <option value="euroroof-140">Euroroof 140mm</option>
+            <option value="euroroof-160">Euroroof 160mm</option>
           </optgroup>
           <optgroup label="Recticel Powerroof (bez membrany)">
-            <option value="powerroof-100">Powerroof 100mm – 76 zł/m²</option>
-            <option value="powerroof-120">Powerroof 120mm – 86 zł/m²</option>
+            <option value="powerroof-100">Powerroof 100mm</option>
+            <option value="powerroof-120">Powerroof 120mm</option>
           </optgroup>
         </select>
       </div>
@@ -1263,6 +1374,81 @@
     <button class="btn-primary" onclick="closeArticle(); scrollToContactCalc()">Zapytaj o bezpłatną wycenę →</button>
   </div>
 </div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal">
+    <div class="section-tag">Wiedza podstawowa</div>
+    <h2>NAJCZĘŚCIEJ ZADAWANE PYTANIA</h2>
+    <p class="section-sub">Wszystko co warto wiedzieć o izolacji nakrokwiowej PIR — prostym językiem.</p>
+  </div>
+
+  <div class="faq-intro reveal">
+    <h3>Czym jest izolacja nakrokwiowa PIR?</h3>
+    <p>Izolacja nakrokwiowa to nowoczesny sposób ocieplenia dachu, w którym płyty termoizolacyjne układa się <strong>na krokwiach</strong> — od zewnątrz, pod pokryciem dachowym — zamiast między nimi. Dzięki temu powstaje ciągła, szczelna warstwa ciepła bez przerw i mostków termicznych.</p>
+    <p>PIR to jeden z najskuteczniejszych materiałów izolacyjnych dostępnych na rynku. Przy tej samej grubości izoluje znacznie lepiej niż tradycyjna wełna — co oznacza <strong>cieplejszy dom, niższe rachunki i więcej miejsca na poddaszu</strong>.</p>
+  </div>
+
+  <div class="faq-cols reveal">
+    <div class="faq-col">
+      <div class="faq-col-title">Podstawy PIR</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czym różni się izolacja nakrokwiowa od tradycyjnej?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">W tradycyjnej izolacji materiał układa się między krokwiami — przez co na każdej krokwi powstaje mostek termiczny (miejsce ucieczki ciepła). Izolacja nakrokwiowa układana jest na krokwiach, tworząc ciągłą warstwę bez przerw. Efekt: równomierne ciepło na całym dachu i brak miejsc, którędy ucieka energia.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Dlaczego PIR jest lepszy od wełny mineralnej?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">PIR ma współczynnik przewodzenia ciepła λ = 0,022 W/mK — to około dwa razy lepiej niż typowa wełna mineralna. W praktyce płyta PIR o połowę cieńsza daje taką samą izolacyjność jak grubsza warstwa wełny. PIR nie osiada z czasem, nie chłonie wilgoci i zachowuje parametry przez dziesięciolecia.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czy nadaje się do starych dachów?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Tak. Izolację nakrokwiową można zastosować zarówno w nowych budynkach, jak i przy remoncie istniejącego dachu. Przy remoncie nie trzeba demontować poddasza od wewnątrz — całość montuje się od zewnątrz, co jest dużym ułatwieniem dla mieszkańców.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czy PIR jest bezpieczny i trwały?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Tak. Płyty Recticel zachowują parametry izolacyjne przez ponad 30 lat. Produkty występują w różnych klasach reakcji na ogień — Powerroof (okładzina aluminiowa) ma podwyższoną klasę D-s2-d0, a Euroroof klasę F. Po zamontowaniu płyty są całkowicie zakryte pokryciem dachowym.</div></div>
+      </div>
+    </div>
+
+    <div class="faq-col">
+      <div class="faq-col-title">Pytania praktyczne</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Jaką grubość PIR wybrać?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Zależy od przeznaczenia budynku i wymagań cieplnych. Najczęściej wybierane grubości to 100–160 mm, a dla domu energooszczędnego zwykle 120–160 mm. Najprościej skorzystać z naszego kalkulatora — po podaniu wymiarów dachu podpowie odpowiedni produkt i pokaże koszt.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Ile kosztuje izolacja nakrokwiowa?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Koszt zależy od powierzchni dachu, wybranej grubości płyt i lokalizacji (koszt dostawy). Dlatego nasz kalkulator wylicza orientacyjny koszt w 30 sekund na podstawie Twoich danych. Po wypełnieniu formularza przygotujemy dokładną wycenę w ciągu 24 godzin.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Jak wygląda montaż płyt?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Płyty układa się na krokwiach od dołu dachu (od okapu) ku kalenicy, naprzemiennie „na mijankę", frezem pióro-wpust łączącym sąsiednie płyty. Mocuje się je specjalnymi wkrętami pod kątem prostym. Montaż jest szybki — izolację i pokrycie dachowe może wykonać ta sama ekipa.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czy potrzebuję dodatkowych materiałów?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Do kompletnego montażu zwykle potrzebne są: membrana wstępnego krycia (Rectivent), taśma do uszczelnienia połączeń (Rectitape) oraz wkręty mocujące (Rectifix). Wersje MAX płyt mają już zintegrowaną membranę. W wycenie pomożemy dobrać wszystkie potrzebne elementy.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Jak długo trwa dostawa?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Czas dostawy ustalamy indywidualnie przy wycenie — zależy od dostępności produktu i lokalizacji. Produkty magazynowe (najpopularniejsze grubości) są dostępne szybciej. Szczegóły potwierdzamy przy składaniu zamówienia.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czy pomagacie znaleźć ekipę montażową?<span class="faq-icon"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Budujemy sieć sprawdzonych ekip dekarskich, które znają produkty Recticel. Jeśli szukasz wykonawcy — skontaktuj się z nami, pomożemy znaleźć kogoś w Twoim regionie lub doradzimy, na co zwrócić uwagę przy wyborze ekipy.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- KONTAKT -->
 <section id="kontakt">
@@ -1591,6 +1777,12 @@
   // ══════════════════════════════════════════════════
   // SCROLL REVEAL
   // ══════════════════════════════════════════════════
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
