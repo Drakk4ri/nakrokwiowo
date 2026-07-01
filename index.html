@@ -306,11 +306,9 @@
     /* ── KALKULATOR ── */
     #kalkulator { background: var(--bg); }
     .calc-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-      margin-top: 2rem;
+      display: block;
+      max-width: 680px;
+      margin: 2rem auto 0;
     }
     .calc-form {
       background: var(--surface);
@@ -369,7 +367,6 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       padding: 2.5rem;
-      position: sticky; top: 6rem;
     }
     .results-title {
       font-family: var(--serif);
@@ -949,6 +946,125 @@
       footer { padding: 1.5rem 1rem; gap: 0.5rem; }
       footer p { font-size: 0.72rem; }
     }
+    /* ── KLAUZULE KALKULATORA ── */
+    .result-clause-a {
+      margin: 0.8rem 0 0.5rem;
+      padding: 0.7rem 0.9rem;
+      background: var(--amber-bg);
+      border-left: 3px solid var(--amber);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      color: var(--ash);
+      line-height: 1.5;
+    }
+    .result-clause-details {
+      margin: 0.4rem 0 0.8rem;
+      font-size: 0.75rem;
+    }
+    .result-clause-details summary {
+      cursor: pointer;
+      color: var(--ash);
+      font-size: 0.75rem;
+      padding: 0.3rem 0;
+      user-select: none;
+    }
+    .result-clause-details summary:hover { color: var(--sage); }
+    .result-clause-inner {
+      margin-top: 0.6rem;
+      padding: 0.8rem;
+      background: var(--paper);
+      border-radius: 6px;
+      color: var(--ash);
+      line-height: 1.55;
+    }
+    .result-clause-inner p { margin-bottom: 0.6rem; }
+    .result-clause-inner p:last-child { margin-bottom: 0; }
+
+    /* ── FAQ FEARS (obawy) ── */
+    .faq-fears-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 3rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px) {
+      .faq-fears-grid { grid-template-columns: 1fr; }
+    }
+    .faq-fears-col { display: flex; flex-direction: column; }
+    .faq-fear-item {
+      border-bottom: 1px solid var(--warm);
+      padding: 0.2rem 0;
+    }
+    .faq-fear-q {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 1rem 0;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1.45;
+      transition: color 0.2s;
+    }
+    .faq-fear-q:hover { color: var(--sage); }
+    .faq-bubble {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .faq-fear-q span:nth-child(2) { flex: 1; }
+    .faq-fear-q .faq-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid var(--amber);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      font-size: 1.1rem;
+      transition: transform 0.25s var(--ease);
+      margin-top: 0.15rem;
+    }
+    .faq-fear-q .faq-icon::after { content: '+'; }
+    .faq-fear-item.open .faq-fear-q .faq-icon {
+      transform: rotate(45deg);
+    }
+    .faq-fear-item.open .faq-fear-q { color: var(--sage); }
+    .faq-fear-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s var(--ease);
+    }
+    .faq-fear-item.open .faq-fear-a { max-height: 400px; }
+    .faq-fear-inner {
+      padding: 0 0 1.2rem 2rem;
+      color: var(--graphite);
+      line-height: 1.7;
+      font-size: 0.93rem;
+    }
+    .faq-fear-inner a { color: var(--sage); }
+    .faq-fear-inner strong { color: var(--charcoal); }
+
+    /* ── PRODUCTS CTA ── */
+    .products-cta {
+      text-align: center;
+      padding: 2.5rem 1rem 0.5rem;
+    }
+    .products-cta p {
+      font-size: 1.05rem;
+      color: var(--graphite);
+      margin-bottom: 1rem;
+    }
+
+    /* ── KALKULATOR pełna szerokość ── */
+    #calcResultsBelow .calc-results {
+      position: static;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
   </style>
 </head>
 <body>
@@ -1020,79 +1136,12 @@
   </div>
 </section>
 
-<!-- PRODUKTY -->
-<section id="produkty">
-  <div class="reveal">
-    <div class="section-tag">Nasza oferta</div>
-    <h2>PŁYTY PIR</h2>
-    <p class="section-sub">Najlepsza izolacja nakrokwiowa dostępna na rynku. Wybierz grubość dopasowaną do Twoich potrzeb.</p>
-  </div>
-  <div class="products-grid reveal">
-    <!-- EUROROOF -->
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Euroroof 100mm')">Zapytaj o wycenę →</button>
-    </div>
-    <div class="product-card">
-      <div class="product-badge popular">Euroroof · popularny</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Euroroof 120mm')">Zapytaj o wycenę →</button>
-    </div>
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">140 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>23,04 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Euroroof 140mm')">Zapytaj o wycenę →</button>
-    </div>
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">160 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>20,16 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Euroroof 160mm')">Zapytaj o wycenę →</button>
-    </div>
-    <!-- POWERROOF -->
-    <div class="product-card">
-      <div class="product-badge">Powerroof</div>
-      <div class="product-name">Recticel Powerroof</div>
-      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Powerroof 100mm')">Zapytaj o wycenę →</button>
-    </div>
-    <div class="product-card">
-      <div class="product-badge popular">Powerroof · popularny</div>
-      <div class="product-name">Recticel Powerroof</div>
-      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
-      <button class="btn-inquiry" onclick="scrollToContact('Powerroof 120mm')">Zapytaj o wycenę →</button>
-    </div>
-  </div>
-</section>
-
 <!-- KALKULATOR -->
 <section id="kalkulator">
   <div class="reveal">
     <div class="section-tag">Narzędzie</div>
     <h2>KALKULATOR IZOLACJI</h2>
-    <p class="section-sub">Podaj wymiary swojego dachu, a my wyliczymy orientacyjną ilość materiału, koszt dostawy i montażu.</p>
+    <p class="section-sub">Podaj wymiary swojego dachu — wyliczamy orientacyjny koszt materiału i dostawy w 30 sekund.</p>
   </div>
   <div class="calc-wrapper reveal">
     <!-- FORMULARZ -->
@@ -1154,27 +1203,21 @@
         </select>
       </div>
 
-      <button class="btn-calc" onclick="calculate()">OBLICZ KOSZT IZOLACJI</button>
-
-      <!-- Mini diagram -->
-      <div class="roof-diagram" id="roofDiagram">
-        <div class="roof-diagram-title" id="roofDiagramTitle">Podgląd – dach dwuspadowy · 30°</div>
-        <svg id="roofSvg" viewBox="0 0 300 160" width="100%" style="max-width:300px">
-          <defs>
-            <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="8" stroke="#4A7060" stroke-width="1" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <polygon id="roofPolyFill" points="150,25 275,125 25,125" fill="url(#hatch)"/>
-          <polygon id="roofPolyStroke" points="150,25 275,125 25,125" fill="none" stroke="#4A7060" stroke-width="2"/>
-          <rect x="25" y="125" width="250" height="20" fill="rgba(200,133,10,0.06)" stroke="#D4970E" stroke-width="1"/>
-          <text id="roofLabel" x="150" y="90" text-anchor="middle" fill="#6B7280" font-size="11" font-family="var(--sans)">warstwa PIR</text>
-        </svg>
+      <div class="form-group" style="margin-bottom:0.5rem">
+        <label style="display:flex;align-items:center;gap:0.6rem;cursor:pointer;font-weight:500">
+          <input type="checkbox" id="addAccessories" style="width:18px;height:18px;cursor:pointer;accent-color:var(--sage)">
+          Dolicz akcesoria montażowe
+          <span style="font-weight:400;color:var(--ash);font-size:0.82rem">(Rectivent, Rectitape, Rectifix)</span>
+        </label>
       </div>
-    </div>
 
-    <!-- WYNIKI -->
-    <div class="calc-results">
+      <button class="btn-calc" onclick="calculate()">OBLICZ KOSZT IZOLACJI</button>
+    </div>
+  </div>
+
+  <!-- WYNIK - pojawia się po kliknięciu Oblicz -->
+  <div id="calcResultsBelow" style="display:none; margin-top:2rem">
+    <div class="calc-results" style="position:static; max-width:680px; margin:0 auto">
       <div class="results-title">WYNIK KALKULACJI</div>
       <div id="resultsEmpty" class="results-empty">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1204,16 +1247,33 @@
         <!-- Kosztorys -->
         <div class="results-section-label" style="margin-top:1.2rem">Kosztorys orientacyjny</div>
         <div class="result-row">
-          <span class="result-label">Materiał PIR</span>
+          <span class="result-label">Materiał PIR (z marżą)</span>
           <span class="result-value" id="resMaterialCost">–</span>
         </div>
         <div class="result-row">
-          <span class="result-label">Dostawa</span>
+          <span class="result-label">Transport orientacyjny</span>
           <span class="result-value" id="resDelivery">–</span>
         </div>
-        <div class="result-row">
-          <span class="result-label">Montaż</span>
-          <span class="result-value" id="resMontaz">–</span>
+
+        <!-- Akcesoria – widoczne gdy checkbox zaznaczony -->
+        <div id="resAccessoriesSection" style="display:none">
+          <div class="results-section-label" style="margin-top:1rem">Akcesoria montażowe</div>
+          <div class="result-row">
+            <span class="result-label">Rectifix (wkręty)</span>
+            <span class="result-value" id="resRectifix">–</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Rectitape (taśma)</span>
+            <span class="result-value" id="resRectitape">–</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Rectivent (membrana)</span>
+            <span class="result-value" id="resRectivent">–</span>
+          </div>
+          <div class="result-row" style="margin-top:0.4rem;border-top:1px dashed var(--warm);padding-top:0.4rem">
+            <span class="result-label">Szacunkowy koszt akcesoriów</span>
+            <span class="result-value" id="resAccessoriesCost">–</span>
+          </div>
         </div>
 
         <!-- Suma -->
@@ -1223,12 +1283,95 @@
           <div class="result-total-vat" id="resTotalBrutto">– brutto (z VAT 23%)</div>
         </div>
 
-        <div class="result-note">
-          ⚠️ Wynik jest orientacyjny. Ceny dostawy i montażu zależą od lokalizacji i złożoności dachu. Skontaktuj się z nami po dokładną wycenę.
+        <!-- Klauzula A – zawsze widoczna -->
+        <div class="result-clause-a">
+          Powyższa kalkulacja ma charakter wyłącznie orientacyjny i informacyjny. Nie stanowi oferty w rozumieniu art. 66 i nast. Kodeksu cywilnego. Wynik został wyliczony na podstawie danych podanych przez użytkownika i służy wyłącznie wstępnemu oszacowaniu kosztów. Wiążąca wycena zostanie przygotowana indywidualnie po kontakcie przez formularz.
         </div>
+
+        <!-- Klauzule B-E – rozwijane -->
+        <details class="result-clause-details">
+          <summary>ℹ️ Informacje prawne</summary>
+          <div class="result-clause-inner">
+            <p><strong>Odpowiedzialność za dane wejściowe</strong><br>
+            Wynik kalkulacji zależy w całości od danych wprowadzonych przez użytkownika (wymiary dachu, kąt nachylenia, rodzaj i grubość izolacji, lokalizacja). Za poprawność i kompletność tych danych odpowiada wyłącznie osoba je podająca. Nakrokwiowo.pl nie ponosi odpowiedzialności za skutki wynikające z podania nieprawidłowych lub niepełnych informacji.</p>
+            <p><strong>Dobór materiałów montażowych</strong><br>
+            Przedstawione ilości materiałów montażowych wyliczone są dla typowej konstrukcji dachu zgodnie z ogólnymi wytycznymi producenta. Ostateczna ilość materiałów, w szczególności liczba wkrętów mocujących, powinna zostać potwierdzona przez uprawnionego projektanta lub konstruktora.</p>
+            <p><strong>Koszt transportu</strong><br>
+            Wskazany koszt transportu ma charakter orientacyjny i zależy od regionu dostawy oraz ilości zamówionego materiału. Dokładny koszt podany zostanie w wiążącej wycenie.</p>
+            <p><strong>Aktualność cen</strong><br>
+            Ceny przyjęte w kalkulatorze mają charakter orientacyjny i mogą ulec zmianie. Wiążąca cena potwierdzana jest w indywidualnej ofercie po kontakcie przez formularz.</p>
+          </div>
+        </details>
+
         <button class="btn-quote" id="btnQuote" onclick="scrollToContactCalc()">ZAMÓW DOKŁADNĄ WYCENĘ →</button>
-      </div>
+          </div>
+  </div>
+</section>
+
+<!-- PRODUKTY -->
+<section id="produkty">
+  <div class="reveal">
+    <div class="section-tag">Nasza oferta</div>
+    <h2>PŁYTY PIR</h2>
+    <p class="section-sub">Najlepsza izolacja nakrokwiowa dostępna na rynku. Wybierz grubość dopasowaną do Twoich potrzeb.</p>
+  </div>
+  <div class="products-grid reveal">
+    <!-- EUROROOF -->
+    <div class="product-card">
+      <div class="product-badge">Euroroof</div>
+      <div class="product-name">Recticel Euroroof</div>
+      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
     </div>
+    <div class="product-card">
+      <div class="product-badge popular">Euroroof · popularny</div>
+      <div class="product-name">Recticel Euroroof</div>
+      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-badge">Euroroof</div>
+      <div class="product-name">Recticel Euroroof</div>
+      <div class="product-thick">140 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>23,04 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-badge">Euroroof</div>
+      <div class="product-name">Recticel Euroroof</div>
+      <div class="product-thick">160 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>20,16 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
+    </div>
+    <!-- POWERROOF -->
+    <div class="product-card">
+      <div class="product-badge">Powerroof</div>
+      <div class="product-name">Recticel Powerroof</div>
+      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-badge popular">Powerroof · popularny</div>
+      <div class="product-name">Recticel Powerroof</div>
+      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
+      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
+      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
+      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
+    </div>
+  </div>
+
+  <!-- CTA pod siatką produktów -->
+  <div class="products-cta reveal">
+    <p>Nie wiesz który produkt wybrać?</p>
+    <a href="#kalkulator" class="btn-primary">Skorzystaj z kalkulatora →</a>
   </div>
 </section>
 
@@ -1298,6 +1441,138 @@
 </div>
 <!-- ══ KONIEC SOCIAL PROOF ══ -->
 
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal">
+    <div class="section-tag">Najczęstsze obawy</div>
+    <h2>MASZ WĄTPLIWOŚCI?</h2>
+    <p class="section-sub">Zebraliśmy najczęstsze obawy inwestorów — i odpowiadamy wprost.</p>
+  </div>
+
+  <div class="faq-fears-grid reveal">
+
+    <!-- KOLUMNA LEWA -->
+    <div class="faq-fears-col">
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Nie rozumiem po co nakrokwiowa — zwykła wełna między krokwiami nie wystarczy?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Wystarczy na papierze — ale w praktyce każda krokiew to mostek termiczny, czyli miejsce gdzie ciepło ucieka kilkanaście razy szybciej niż przez wełnę. Krokwie zajmują ok. 15–20% powierzchni dachu. Izolacja nakrokwiowa układana jest <strong>na</strong> krokwiach — jako ciągła warstwa bez przerw. Jeden dom, zero mostków.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Słyszałem że wełna mineralna jest tańsza i równie dobra</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Tańsza — tak. Równie dobra — nie do końca. PIR ma λ = 0,022 W/mK, wełna ok. 0,035–0,040. To znaczy że <strong>12 cm PIR izoluje tyle co ponad 20 cm wełny</strong>. A przede wszystkim wełna między krokwiami zawsze ma te mostki termiczne. PIR nakrokwiowy — nie ma żadnych.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Mam stary dom z lat 90. — to w ogóle da się zastosować?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Tak — i właśnie wtedy ma największy sens. Izolacja nakrokwiowa układana jest od zewnątrz, przy wymianie pokrycia dachowego. <strong>Wnętrze domu pozostaje nienaruszone</strong> — żadnych rozbiórek sufitów, żadnego chaosu na poddaszu. To idealne rozwiązanie dla remontów.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Czy PIR jest bezpieczny? Co z ogniem?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Płyty Recticel są certyfikowane i spełniają normy budowlane. Euroroof ma klasę reakcji na ogień F, Powerroof — D-s2-d0 (podwyższona klasa). Po zamontowaniu płyty są całkowicie zakryte pokryciem dachowym. Parametry utrzymują się przez ponad 30 lat bez degradacji.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Nie wiem ile centymetrów wybrać — jak mam to ocenić?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Prosta zasada: minimum 120 mm dla nowego budownictwa zgodnego z WT 2021. Dla domu energooszczędnego — 160 mm. Przy remoncie ze starszym dachem gdzie liczy się wysokość — 100 mm i tak daje ogromną poprawę. Skorzystaj z <a href="#kalkulator">kalkulatora</a> — podajesz wymiary, pokazujemy koszt dla każdej grubości.
+        </div></div>
+      </div>
+
+    </div>
+
+    <!-- KOLUMNA PRAWA -->
+    <div class="faq-fears-col">
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Czy inwestycja w PIR zwraca się czy to przepalanie pieniędzy?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Zwraca się — i to dość szybko. Przez dach ucieka nawet 30% ciepła w domu. Po ociepleniu PIR rachunki za ogrzewanie mogą spaść o 20–40%. Przy typowym domu 120–180 m² oszczędność to 2 000–5 000 zł rocznie. <strong>Zwrot inwestycji następuje zwykle po 8–12 latach</strong> — reszta okresu użytkowania dachu to czysta oszczędność.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Boję się że dekarz tego nie będzie umiał zamontować</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          To uzasadniona obawa — montaż musi być wykonany starannie. Płyty Recticel mają zamek pióro-wpust który upraszcza układanie i eliminuje szczeliny. Skontaktuj się z nami — doradzamy na co zwrócić uwagę przy wyborze ekipy i pomagamy znaleźć wykonawców którzy znają ten produkt.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Czy oprócz płyt muszę kupować jeszcze coś innego?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Do kompletnego montażu potrzebne są: membrana wstępnego krycia Rectivent, taśma uszczelniająca Rectitape i wkręty mocujące Rectifix. Nasz kalkulator wylicza ilości i szacunkowy koszt wszystkich akcesoriów — wystarczy zaznaczyć checkbox "Dolicz akcesoria montażowe".
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Nie wiem ile muszę czekać na dostawę</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Czas dostawy ustalamy indywidualnie przy wycenie — zależy od dostępności produktu i lokalizacji. Popularne grubości (120 mm, 160 mm) są dostępne szybciej. Dostawa realizowana jest bezpośrednio przez Recticel — nie przez pośredników. Szczegóły potwierdzamy w ciągu 24h od kontaktu.
+        </div></div>
+      </div>
+
+      <div class="faq-fear-item">
+        <div class="faq-fear-q" onclick="toggleFear(this)">
+          <span class="faq-bubble">💬</span>
+          <span>Gdzie znaleźć dobrego dekarza który to zna?</span>
+          <span class="faq-icon"></span>
+        </div>
+        <div class="faq-fear-a"><div class="faq-fear-inner">
+          Budujemy sieć sprawdzonych ekip dekarskich znających produkty Recticel. Jeśli szukasz wykonawcy — napisz do nas. Doradzimy na co zwrócić uwagę przy wyborze ekipy lub pomożemy znaleźć kogoś w Twoim regionie.
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- BLOG -->
 <section id="blog">
   <div class="reveal">
@@ -1363,7 +1638,6 @@
     </div>
   </div>
 </section>
-
 <!-- MODAL ARTYKUŁU -->
 <div class="article-overlay" id="articleOverlay" onclick="closeArticle()"></div>
 <div class="article-modal" id="articleModal">
@@ -1374,81 +1648,6 @@
     <button class="btn-primary" onclick="closeArticle(); scrollToContactCalc()">Zapytaj o bezpłatną wycenę →</button>
   </div>
 </div>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="reveal">
-    <div class="section-tag">Wiedza podstawowa</div>
-    <h2>NAJCZĘŚCIEJ ZADAWANE PYTANIA</h2>
-    <p class="section-sub">Wszystko co warto wiedzieć o izolacji nakrokwiowej PIR — prostym językiem.</p>
-  </div>
-
-  <div class="faq-intro reveal">
-    <h3>Czym jest izolacja nakrokwiowa PIR?</h3>
-    <p>Izolacja nakrokwiowa to nowoczesny sposób ocieplenia dachu, w którym płyty termoizolacyjne układa się <strong>na krokwiach</strong> — od zewnątrz, pod pokryciem dachowym — zamiast między nimi. Dzięki temu powstaje ciągła, szczelna warstwa ciepła bez przerw i mostków termicznych.</p>
-    <p>PIR to jeden z najskuteczniejszych materiałów izolacyjnych dostępnych na rynku. Przy tej samej grubości izoluje znacznie lepiej niż tradycyjna wełna — co oznacza <strong>cieplejszy dom, niższe rachunki i więcej miejsca na poddaszu</strong>.</p>
-  </div>
-
-  <div class="faq-cols reveal">
-    <div class="faq-col">
-      <div class="faq-col-title">Podstawy PIR</div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Czym różni się izolacja nakrokwiowa od tradycyjnej?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">W tradycyjnej izolacji materiał układa się między krokwiami — przez co na każdej krokwi powstaje mostek termiczny (miejsce ucieczki ciepła). Izolacja nakrokwiowa układana jest na krokwiach, tworząc ciągłą warstwę bez przerw. Efekt: równomierne ciepło na całym dachu i brak miejsc, którędy ucieka energia.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Dlaczego PIR jest lepszy od wełny mineralnej?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">PIR ma współczynnik przewodzenia ciepła λ = 0,022 W/mK — to około dwa razy lepiej niż typowa wełna mineralna. W praktyce płyta PIR o połowę cieńsza daje taką samą izolacyjność jak grubsza warstwa wełny. PIR nie osiada z czasem, nie chłonie wilgoci i zachowuje parametry przez dziesięciolecia.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Czy nadaje się do starych dachów?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Tak. Izolację nakrokwiową można zastosować zarówno w nowych budynkach, jak i przy remoncie istniejącego dachu. Przy remoncie nie trzeba demontować poddasza od wewnątrz — całość montuje się od zewnątrz, co jest dużym ułatwieniem dla mieszkańców.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Czy PIR jest bezpieczny i trwały?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Tak. Płyty Recticel zachowują parametry izolacyjne przez ponad 30 lat. Produkty występują w różnych klasach reakcji na ogień — Powerroof (okładzina aluminiowa) ma podwyższoną klasę D-s2-d0, a Euroroof klasę F. Po zamontowaniu płyty są całkowicie zakryte pokryciem dachowym.</div></div>
-      </div>
-    </div>
-
-    <div class="faq-col">
-      <div class="faq-col-title">Pytania praktyczne</div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Jaką grubość PIR wybrać?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Zależy od przeznaczenia budynku i wymagań cieplnych. Najczęściej wybierane grubości to 100–160 mm, a dla domu energooszczędnego zwykle 120–160 mm. Najprościej skorzystać z naszego kalkulatora — po podaniu wymiarów dachu podpowie odpowiedni produkt i pokaże koszt.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Ile kosztuje izolacja nakrokwiowa?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Koszt zależy od powierzchni dachu, wybranej grubości płyt i lokalizacji (koszt dostawy). Dlatego nasz kalkulator wylicza orientacyjny koszt w 30 sekund na podstawie Twoich danych. Po wypełnieniu formularza przygotujemy dokładną wycenę w ciągu 24 godzin.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Jak wygląda montaż płyt?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Płyty układa się na krokwiach od dołu dachu (od okapu) ku kalenicy, naprzemiennie „na mijankę", frezem pióro-wpust łączącym sąsiednie płyty. Mocuje się je specjalnymi wkrętami pod kątem prostym. Montaż jest szybki — izolację i pokrycie dachowe może wykonać ta sama ekipa.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Czy potrzebuję dodatkowych materiałów?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Do kompletnego montażu zwykle potrzebne są: membrana wstępnego krycia (Rectivent), taśma do uszczelnienia połączeń (Rectitape) oraz wkręty mocujące (Rectifix). Wersje MAX płyt mają już zintegrowaną membranę. W wycenie pomożemy dobrać wszystkie potrzebne elementy.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Jak długo trwa dostawa?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Czas dostawy ustalamy indywidualnie przy wycenie — zależy od dostępności produktu i lokalizacji. Produkty magazynowe (najpopularniejsze grubości) są dostępne szybciej. Szczegóły potwierdzamy przy składaniu zamówienia.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Czy pomagacie znaleźć ekipę montażową?<span class="faq-icon"></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Budujemy sieć sprawdzonych ekip dekarskich, które znają produkty Recticel. Jeśli szukasz wykonawcy — skontaktuj się z nami, pomożemy znaleźć kogoś w Twoim regionie lub doradzimy, na co zwrócić uwagę przy wyborze ekipy.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- KONTAKT -->
 <section id="kontakt">
@@ -1752,22 +1951,46 @@
   // KONFIGURACJA PRODUKTÓW – TU ZMIENIASZ CENY I DANE
   // Każdy produkt: id, nazwa, grubość (mm), cena netto (zł/m²), m² na palecie
   // ══════════════════════════════════════════════════
+  // ══════════════════════════════════════════════════
+  // KONFIGURACJA PRODUKTÓW – ceny netto z marżą (zł/m²)
+  // ══════════════════════════════════════════════════
   const PRODUCTS = [
-    { id: 'euroroof-100', name: 'Euroroof 100mm',  thick: 100, price: 64,  pallet: 31.68 },
-    { id: 'euroroof-120', name: 'Euroroof 120mm',  thick: 120, price: 74,  pallet: 25.92 },
-    { id: 'euroroof-140', name: 'Euroroof 140mm',  thick: 140, price: 85,  pallet: 23.04 },
-    { id: 'euroroof-160', name: 'Euroroof 160mm',  thick: 160, price: 96,  pallet: 20.16 },
-    { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 76, pallet: 31.68 },
-    { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 86, pallet: 25.92 },
+    { id: 'euroroof-100',  name: 'Euroroof 100mm',  thick: 100, price: 64,  pallet: 31.68 },
+    { id: 'euroroof-120',  name: 'Euroroof 120mm',  thick: 120, price: 74,  pallet: 25.92 },
+    { id: 'euroroof-140',  name: 'Euroroof 140mm',  thick: 140, price: 85,  pallet: 23.04 },
+    { id: 'euroroof-160',  name: 'Euroroof 160mm',  thick: 160, price: 96,  pallet: 20.16 },
+    { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 76,  pallet: 31.68 },
+    { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 86,  pallet: 25.92 },
   ];
 
-  // Legacy – mapa id→cena dla kompatybilności z kalkulatorem (używa thickness)
-  // UWAGA: thickness nie jest unikalny – kalkulator użyje pierwszego dopasowania
-  const PRICES = Object.fromEntries(PRODUCTS.map(p => [p.id, p.price]));
-  const MONTAZ_PER_M2  = 35;   // zł netto / m² – koszt montażu
-  const DOSTAWA_BASE   = 400;  // zł netto – dostawa bazowa
-  const DOSTAWA_PER_M2 = 2;    // zł netto / m² – zmienny koszt dostawy
-  const VAT = 0.23;
+  const MARZA        = 0.10;   // 10% marża wbudowana w cenę (klient widzi cenę końcową)
+  const DOSTAWA_PER_M2 = 1.5; // zł netto / m² – TYMCZASOWE, do wymiany po potwierdzeniu z Jackiem
+  const VAT          = 0.23;
+
+  // ── AKCESORIA ─────────────────────────────────────
+  // Rectifix: liczba wkrętów/m² wg grubości × kąt nachylenia
+  // Kolumny: 100mm / 120mm / 140mm / 160mm (używa kolumny 200mm z tabeli Recticel)
+  // Wiersze (kąt): 25° / 30° / 35° / 40° / 45° / 50-60°
+  // Dla kąta < 25° stosujemy wartości jak dla 25°
+  const RECTIFIX_TABLE = {
+    25: [2.78, 2.78, 2.78, 2.78],
+    30: [2.78, 2.88, 3.29, 4.89],
+    35: [3.07, 3.56, 4.07, 5.69],
+    40: [3.42, 3.97, 5.55, 6.39],
+    45: [3.55, 4.14, 4.74, 6.69],
+    50: [3.55, 4.14, 4.74, 6.69],
+    55: [3.55, 4.14, 4.74, 6.69],
+    60: [3.55, 4.14, 4.74, 6.69],
+  };
+  const RECTIFIX_PACK       = 50;   // sztuk w opakowaniu
+  const RECTIFIX_PRICE_PACK = 85;   // zł netto / opakowanie (orientacyjnie)
+
+  const RECTITAPE_PER_M2    = 1.25; // mb taśmy na m² połaci
+  const RECTITAPE_ROLL      = 25;   // mb w rolce
+  const RECTITAPE_PRICE_ROLL= 55;   // zł netto / rolka (orientacyjnie)
+
+  const RECTIVENT_EFF_M2    = 67.5; // m² krycia efektywnego / rolka (z 10% zapasem)
+  const RECTIVENT_PRICE_ROLL= 280;  // zł netto / rolka (orientacyjnie)
 
   // ══════════════════════════════════════════════════
   // STAN APLIKACJI
@@ -1914,15 +2137,41 @@
   // ══════════════════════════════════════════════════
   // GŁÓWNA FUNKCJA KALKULATORA
   // ══════════════════════════════════════════════════
+
+  // Pomocnik: zaokrąglenie w górę do pełnych opakowań
+  function ceilPacks(qty, packSize) {
+    return Math.ceil(qty / packSize);
+  }
+
+  // Pobiera kolumnę z tabeli Rectifix dla danej grubości
+  function rectifixCol(thick) {
+    if (thick <= 100) return 0;
+    if (thick <= 120) return 1;
+    if (thick <= 140) return 2;
+    return 3; // 160mm → kolumna 200mm z tabeli Recticel
+  }
+
+  // Pobiera wiersz z tabeli Rectifix dla danego kąta
+  function rectifixRow(angle) {
+    if (angle < 25) return 25;
+    if (angle <= 60) {
+      const stepped = Math.floor(angle / 5) * 5;
+      return stepped >= 50 ? 50 : stepped;
+    }
+    return 50;
+  }
+
   function calculate() {
-    const L          = parseFloat(document.getElementById('length').value);
-    const W          = parseFloat(document.getElementById('width').value);
-    const angle      = parseInt(document.getElementById('angleSlider').value);
-    const productId  = document.getElementById('thickness').value;
-    const product    = PRODUCTS.find(p => p.id === productId) || PRODUCTS[1];
-    const thickness  = product.thick;
-    const priceM2    = product.price;
-    const palletSize = product.pallet;
+    const L         = parseFloat(document.getElementById('length').value);
+    const W         = parseFloat(document.getElementById('width').value);
+    const angle     = parseInt(document.getElementById('angleSlider').value);
+    const productId = document.getElementById('thickness').value;
+    const withAcc   = document.getElementById('addAccessories').checked;
+    const product   = PRODUCTS.find(p => p.id === productId) || PRODUCTS[1];
+    const thickness = product.thick;
+    // Cena z marżą (marża już wbudowana w PRODUCTS.price jako cena zakupu,
+    // więc doliczamy marżę do ceny wyjściowej)
+    const priceM2   = product.price * (1 + MARZA);
 
     // Walidacja
     if (!L || !W || L <= 0 || W <= 0) {
@@ -1935,23 +2184,66 @@
       return;
     }
 
-    // Obliczenia
-    const footprint    = L * W;
-    const roofSurface  = calcRoofSurface(selectedRoof, L, W, angle);
-    const materialM2   = roofSurface * 1.10;           // +10% odpad
+    // ── Geometria ────────────────────────────────────
+    const footprint   = L * W;
+    const roofSurface = calcRoofSurface(selectedRoof, L, W, angle);
+    const materialM2  = roofSurface * 1.10; // +10% odpad
 
+    // ── Koszty podstawowe ────────────────────────────
     const costMaterial = materialM2 * priceM2;
-    const costDostawa  = DOSTAWA_BASE + materialM2 * DOSTAWA_PER_M2;
-    const costMontaz   = materialM2 * MONTAZ_PER_M2;
-    const totalNetto   = costMaterial + costDostawa + costMontaz;
-    const totalBrutto  = totalNetto * (1 + VAT);
+    const costDostawa  = materialM2 * DOSTAWA_PER_M2;
 
-    // Formatowanie liczb po polsku
+    let totalNetto = costMaterial + costDostawa;
+
+    // ── Akcesoria (jeśli checkbox zaznaczony) ────────
+    let accSection   = '';
+    let costAccTotal = 0;
+
+    if (withAcc) {
+      // Rectifix
+      const rfCol       = rectifixCol(thickness);
+      const rfRow       = rectifixRow(angle);
+      const rfPerM2     = RECTIFIX_TABLE[rfRow][rfCol];
+      const rfTotalQty  = materialM2 * rfPerM2;
+      const rfPacks     = ceilPacks(rfTotalQty, RECTIFIX_PACK);
+      const rfCost      = rfPacks * RECTIFIX_PRICE_PACK;
+      costAccTotal     += rfCost;
+
+      // Rectitape
+      const rtMb        = materialM2 * RECTITAPE_PER_M2;
+      const rtRolls     = ceilPacks(rtMb, RECTITAPE_ROLL);
+      const rtCost      = rtRolls * RECTITAPE_PRICE_ROLL;
+      costAccTotal     += rtCost;
+
+      // Rectivent (tylko wersje zwykłe, nie MAX)
+      const rvRolls     = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
+      const rvCost      = rvRolls * RECTIVENT_PRICE_ROLL;
+      costAccTotal     += rvCost;
+
+      totalNetto       += costAccTotal;
+
+      const fmt2 = n => Math.round(n).toLocaleString('pl-PL') + ' zł';
+      document.getElementById('resAccessoriesSection').style.display = 'block';
+      document.getElementById('resRectifix').textContent   =
+        `${rfPacks} op. × ${RECTIFIX_PACK} szt. ≈ ${fmt2(rfCost)} netto`;
+      document.getElementById('resRectitape').textContent  =
+        `${rtRolls} rol. × ${RECTITAPE_ROLL} mb ≈ ${fmt2(rtCost)} netto`;
+      document.getElementById('resRectivent').textContent  =
+        `${rvRolls} rol. ≈ ${fmt2(rvCost)} netto`;
+      document.getElementById('resAccessoriesCost').textContent = fmt2(costAccTotal) + ' netto';
+    } else {
+      document.getElementById('resAccessoriesSection').style.display = 'none';
+    }
+
+    const totalBrutto = totalNetto * (1 + VAT);
+
+    // ── Formatowanie ──────────────────────────────────
     const fmt = n => Math.round(n).toLocaleString('pl-PL') + ' zł';
 
-    // Wyświetl wyniki
-    document.getElementById('resultsEmpty').style.display   = 'none';
-    document.getElementById('resultsContent').style.display = 'block';
+    // ── Wyświetl wyniki ────────────────────────────────
+    document.getElementById('calcResultsBelow').style.display = 'block';
+    document.getElementById('resultsEmpty').style.display     = 'none';
+    document.getElementById('resultsContent').style.display   = 'block';
 
     document.getElementById('resFootprint').textContent    = footprint.toFixed(1) + ' m²';
     document.getElementById('resSurface').textContent      = roofSurface.toFixed(1) + ' m²';
@@ -1959,20 +2251,20 @@
     document.getElementById('resThickness').textContent    = thickness + ' mm';
     document.getElementById('resMaterialCost').textContent = fmt(costMaterial) + ' netto';
     document.getElementById('resDelivery').textContent     = fmt(costDostawa) + ' netto';
-    document.getElementById('resMontaz').textContent       = fmt(costMontaz) + ' netto';
     document.getElementById('resTotalNetto').textContent   = fmt(totalNetto);
     document.getElementById('resTotalBrutto').textContent  = fmt(totalBrutto) + ' brutto (z VAT 23%)';
     document.getElementById('btnQuote').style.display      = 'block';
 
-    // Wypełnij formularz kontaktowy
+    // ── Wypełnij formularz kontaktowy ─────────────────
+    const accInfo = withAcc ? '\nAkcesoria: TAK (Rectivent + Rectitape + Rectifix)' : '';
     document.getElementById('contactProduct').value = product.name;
     document.getElementById('contactMsg').value =
       `Typ dachu: ${selectedRoof}, wymiary: ${L}×${W} m, kąt: ${angle}°\n` +
       `Powierzchnia połaci: ~${roofSurface.toFixed(0)} m²\n` +
-      `Orientacyjny koszt: ~${fmt(totalNetto)} netto`;
+      `Orientacyjny koszt: ~${fmt(totalNetto)} netto` + accInfo;
 
-    // Animacja wyników
-    document.querySelector('.calc-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // ── Scroll do wyników ─────────────────────────────
+    document.getElementById('calcResultsBelow').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   // ══════════════════════════════════════════════════
