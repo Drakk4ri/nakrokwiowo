@@ -2006,6 +2006,11 @@
     item.classList.toggle('open');
   }
 
+  function toggleFear(el) {
+    const item = el.closest('.faq-fear-item');
+    item.classList.toggle('open');
+  }
+
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
