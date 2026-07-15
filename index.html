@@ -305,10 +305,28 @@
 
     /* ── KALKULATOR ── */
     #kalkulator { background: var(--bg); }
-    .calc-wrapper {
-      display: block;
-      max-width: 680px;
+    .calc-panel {
+      background: var(--paper);
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      max-width: 1120px;
       margin: 2rem auto 0;
+    }
+    .calc-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .calc-illustration {
+      width: 100%;
+      height: auto;
+      border-radius: var(--r);
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .calc-panel { padding: 1.5rem; max-width: 680px; }
+      .calc-illustration { display: none; }
     }
     .calc-form {
       background: var(--surface);
@@ -1143,7 +1161,8 @@
     <h2>KALKULATOR IZOLACJI</h2>
     <p class="section-sub">Podaj wymiary swojego dachu — wyliczamy orientacyjny koszt materiału i dostawy w 30 sekund.</p>
   </div>
-  <div class="calc-wrapper reveal">
+  <div class="calc-panel reveal">
+  <div class="calc-wrapper">
     <!-- FORMULARZ -->
     <div class="calc-form">
 
@@ -1305,6 +1324,12 @@
 
         <button class="btn-quote" id="btnQuote" onclick="scrollToContactCalc()">ZAMÓW DOKŁADNĄ WYCENĘ →</button>
           </div>
+    </div>
+
+    <!-- ILUSTRACJA -->
+    <img class="calc-illustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
+
+  </div>
   </div>
 </section>
 
