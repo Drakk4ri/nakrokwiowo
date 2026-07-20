@@ -242,66 +242,50 @@
 
     /* ── PRODUCTS ── */
     #produkty { background: var(--surface); }
-    .products-grid {
+    .goal-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
       margin-top: 2rem;
     }
-    .product-card {
+    .goal-tile {
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s, transform 0.2s;
-    }
-    .product-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s;
-    }
-    .product-card:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
-    .product-card:hover::before { transform: scaleX(1); }
-    .product-badge {
-      display: inline-block; font-size: 0.65rem; letter-spacing: -0.02em;
-      text-transform: uppercase; background: var(--gold); color: var(--bg);
-      padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    .product-badge.popular { background: var(--amber); }
-    .product-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .product-thick { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
-    .product-lambda {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;
-    }
-    .product-lambda span { color: var(--gold); font-weight: 700; }
-    .product-price {
-      font-family: var(--serif);
-      font-size: 2rem; color: var(--text);
-      margin: 1.2rem 0 0.2rem;
-    }
-    .product-price-unit { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .btn-inquiry {
-      width: 100%;
-      background: transparent;
-      color: var(--sage);
-      border: 1px solid var(--sage-l);
-      padding: 0.7rem;
-      border-radius: 2px;
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 2rem 1.2rem;
+      text-align: center;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
     }
-    .btn-inquiry:hover { background: var(--sage); color: #fff; }
+    .goal-tile:hover { border-color: var(--gold-dim); transform: translateY(-3px); }
+    .goal-tile.active { border-color: var(--amber); background: var(--amber-bg); }
+    .goal-tile-icon { width: 40px; height: 40px; margin: 0 auto 1rem; color: var(--sage); }
+    .goal-tile.active .goal-tile-icon { color: var(--amber-d); }
+    .goal-tile-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .goal-tile-tagline { font-size: 0.82rem; color: var(--text-muted); }
+
+    .goal-panel {
+      margin-top: 2rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--sage);
+      border-radius: 4px;
+      padding: 2rem 2.2rem;
+    }
+    .goal-panel-heading { font-family: var(--serif); font-size: 1.4rem; color: var(--sage-d); margin-bottom: 0.6rem; }
+    .goal-panel-body { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem; }
+    .goal-product-group { margin-bottom: 1rem; }
+    .goal-product-group-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .goal-product-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .goal-product-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 600;
+    }
 
     /* ── KALKULATOR ── */
     #kalkulator { background: var(--bg); }
@@ -483,17 +467,6 @@
     .result-total-label { font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
     .result-total-value { font-family: var(--serif); font-size: 2.4rem; color: var(--amber); line-height: 1; }
     .result-total-vat { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
-
-    /* ── DIAGRAM DACHU ── */
-    .roof-diagram {
-      margin-top: 1.5rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1.2rem;
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .roof-diagram-title { font-size: 0.72rem; letter-spacing: -0.01em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
 
     /* ── SOCIAL PROOF (ukryte – aktywować po zebraniu opinii) ── */
     .reviews-grid {
@@ -932,6 +905,7 @@
       .calc-results { position: static; }
       footer { flex-direction: column; text-align: center; }
       .roof-type-grid { grid-template-columns: 1fr 1fr; }
+      .goal-grid { grid-template-columns: 1fr; }
     }
 
     /* ── TELEFON (max 480px) ── */
@@ -949,7 +923,7 @@
       section { padding: 2.5rem 1rem; }
       .calc-panel { margin: 2rem calc(-1 * 1rem) 0; width: calc(100% + 2 * 1rem); }
 
-      .products-grid { grid-template-columns: 1fr; }
+      .goal-grid { grid-template-columns: 1fr; }
 
       .calc-form, .calc-results { padding: 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
@@ -1068,17 +1042,6 @@
     }
     .faq-fear-inner a { color: var(--sage); }
     .faq-fear-inner strong { color: var(--charcoal); }
-
-    /* ── PRODUCTS CTA ── */
-    .products-cta {
-      text-align: center;
-      padding: 2.5rem 1rem 0.5rem;
-    }
-    .products-cta p {
-      font-size: 1.05rem;
-      color: var(--graphite);
-      margin-bottom: 1rem;
-    }
 
     /* ── KALKULATOR pełna szerokość ── */
     #calcResultsBelow .calc-results {
@@ -1272,9 +1235,8 @@
           <span class="result-label">Materiał PIR (z marżą)</span>
           <span class="result-value" id="resMaterialCost">–</span>
         </div>
-        <div class="result-row">
-          <span class="result-label">Transport orientacyjny</span>
-          <span class="result-value" id="resDelivery">–</span>
+        <div class="result-note" style="margin-top:0.6rem">
+          Koszt dostawy nie jest wliczony w powyższą kwotę — wyliczamy go indywidualnie dla każdego regionu i każdego zamówienia. Podamy go w wiążącej wycenie po kontakcie.
         </div>
 
         <!-- Akcesoria – widoczne gdy checkbox zaznaczony -->
@@ -1319,7 +1281,7 @@
             <p><strong>Dobór materiałów montażowych</strong><br>
             Przedstawione ilości materiałów montażowych wyliczone są dla typowej konstrukcji dachu zgodnie z ogólnymi wytycznymi producenta. Ostateczna ilość materiałów, w szczególności liczba wkrętów mocujących, powinna zostać potwierdzona przez uprawnionego projektanta lub konstruktora.</p>
             <p><strong>Koszt transportu</strong><br>
-            Wskazany koszt transportu ma charakter orientacyjny i zależy od regionu dostawy oraz ilości zamówionego materiału. Dokładny koszt podany zostanie w wiążącej wycenie.</p>
+            Kalkulator nie zawiera kosztu transportu. Koszt dostawy zależy od regionu i wielkości zamówienia i jest wyliczany indywidualnie dla każdej dostawy — podamy go w wiążącej wycenie po kontakcie przez formularz.</p>
             <p><strong>Aktualność cen</strong><br>
             Ceny przyjęte w kalkulatorze mają charakter orientacyjny i mogą ulec zmianie. Wiążąca cena potwierdzana jest w indywidualnej ofercie po kontakcie przez formularz.</p>
           </div>
@@ -1340,67 +1302,34 @@
 <!-- PRODUKTY -->
 <section id="produkty">
   <div class="reveal">
-    <div class="section-tag">Nasza oferta</div>
-    <h2>PŁYTY PIR</h2>
-    <p class="section-sub">Najlepsza izolacja nakrokwiowa dostępna na rynku. Wybierz grubość dopasowaną do Twoich potrzeb.</p>
+    <div class="section-tag">Narzędzie</div>
+    <h2>JAKIE OCIEPLENIE POTRZEBUJESZ?</h2>
+    <p class="section-sub">Wybierz swój cel, a pokażemy rekomendowaną grubość izolacji PIR Recticel.</p>
   </div>
-  <div class="products-grid reveal">
-    <!-- EUROROOF -->
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
+
+  <div class="goal-grid reveal">
+    <div class="goal-tile" data-goal="pasywny" onclick="selectGoal(this,'pasywny')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8 6 4 10 4 15a8 8 0 0016 0c0-5-4-9-8-13z"/><path d="M12 8v13"/></svg>
+      <div class="goal-tile-name">Dom pasywny</div>
+      <div class="goal-tile-tagline">Maksymalna efektywność energetyczna</div>
     </div>
-    <div class="product-card">
-      <div class="product-badge popular">Euroroof · popularny</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
+    <div class="goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      <div class="goal-tile-name">Dom standardowy</div>
+      <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
     </div>
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">140 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>23,04 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-    </div>
-    <div class="product-card">
-      <div class="product-badge">Euroroof</div>
-      <div class="product-name">Recticel Euroroof</div>
-      <div class="product-thick">160 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>20,16 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>F</span></div>
-    </div>
-    <!-- POWERROOF -->
-    <div class="product-card">
-      <div class="product-badge">Powerroof</div>
-      <div class="product-name">Recticel Powerroof</div>
-      <div class="product-thick">100 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>31,68 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
-    </div>
-    <div class="product-card">
-      <div class="product-badge popular">Powerroof · popularny</div>
-      <div class="product-name">Recticel Powerroof</div>
-      <div class="product-thick">120 mm · 1200×2400 mm (P+W)</div>
-      <div class="product-lambda">Współczynnik λ: <span>0.022 W/mK</span></div>
-      <div class="product-lambda">Paleta: <span>25,92 m²</span></div>
-      <div class="product-lambda">Klasa ogniowa: <span>D-s2-d0</span></div>
+    <div class="goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.4-3.4a4 4 0 01-5.6 5.6L6.3 20.7a2 2 0 01-2.8-2.8L14.7 6.3z"/></svg>
+      <div class="goal-tile-name">Docieplenie / remont</div>
+      <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
     </div>
   </div>
 
-  <!-- CTA pod siatką produktów -->
-  <div class="products-cta reveal">
-    <p>Nie wiesz który produkt wybrać?</p>
-    <a href="#kalkulator" class="btn-primary">Skorzystaj z kalkulatora →</a>
+  <div class="goal-panel" id="goalPanel" style="display:none">
+    <div class="goal-panel-heading" id="goalHeading"></div>
+    <div class="goal-panel-body" id="goalBody"></div>
+    <div id="goalProducts"></div>
+    <a href="#kalkulator" class="btn-primary" style="margin-top:0.5rem;display:inline-block" onclick="prefillFromGoal()">Przejdź do kalkulatora →</a>
   </div>
 </section>
 
@@ -1993,7 +1922,6 @@
   ];
 
   const MARZA        = 0.10;   // 10% marża wbudowana w cenę (klient widzi cenę końcową)
-  const DOSTAWA_PER_M2 = 1.5; // zł netto / m² – TYMCZASOWE, do wymiany po potwierdzeniu z Jackiem
   const VAT          = 0.23;
 
   // ── AKCESORIA ─────────────────────────────────────
@@ -2020,6 +1948,62 @@
 
   const RECTIVENT_EFF_M2    = 67.5; // m² krycia efektywnego / rolka (z 10% zapasem)
   const RECTIVENT_PRICE_ROLL= 280;  // zł netto / rolka (orientacyjnie)
+
+  // ══════════════════════════════════════════════════
+  // WYBÓR CELU OCIEPLENIA (sekcja Produkty)
+  // ══════════════════════════════════════════════════
+  const GOALS = {
+    pasywny: {
+      heading: 'Rekomendacja: dom pasywny',
+      body: 'Podwyższony standard energetyczny. Przy 160 mm R ≈ 7,27 m²K/W — minimalne koszty ogrzewania na kolejne 30–40 lat.',
+      groups: [
+        { label: 'Rekomendowany produkt', ids: ['euroroof-160'] }
+      ]
+    },
+    standard: {
+      heading: 'Rekomendacja: dom standardowy',
+      body: 'Grubość 140 mm spełnia Warunki Techniczne WT2021 z zapasem — dobry balans ceny i efektywności energetycznej.',
+      groups: [
+        { label: 'Rekomendowany produkt', ids: ['euroroof-140'] }
+      ]
+    },
+    docieplenie: {
+      heading: 'Rekomendacja: docieplenie / remont',
+      body: 'Grubość dopasowana do wysokości konstrukcji przy remoncie dachu. Euroroof to kompletny system z membraną Rectivent — sprawdzi się przy pełnym deskowaniu. Powerroof nie wymaga pełnego deskowania, co często dotyczy starszych dachów.',
+      groups: [
+        { label: 'Euroroof · pełne deskowanie, system z membraną', ids: ['euroroof-100', 'euroroof-120'] },
+        { label: 'Powerroof · bez pełnego deskowania', ids: ['powerroof-100', 'powerroof-120'] }
+      ]
+    }
+  };
+
+  function selectGoal(el, key) {
+    document.querySelectorAll('.goal-tile').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+
+    const g = GOALS[key];
+    document.getElementById('goalHeading').textContent = g.heading;
+    document.getElementById('goalBody').textContent = g.body;
+
+    document.getElementById('goalProducts').innerHTML = g.groups.map(group => {
+      const chips = group.ids.map(id => {
+        const p = PRODUCTS.find(pr => pr.id === id);
+        return '<span class="goal-product-chip">' + p.name + '</span>';
+      }).join('');
+      return '<div class="goal-product-group"><div class="goal-product-group-label">' + group.label + '</div><div class="goal-product-row">' + chips + '</div></div>';
+    }).join('');
+
+    const panel = document.getElementById('goalPanel');
+    panel.dataset.firstProduct = g.groups[0].ids[0];
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function prefillFromGoal() {
+    const panel = document.getElementById('goalPanel');
+    const id = panel.dataset.firstProduct;
+    if (id) document.getElementById('thickness').value = id;
+  }
 
   // ══════════════════════════════════════════════════
   // STAN APLIKACJI
@@ -2053,7 +2037,6 @@
     document.querySelectorAll('.roof-tile').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
     selectedRoof = el.dataset.type;
-    updateDiagram(selectedRoof, parseInt(document.getElementById('angleSlider').value));
   }
 
   // ══════════════════════════════════════════════════
@@ -2061,79 +2044,6 @@
   // ══════════════════════════════════════════════════
   function updateAngle(val) {
     document.getElementById('angleDisplay').textContent = val + '°';
-    updateDiagram(selectedRoof, parseInt(val));
-  }
-
-  // ══════════════════════════════════════════════════
-  // DIAGRAM SVG
-  // ══════════════════════════════════════════════════
-  function updateDiagram(type, angle) {
-    const fill   = document.getElementById('roofPolyFill');
-    const stroke = document.getElementById('roofPolyStroke');
-    const label  = document.getElementById('roofLabel');
-    const title  = document.getElementById('roofDiagramTitle');
-
-    // peak – szczyt dachu przesuwa się w górę wraz z kątem
-    const peak = Math.max(15, 115 - (angle - 10) * 1.6);
-    // boki czterospadowego/kopertowego – okapy boczne niżej niż kalenica
-    const sideY = Math.min(125, peak + (125 - peak) * 0.55);
-
-    const shapes = {
-      // Trójkąt – widok z boku (profil)
-      dwuspadowy:    `150,${peak} 275,125 25,125`,
-      // Trapez jednostronny – widok z boku
-      jednospadowy:  `25,${peak} 275,125 25,125`,
-      // Czterospadowy – widok lekko z przodu i boku:
-      // szczyt (kalenica) jako linia pozioma, cztery połacie zbiegają do okapów
-      czterospadowy: `100,${peak} 200,${peak} 270,125 30,125`,
-      // Kopertowy – jak czterospadowy ale kalenica to punkt (piramida)
-      kopertowy:     `150,${peak} 270,125 30,125`,
-    };
-
-    // Dodatkowe linie dla czterospadowego (linie kalenicy i narożne)
-    const extraLines = {
-      czterospadowy: [
-        // Linia kalenicy
-        [100, peak, 200, peak],
-        // Linie narożne
-        [100, peak, 30,  125],
-        [200, peak, 270, 125],
-      ],
-      kopertowy: [],
-      dwuspadowy: [],
-      jednospadowy: [],
-    };
-
-    const names = {
-      dwuspadowy:    'Dach dwuspadowy',
-      jednospadowy:  'Dach jednospadowy',
-      czterospadowy: 'Dach czterospadowy',
-      kopertowy:     'Dach kopertowy',
-    };
-
-    const pts = shapes[type] || shapes.dwuspadowy;
-    fill.setAttribute('points', pts);
-    stroke.setAttribute('points', pts);
-
-    // Usuń poprzednie linie dodatkowe
-    const svg = document.getElementById('roofSvg');
-    svg.querySelectorAll('.extra-line').forEach(el => el.remove());
-
-    // Dodaj linie dodatkowe dla czterospadowego
-    (extraLines[type] || []).forEach(([x1,y1,x2,y2]) => {
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', '#4A7060');
-      line.setAttribute('stroke-width', '1.5');
-      line.setAttribute('stroke-dasharray', '4,3');
-      line.setAttribute('opacity', '0.6');
-      line.classList.add('extra-line');
-      svg.appendChild(line);
-    });
-
-    label.textContent = 'warstwa PIR';
-    title.textContent = `Podgląd – ${names[type].toLowerCase()} · ${angle}°`;
   }
 
   // ══════════════════════════════════════════════════
@@ -2225,9 +2135,8 @@
 
     // ── Koszty podstawowe ────────────────────────────
     const costMaterial = materialM2 * priceM2;
-    const costDostawa  = materialM2 * DOSTAWA_PER_M2;
 
-    let totalNetto = costMaterial + costDostawa;
+    let totalNetto = costMaterial;
 
     // ── Akcesoria (jeśli checkbox zaznaczony) ────────
     let accSection   = '';
@@ -2284,7 +2193,6 @@
     document.getElementById('resMaterial').textContent     = materialM2.toFixed(1) + ' m²';
     document.getElementById('resThickness').textContent    = thickness + ' mm';
     document.getElementById('resMaterialCost').textContent = fmt(costMaterial) + ' netto';
-    document.getElementById('resDelivery').textContent     = fmt(costDostawa) + ' netto';
     document.getElementById('resTotalNetto').textContent   = fmt(totalNetto);
     document.getElementById('resTotalBrutto').textContent  = fmt(totalBrutto) + ' brutto (z VAT 23%)';
     document.getElementById('btnQuote').style.display      = 'block';
