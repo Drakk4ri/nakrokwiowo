@@ -464,7 +464,7 @@
       transition: border-color 0.2s, background 0.2s;
       color: var(--text-muted);
     }
-    .roof-tile svg { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; }
+    .roof-tile svg, .roof-tile img { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; object-fit: cover; border-radius: 3px; }
     .roof-tile span { font-size: 0.75rem; letter-spacing: 0; }
     .roof-tile:hover { border-color: var(--sage-d); color: var(--sage); }
     .roof-tile.active { border-color: var(--sage); background: rgba(200,133,10,0.06); color: var(--sage); }
@@ -865,7 +865,7 @@
       .form-row { grid-template-columns: 1fr; }
       .roof-type-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
       .roof-tile { padding: 0.6rem 0.3rem 0.4rem; }
-      .roof-tile svg { width: 44px; height: 33px; }
+      .roof-tile svg, .roof-tile img { width: 44px; height: 33px; }
       .roof-tile span { font-size: 0.68rem; }
 
       .result-total-value { font-size: 1.9rem; }
@@ -1075,19 +1075,19 @@
         <label>Typ dachu</label>
         <div class="roof-type-grid">
           <button type="button" class="tile-btn roof-tile active" data-type="dwuspadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-dwuspadowy.webp" width="56" height="42" alt="Dach dwuspadowy" loading="lazy">
             <span>Dwuspadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="czterospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 68,38 40,48 12,38" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-czterospadowy.webp" width="56" height="42" alt="Dach czterospadowy" loading="lazy">
             <span>Czterospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="jednospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="8,12 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-jednospadowy.webp" width="56" height="42" alt="Dach jednospadowy" loading="lazy">
             <span>Jednospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 70,44 10,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><line x1="40" y1="8" x2="10" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><line x1="40" y1="8" x2="70" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><rect x="10" y="44" width="60" height="8" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-kopertowy.webp" width="56" height="42" alt="Dach kopertowy" loading="lazy">
             <span>Kopertowy</span>
           </button>
         </div>
@@ -1252,11 +1252,11 @@
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
       <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      <div class="goal-tile-name">Standard energetyczny</div>
+      <div class="goal-tile-name">Dom standardowy</div>
       <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.4-3.4a4 4 0 01-5.6 5.6L6.3 20.7a2 2 0 01-2.8-2.8L14.7 6.3z"/></svg>
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg>
       <div class="goal-tile-name">Docieplenie / remont</div>
       <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
     </button>
