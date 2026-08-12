@@ -458,14 +458,14 @@
     .roof-tile {
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.8rem 0.5rem 0.5rem;
+      padding: 0.45rem 0.3rem 0.4rem;
       cursor: pointer;
       text-align: center;
       transition: border-color 0.2s, background 0.2s;
       color: var(--text-muted);
     }
-    .roof-tile svg, .roof-tile img { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; object-fit: cover; border-radius: 3px; }
-    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; }
+    .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; display: block; margin: 0 auto; object-fit: cover; border-radius: 3px; }
+    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; font-weight: 600; display: block; position: relative; margin-top: -1.1rem; }
     .roof-tile:hover { border-color: var(--sage-d); color: var(--sage); }
     .roof-tile.active { border-color: var(--sage); background: rgba(200,133,10,0.06); color: var(--sage); }
 
@@ -864,9 +864,9 @@
       .calc-form, .calc-results { padding: 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .roof-type-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .roof-tile { padding: 0.6rem 0.3rem 0.4rem; }
-      .roof-tile svg, .roof-tile img { width: 44px; height: 33px; }
-      .roof-tile span { font-size: 0.68rem; }
+      .roof-tile { padding: 0.4rem 0.25rem 0.35rem; }
+      .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; }
+      .roof-tile span { font-size: 0.68rem; margin-top: -0.9rem; }
 
       .result-total-value { font-size: 1.9rem; }
 
@@ -1075,19 +1075,19 @@
         <label>Typ dachu</label>
         <div class="roof-type-grid">
           <button type="button" class="tile-btn roof-tile active" data-type="dwuspadowy" onclick="selectRoof(this)">
-            <img src="images/roof-dwuspadowy.webp" width="56" height="42" alt="Dach dwuspadowy" loading="lazy">
+            <img src="images/roof-dwuspadowy.webp" alt="Dach dwuspadowy" loading="lazy">
             <span>Dwuspadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="czterospadowy" onclick="selectRoof(this)">
-            <img src="images/roof-czterospadowy.webp" width="56" height="42" alt="Dach czterospadowy" loading="lazy">
+            <img src="images/roof-czterospadowy.webp" alt="Dach czterospadowy" loading="lazy">
             <span>Czterospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="jednospadowy" onclick="selectRoof(this)">
-            <img src="images/roof-jednospadowy.webp" width="56" height="42" alt="Dach jednospadowy" loading="lazy">
+            <img src="images/roof-jednospadowy.webp" alt="Dach jednospadowy" loading="lazy">
             <span>Jednospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <img src="images/roof-kopertowy.webp" width="56" height="42" alt="Dach kopertowy" loading="lazy">
+            <img src="images/roof-kopertowy.webp" alt="Dach kopertowy" loading="lazy">
             <span>Kopertowy</span>
           </button>
         </div>
