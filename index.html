@@ -1241,7 +1241,7 @@
   </div>
 
     <!-- ILUSTRACJA -->
-    <img class="calc-illustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
+    <img class="calc-illustration" id="calcIllustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
 
   </div>
   </div>
@@ -2145,6 +2145,7 @@
 
     // ── Wyświetl wyniki ────────────────────────────────
     document.getElementById('calcResultsBelow').style.display = 'block';
+    document.getElementById('calcIllustration').style.display = 'none';
     document.getElementById('resultsEmpty').style.display     = 'none';
     document.getElementById('resultsContent').style.display   = 'block';
 
