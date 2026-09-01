@@ -30,9 +30,20 @@
   <meta name="twitter:title" content="Nakrokwiowo.pl – Izolacja nakrokwiowa PIR Recticel"/>
   <meta name="twitter:description" content="Wylicz koszt ocieplenia dachu w 30 sekund i zamów bezpłatną wycenę."/>
   <meta name="twitter:image" content="https://nakrokwiowo.pl/og-image.jpg"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/Inter-300.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/Inter-500.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/Inter-600.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/Inter-700.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/PlayfairDisplay-400.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/PlayfairDisplay-500.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/PlayfairDisplay-600.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/PlayfairDisplay-700.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:400; font-display:swap; src:url('fonts/PlayfairDisplay-400-italic.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:500; font-display:swap; src:url('fonts/PlayfairDisplay-500-italic.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:600; font-display:swap; src:url('fonts/PlayfairDisplay-600-italic.woff2') format('woff2'); }
+  </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -475,14 +486,14 @@
     .roof-tile {
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.8rem 0.5rem 0.5rem;
+      padding: 0.45rem 0.3rem 0.4rem;
       cursor: pointer;
       text-align: center;
       transition: border-color 0.2s, background 0.2s;
       color: var(--text-muted);
     }
-    .roof-tile svg { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; }
-    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; }
+    .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; display: block; margin: 0 auto; object-fit: cover; border-radius: 3px; }
+    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; font-weight: 600; display: block; position: relative; margin-top: -1.1rem; }
     .roof-tile:hover { border-color: var(--sage-d); color: var(--sage); }
     .roof-tile.active { border-color: var(--sage); background: rgba(200,133,10,0.06); color: var(--sage); }
 
@@ -881,9 +892,9 @@
       .calc-form, .calc-results { padding: 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .roof-type-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .roof-tile { padding: 0.6rem 0.3rem 0.4rem; }
-      .roof-tile svg { width: 44px; height: 33px; }
-      .roof-tile span { font-size: 0.68rem; }
+      .roof-tile { padding: 0.4rem 0.25rem 0.35rem; }
+      .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; }
+      .roof-tile span { font-size: 0.68rem; margin-top: -0.9rem; }
 
       .result-total-value { font-size: 1.9rem; }
 
@@ -964,20 +975,26 @@
     }
     .faq-fear-q span:nth-child(2) { flex: 1; min-width: 0; }
     .faq-fear-q .faq-icon {
+      position: relative;
       flex-shrink: 0;
       width: 20px;
       height: 20px;
       border: 1.5px solid #8F5C05;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #8F5C05;
-      font-size: 1.1rem;
       transition: transform 0.25s var(--ease);
       margin-top: 0.15rem;
     }
-    .faq-fear-q .faq-icon::after { content: '+'; }
+    .faq-fear-q .faq-icon::before,
+    .faq-fear-q .faq-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: #8F5C05;
+      transform: translate(-50%, -50%);
+    }
+    .faq-fear-q .faq-icon::before { width: 8px; height: 1.5px; }
+    .faq-fear-q .faq-icon::after { width: 1.5px; height: 8px; }
     .faq-fear-item.open .faq-fear-q .faq-icon {
       transform: rotate(45deg);
     }
@@ -1092,19 +1109,19 @@
         <label>Typ dachu</label>
         <div class="roof-type-grid">
           <button type="button" class="tile-btn roof-tile active" data-type="dwuspadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-dwuspadowy.webp" alt="Dach dwuspadowy" loading="lazy">
             <span>Dwuspadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="czterospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 68,38 40,48 12,38" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-czterospadowy.webp" alt="Dach czterospadowy" loading="lazy">
             <span>Czterospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="jednospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="8,12 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-jednospadowy.webp" alt="Dach jednospadowy" loading="lazy">
             <span>Jednospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 70,44 10,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><line x1="40" y1="8" x2="10" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><line x1="40" y1="8" x2="70" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><rect x="10" y="44" width="60" height="8" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-kopertowy.webp" alt="Dach kopertowy" loading="lazy">
             <span>Kopertowy</span>
           </button>
         </div>
@@ -1255,7 +1272,7 @@
   </div>
 
     <!-- ILUSTRACJA -->
-    <img class="calc-illustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
+    <img class="calc-illustration" id="calcIllustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
 
   </div>
   </div>
@@ -1277,11 +1294,11 @@
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
       <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      <div class="goal-tile-name">Standard energetyczny</div>
+      <div class="goal-tile-name">Dom standardowy</div>
       <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.4-3.4a4 4 0 01-5.6 5.6L6.3 20.7a2 2 0 01-2.8-2.8L14.7 6.3z"/></svg>
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg>
       <div class="goal-tile-name">Docieplenie / remont</div>
       <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
     </button>
@@ -1414,7 +1431,7 @@
           <span class="faq-icon"></span>
         </button>
         <div class="faq-fear-a"><div class="faq-fear-inner">
-          Płyty Recticel są certyfikowane i spełniają normy budowlane. Euroroof ma klasę reakcji na ogień F, Powerroof — D-s2-d0 (podwyższona klasa). Po zamontowaniu płyty są całkowicie zakryte pokryciem dachowym. Parametry utrzymują się przez ponad 30 lat bez degradacji.
+          Płyty Recticel są certyfikowane i spełniają normy budowlane. Po zamontowaniu płyty są całkowicie zakryte pokryciem dachowym. Parametry utrzymują się przez ponad 30 lat bez degradacji.
         </div></div>
       </div>
 
@@ -1658,13 +1675,13 @@
   <div style="margin:22px 40px; display:grid; grid-template-columns:1fr 1fr; gap:16px">
     <div style="background:#FAFBF9; border:1px solid #E8E4DD; padding:16px">
       <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#6B7280; margin-bottom:10px">Wybrany typ dachu</div>
-      <div style="display:flex; align-items:center; justify-content:center; height:100px" id="pdfRoofIcon"></div>
+      <div id="pdfRoofIcon" style="width:100%; aspect-ratio:4/3; border-radius:4px; overflow:hidden; background:#EFEDE6"></div>
       <div style="font-size:13px; text-align:center; color:#1C1C1C; margin-top:8px" id="pdfRoofLabel">–</div>
     </div>
     <div style="background:#FAFBF9; border:1px dashed #B4B2A9; padding:16px">
       <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#6B7280; margin-bottom:10px">Przekrój i wymiary</div>
-      <!-- PLACEHOLDER: docelowo rysunek techniczny przekroju dachu z klienta -->
-      <div style="display:flex; align-items:center; justify-content:center; height:100px">
+      <!-- PLACEHOLDER: docelowo rysunek techniczny przekroju dachu z klienta, ten sam layout co box po lewej -->
+      <div style="width:100%; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; background:#EFEDE6; border-radius:4px">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
       </div>
       <div style="font-size:12px; text-align:center; color:#6B7280; margin-top:8px" id="pdfCrossDims">–</div>
@@ -2257,6 +2274,7 @@
 
     // ── Wyświetl wyniki ────────────────────────────────
     document.getElementById('calcResultsBelow').style.display = 'block';
+    document.getElementById('calcIllustration').style.display = 'none';
     document.getElementById('resultsEmpty').style.display     = 'none';
     document.getElementById('resultsContent').style.display   = 'block';
 
@@ -2311,18 +2329,6 @@
     document.getElementById('pdfCrossDims').textContent =
       `L ${c.L} m · W ${c.W} m · kąt ${c.angle}°`;
 
-    // Ikona wybranego typu dachu — kopiujemy aktywny kafelek z formularza
-    const iconContainer = document.getElementById('pdfRoofIcon');
-    iconContainer.innerHTML = '';
-    const activeTileSvg = document.querySelector('.roof-tile.active svg');
-    if (activeTileSvg) {
-      const clone = activeTileSvg.cloneNode(true);
-      clone.setAttribute('width', '70');
-      clone.setAttribute('height', '52');
-      clone.style.color = '#4A7060';
-      iconContainer.appendChild(clone);
-    }
-
     document.getElementById('pdfProduct').textContent      = c.productName;
     document.getElementById('pdfFootprint').textContent    = c.footprint.toFixed(1) + ' m²';
     document.getElementById('pdfSurface').textContent      = c.roofSurface.toFixed(1) + ' m²';
@@ -2350,39 +2356,69 @@
     btn.textContent = 'GENEROWANIE PDF...';
     btn.disabled = true;
 
-    html2canvas(document.getElementById('pdfTemplate'), { scale: 2, backgroundColor: '#ffffff', useCORS: true })
-      .then(canvas => {
-        const { jsPDF } = window.jspdf;
-        const pdf        = new jsPDF('p', 'mm', 'a4');
-        const pageWidth   = pdf.internal.pageSize.getWidth();
-        const pageHeight  = pdf.internal.pageSize.getHeight();
-        const imgWidth    = pageWidth;
-        const imgHeight   = canvas.height * imgWidth / canvas.width;
-        const imgData     = canvas.toDataURL('image/png');
+    const renderToPdf = () => {
+      html2canvas(document.getElementById('pdfTemplate'), { scale: 2, backgroundColor: '#ffffff', useCORS: true })
+        .then(canvas => {
+          const { jsPDF } = window.jspdf;
+          const pdf        = new jsPDF('p', 'mm', 'a4');
+          const pageWidth   = pdf.internal.pageSize.getWidth();
+          const pageHeight  = pdf.internal.pageSize.getHeight();
+          const imgWidth    = pageWidth;
+          const imgHeight   = canvas.height * imgWidth / canvas.width;
+          const imgData     = canvas.toDataURL('image/png');
 
-        let heightLeft = imgHeight;
-        let position   = 0;
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
+          let heightLeft = imgHeight;
+          let position   = 0;
           pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
-        }
 
-        const fileDate = new Date().toISOString().slice(0, 10);
-        pdf.save(`wycena-nakrokwiowo-${fileDate}.pdf`);
-      })
-      .catch(err => {
-        console.error('Błąd generowania PDF:', err);
-        alert('Nie udało się wygenerować PDF. Spróbuj ponownie lub napisz do nas na nakrokwiowo@gmail.com.');
-      })
-      .finally(() => {
-        btn.textContent = originalLabel;
-        btn.disabled = false;
-      });
+          while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+
+          const fileDate = new Date().toISOString().slice(0, 10);
+          pdf.save(`wycena-nakrokwiowo-${fileDate}.pdf`);
+        })
+        .catch(err => {
+          console.error('Błąd generowania PDF:', err);
+          alert('Nie udało się wygenerować PDF. Spróbuj ponownie lub napisz do nas na nakrokwiowo@gmail.com.');
+        })
+        .finally(() => {
+          btn.textContent = originalLabel;
+          btn.disabled = false;
+        });
+    };
+
+    // Ikona wybranego typu dachu — kopiujemy prawdziwe zdjęcie z aktywnego
+    // kafelka w formularzu. Czekamy, aż obraz się wczyta, żeby html2canvas
+    // nie złapał pustej klatki.
+    const iconContainer = document.getElementById('pdfRoofIcon');
+    iconContainer.innerHTML = '';
+    const activeTileImg = document.querySelector('.roof-tile.active img');
+
+    if (activeTileImg) {
+      let started = false;
+      const startRender = () => {
+        if (started) return;
+        started = true;
+        renderToPdf();
+      };
+      const imgClone = document.createElement('img');
+      imgClone.style.width      = '100%';
+      imgClone.style.height     = '100%';
+      imgClone.style.objectFit  = 'cover';
+      imgClone.style.display    = 'block';
+      imgClone.onload  = startRender;
+      imgClone.onerror = startRender; // nie blokujemy generowania, jeśli obraz się nie wczyta
+      iconContainer.appendChild(imgClone);
+      imgClone.src = activeTileImg.src;
+      if (imgClone.complete) startRender(); // obraz już w cache przeglądarki
+    } else {
+      renderToPdf();
+    }
   }
 
   // ══════════════════════════════════════════════════
