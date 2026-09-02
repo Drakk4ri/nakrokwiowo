@@ -30,9 +30,20 @@
   <meta name="twitter:title" content="Nakrokwiowo.pl – Izolacja nakrokwiowa PIR Recticel"/>
   <meta name="twitter:description" content="Wylicz koszt ocieplenia dachu w 30 sekund i zamów bezpłatną wycenę."/>
   <meta name="twitter:image" content="https://nakrokwiowo.pl/og-image.jpg"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:300; font-display:swap; src:url('fonts/Inter-300.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/Inter-500.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/Inter-600.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/Inter-700.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/PlayfairDisplay-400.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/PlayfairDisplay-500.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/PlayfairDisplay-600.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/PlayfairDisplay-700.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:400; font-display:swap; src:url('fonts/PlayfairDisplay-400-italic.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:500; font-display:swap; src:url('fonts/PlayfairDisplay-500-italic.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:italic; font-weight:600; font-display:swap; src:url('fonts/PlayfairDisplay-600-italic.woff2') format('woff2'); }
+  </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -428,6 +439,23 @@
       border-radius: 2px;
       border-left: 2px solid var(--amber);
     }
+    .btn-pdf {
+      width: 100%;
+      background: transparent;
+      color: var(--sage-d);
+      border: 1.5px solid var(--sage);
+      padding: 1rem;
+      border-radius: 2px;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s, color 0.2s;
+      display: none;
+    }
+    .btn-pdf:hover { background: var(--sage-bg); }
+    .btn-pdf:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-quote {
       width: 100%;
       background: var(--amber);
@@ -439,28 +467,11 @@
       font-size: 1.2rem;
       letter-spacing: -0.01em;
       cursor: pointer;
-      margin-top: 1.5rem;
+      margin-top: 0.8rem;
       transition: background 0.2s;
       display: none;
     }
     .btn-quote:hover { background: var(--amber-d); }
-    .btn-pdf {
-      width: 100%;
-      background: transparent;
-      color: var(--sage-d);
-      border: 1px solid var(--sage);
-      padding: 0.9rem;
-      border-radius: 2px;
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      letter-spacing: -0.01em;
-      cursor: pointer;
-      margin-top: 1.5rem;
-      transition: background 0.2s, color 0.2s, opacity 0.2s;
-      display: none;
-    }
-    .btn-pdf:hover { background: var(--sage-bg); }
-    .btn-pdf:disabled { opacity: 0.6; cursor: not-allowed; }
     .results-empty {
       text-align: center;
       padding: 3rem 1rem;
@@ -475,14 +486,14 @@
     .roof-tile {
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.8rem 0.5rem 0.5rem;
+      padding: 0.45rem 0.3rem 0.4rem;
       cursor: pointer;
       text-align: center;
       transition: border-color 0.2s, background 0.2s;
       color: var(--text-muted);
     }
-    .roof-tile svg { width: 56px; height: 42px; display: block; margin: 0 auto 0.4rem; }
-    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; }
+    .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; display: block; margin: 0 auto; object-fit: cover; border-radius: 3px; }
+    .roof-tile span { font-size: 0.75rem; letter-spacing: 0; font-weight: 600; display: block; position: relative; margin-top: -1.1rem; }
     .roof-tile:hover { border-color: var(--sage-d); color: var(--sage); }
     .roof-tile.active { border-color: var(--sage); background: rgba(200,133,10,0.06); color: var(--sage); }
 
@@ -881,9 +892,9 @@
       .calc-form, .calc-results { padding: 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
       .roof-type-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-      .roof-tile { padding: 0.6rem 0.3rem 0.4rem; }
-      .roof-tile svg { width: 44px; height: 33px; }
-      .roof-tile span { font-size: 0.68rem; }
+      .roof-tile { padding: 0.4rem 0.25rem 0.35rem; }
+      .roof-tile svg, .roof-tile img { width: 100%; height: auto; aspect-ratio: 4/3; }
+      .roof-tile span { font-size: 0.68rem; margin-top: -0.9rem; }
 
       .result-total-value { font-size: 1.9rem; }
 
@@ -1098,19 +1109,19 @@
         <label>Typ dachu</label>
         <div class="roof-type-grid">
           <button type="button" class="tile-btn roof-tile active" data-type="dwuspadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-dwuspadowy.webp" alt="Dach dwuspadowy" loading="lazy">
             <span>Dwuspadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="czterospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 68,38 40,48 12,38" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-czterospadowy.webp" alt="Dach czterospadowy" loading="lazy">
             <span>Czterospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="jednospadowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="8,12 72,44 8,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><rect x="8" y="44" width="64" height="10" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-jednospadowy.webp" alt="Dach jednospadowy" loading="lazy">
             <span>Jednospadowy</span>
           </button>
           <button type="button" class="tile-btn roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <svg viewBox="0 0 80 60"><polygon points="40,8 70,44 10,44" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2"/><line x1="40" y1="8" x2="10" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><line x1="40" y1="8" x2="70" y2="44" stroke="currentColor" stroke-width="1" opacity="0.4"/><rect x="10" y="44" width="60" height="8" fill="currentColor" opacity="0.08" stroke="currentColor" stroke-width="1.5"/></svg>
+            <img src="images/roof-kopertowy.webp" alt="Dach kopertowy" loading="lazy">
             <span>Kopertowy</span>
           </button>
         </div>
@@ -1261,11 +1272,73 @@
   </div>
 
     <!-- ILUSTRACJA -->
-    <img class="calc-illustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
+    <img class="calc-illustration" id="calcIllustration" src="images/calc-illustration.webp" alt="Planowanie i wycena izolacji dachu nakrokwiowej" loading="lazy" />
 
   </div>
   </div>
 </section>
+
+<!-- ══════════════════════════════════════════════════
+     SZABLON PDF WYCENY — poza ekranem, wypełniany przez generatePdf()
+     ══════════════════════════════════════════════════ -->
+<div id="pdfTemplate" style="position:fixed; top:0; left:-9999px; width:794px; background:#ffffff; padding:40px; font-family:'Inter',system-ui,sans-serif; color:#1C1C1C;">
+  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #4A7060; padding-bottom:16px; margin-bottom:24px;">
+    <div style="font-family:'Playfair Display',Georgia,serif; font-size:26px; letter-spacing:-0.01em;">NAKROKWIOWO<span style="color:#6B7280">.PL</span></div>
+    <div style="text-align:right; font-size:12px; color:#6B7280; line-height:1.5;">
+      <div>Orientacyjna wycena izolacji dachu</div>
+      <div id="pdfDate">–</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:20px; align-items:center; margin-bottom:24px;">
+    <div id="pdfRoofIcon" style="width:96px; height:72px; flex-shrink:0; border-radius:6px; overflow:hidden; background:#F5F3EE;"></div>
+    <div>
+      <div style="font-family:'Playfair Display',Georgia,serif; font-size:19px; margin-bottom:4px;" id="pdfProduct">–</div>
+      <div style="font-size:13px; color:#6B7280;" id="pdfRoofInfo">–</div>
+    </div>
+  </div>
+
+  <!-- placeholder na grafikę przekroju z wymiarami — do podmiany na docelowe obrazki -->
+  <div style="border:1.5px dashed #C8850A; border-radius:6px; padding:24px; text-align:center; color:#8a876e; font-size:12px; margin-bottom:24px;">
+    [Miejsce na grafikę przekroju dachu z wymiarami — do podmiany]
+  </div>
+
+  <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:6px;">Dane techniczne</div>
+  <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:20px;">
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia rzutu poziomego</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfFootprint">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia połaci dachu</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfSurface">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Zapotrzebowanie materiału (+10% odpad)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterial">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Zamówienie w pełnych paletach</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfPallets">–</td></tr>
+    <tr><td style="padding:8px 0; color:#6B7280">Wybrana grubość</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfThickness">–</td></tr>
+  </table>
+
+  <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:6px;">Kosztorys orientacyjny</div>
+  <table style="width:100%; border-collapse:collapse; font-size:13px;">
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Materiał PIR (z marżą)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterialCost">–</td></tr>
+  </table>
+  <div id="pdfAccSection" style="display:none; margin-top:4px;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectifix (wkręty)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectitape (taśma)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectitape">–</td></tr>
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectivent (membrana)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectivent">–</td></tr>
+    </table>
+  </div>
+
+  <div style="background:#F5F3EE; border-left:3px solid #4A7060; border-radius:4px; padding:16px 18px; margin:18px 0;">
+    <div style="font-size:11px; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">Łączny koszt netto</div>
+    <div style="font-family:'Playfair Display',Georgia,serif; font-size:30px; color:#C8850A; line-height:1;" id="pdfTotalNetto">–</div>
+    <div style="font-size:12px; color:#6B7280; margin-top:4px;" id="pdfTotalBrutto">–</div>
+  </div>
+
+  <div style="font-size:10px; color:#6B7280; line-height:1.55; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:10px 12px; margin-bottom:20px;">
+    Powyższa kalkulacja ma charakter wyłącznie orientacyjny i informacyjny. Nie stanowi oferty w rozumieniu art. 66 i nast. Kodeksu cywilnego. Wynik został wyliczony na podstawie danych podanych przez użytkownika. Wiążąca wycena zostanie przygotowana indywidualnie po kontakcie przez formularz na stronie nakrokwiowo.pl.
+  </div>
+
+  <div style="border-top:1px solid #E8E4DD; padding-top:12px; font-size:11px; color:#6B7280; display:flex; justify-content:space-between;">
+    <span>nakrokwiowo.pl</span>
+    <span>+48 574 455 271 · nakrokwiowo@gmail.com</span>
+  </div>
+</div>
 
 <!-- PRODUKTY -->
 <section id="produkty">
@@ -1283,11 +1356,11 @@
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
       <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      <div class="goal-tile-name">Standard energetyczny</div>
+      <div class="goal-tile-name">Dom standardowy</div>
       <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
     </button>
     <button type="button" class="tile-btn goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.4-3.4a4 4 0 01-5.6 5.6L6.3 20.7a2 2 0 01-2.8-2.8L14.7 6.3z"/></svg>
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg>
       <div class="goal-tile-name">Docieplenie / remont</div>
       <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
     </button>
@@ -1639,89 +1712,8 @@
   <p>Wszystkie ceny netto, bez VAT</p>
 </footer>
 
-<!-- ══════════════════════════════════════════════════
-     SZABLON PDF WYCENY — poza ekranem, wypełniany przez generatePdf()
-     i renderowany do obrazu przez html2canvas + jsPDF
-     ══════════════════════════════════════════════════ -->
-<div id="pdfTemplate" style="position:fixed; top:0; left:-9999px; width:794px; background:#ffffff; font-family:'Inter',system-ui,sans-serif; color:#1C1C1C;">
-
-  <div style="background:#EEF2EE; padding:24px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #4A7060">
-    <div>
-      <div style="font-size:20px; font-weight:600; color:#2E4F3E; letter-spacing:0.03em">NAKROKWIOWO<span style="color:#6B9B84">.PL</span></div>
-      <div style="font-size:13px; color:#6B7280; margin-top:2px">Izolacja nakrokwiowa PIR Recticel</div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:12px; color:#6B7280">Wycena orientacyjna</div>
-      <div style="font-size:14px; color:#2E4F3E; font-weight:600" id="pdfDate">–</div>
-    </div>
-  </div>
-
-  <div style="padding:28px 40px 8px">
-    <div style="font-family:'Playfair Display',Georgia,serif; font-size:24px; color:#1C1C1C; margin-bottom:4px">Wynik kalkulacji izolacji dachu</div>
-    <div style="font-size:14px; color:#6B7280" id="pdfSubtitle">–</div>
-  </div>
-
-  <div style="margin:22px 40px; display:grid; grid-template-columns:1fr 1fr; gap:16px">
-    <div style="background:#FAFBF9; border:1px solid #E8E4DD; padding:16px">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#6B7280; margin-bottom:10px">Wybrany typ dachu</div>
-      <div style="display:flex; align-items:center; justify-content:center; height:100px" id="pdfRoofIcon"></div>
-      <div style="font-size:13px; text-align:center; color:#1C1C1C; margin-top:8px" id="pdfRoofLabel">–</div>
-    </div>
-    <div style="background:#FAFBF9; border:1px dashed #B4B2A9; padding:16px">
-      <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:#6B7280; margin-bottom:10px">Przekrój i wymiary</div>
-      <!-- PLACEHOLDER: docelowo rysunek techniczny przekroju dachu z klienta -->
-      <div style="display:flex; align-items:center; justify-content:center; height:100px">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B4B2A9" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      </div>
-      <div style="font-size:12px; text-align:center; color:#6B7280; margin-top:8px" id="pdfCrossDims">–</div>
-    </div>
-  </div>
-
-  <div style="margin:0 40px 6px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#4A7060; font-weight:600">Dane techniczne</div>
-  <table style="width:calc(100% - 80px); margin:0 40px; border-collapse:collapse; font-size:13px">
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Produkt</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfProduct">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia rzutu poziomego</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfFootprint">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia połaci dachu</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfSurface">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Materiał potrzebny (+10% odpad)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterial">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Zamówienie w pełnych paletach</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfPallets">–</td></tr>
-    <tr><td style="padding:8px 0; color:#6B7280">Wybrana grubość</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfThickness">–</td></tr>
-  </table>
-
-  <div style="margin:22px 40px 6px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#4A7060; font-weight:600">Kosztorys orientacyjny</div>
-  <table style="width:calc(100% - 80px); margin:0 40px; border-collapse:collapse; font-size:13px">
-    <tr><td style="padding:8px 0; color:#6B7280">Materiał PIR</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterialCost">–</td></tr>
-  </table>
-  <div id="pdfAccRow" style="display:none">
-    <table style="width:calc(100% - 80px); margin:0 40px; border-collapse:collapse; font-size:13px">
-      <tr style="border-top:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectifix (wkręty)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
-      <tr><td style="padding:8px 0; color:#6B7280">Rectitape (taśma)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectitape">–</td></tr>
-      <tr><td style="padding:8px 0; color:#6B7280">Rectivent (membrana)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectivent">–</td></tr>
-    </table>
-  </div>
-
-  <div style="margin:24px 40px; padding:20px 24px; background:#FDF6E8; border-left:4px solid #C8850A">
-    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:#6B7280">Łączny koszt netto</div>
-    <div style="font-family:'Playfair Display',Georgia,serif; font-size:32px; color:#A86D06; line-height:1.2" id="pdfTotalNetto">–</div>
-    <div style="font-size:13px; color:#6B7280; margin-top:4px" id="pdfTotalBrutto">–</div>
-  </div>
-
-  <div style="margin:0 40px 24px; padding:14px 16px; background:#FAFBF9; font-size:11px; line-height:1.6; color:#6B7280">
-    Powyższa kalkulacja ma charakter wyłącznie orientacyjny i informacyjny. Nie stanowi oferty w rozumieniu art. 66 i nast. Kodeksu cywilnego. Wynik został wyliczony na podstawie danych podanych przez użytkownika. Wiążącą wycenę przygotujemy indywidualnie po kontakcie przez formularz na nakrokwiowo.pl. Koszt dostawy nie jest wliczony — wyliczamy go indywidualnie dla każdego zamówienia.
-  </div>
-
-  <div style="border-top:1px solid #E8E4DD; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:#6B7280">
-    <div>
-      <div style="font-weight:600; color:#1C1C1C">NAKROKWIOWO<span style="color:#4A7060">.PL</span></div>
-      <div>+48 574 455 271 · nakrokwiowo@gmail.com</div>
-    </div>
-    <div style="text-align:right">© <span id="pdfYear">2026</span> Nakrokwiowo.pl · Izolacja PIR nakrokwiowa<br>Wszystkie ceny netto, bez VAT</div>
-  </div>
-
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script>
   // ══════════════════════════════════════════════════
   // ARTYKUŁY BLOGOWE
@@ -1994,6 +1986,16 @@
   const MARZA        = 0.10;   // 10% marża wbudowana w cenę (klient widzi cenę końcową)
   const VAT          = 0.23;
 
+  const ROOF_NAMES = {
+    dwuspadowy: 'Dach dwuspadowy',
+    czterospadowy: 'Dach czterospadowy',
+    jednospadowy: 'Dach jednospadowy',
+    kopertowy: 'Dach kopertowy',
+  };
+
+  // Dane ostatniego obliczenia — używane przez generatePdf()
+  let lastCalc = null;
+
   // ── AKCESORIA ─────────────────────────────────────
   // Rectifix: liczba wkrętów/m² wg grubości × kąt nachylenia
   // Kolumny: 100mm / 120mm / 140mm / 160mm (używa kolumny 200mm z tabeli Recticel)
@@ -2077,7 +2079,6 @@
   // STAN APLIKACJI
   // ══════════════════════════════════════════════════
   let selectedRoof = 'dwuspadowy';
-  let lastCalc     = null; // dane ostatniego obliczenia — używane przez generatePdf()
 
   // ══════════════════════════════════════════════════
   // SCROLL REVEAL
@@ -2151,11 +2152,6 @@
     return Math.ceil(qty / packSize);
   }
 
-  // Pomocnik: formatowanie kwoty w złotówkach
-  function fmtPln(n) {
-    return Math.round(n).toLocaleString('pl-PL') + ' zł';
-  }
-
   // Pobiera kolumnę z tabeli Rectifix dla danej grubości
   function rectifixCol(thick) {
     if (thick <= 100) return 0;
@@ -2202,15 +2198,16 @@
     const roofSurface = calcRoofSurface(selectedRoof, L, W, angle);
     const materialM2  = roofSurface * 1.10; // +10% odpad — realne zapotrzebowanie na dach
 
-    // ── Zaokrąglenie zamówienia do pełnych palet ─────
-    // Materiał sprzedawany jest w całych paletach, więc do wyliczeń kosztu
-    // bierzemy zaokrągloną w górę ilość, a nie dokładne zapotrzebowanie.
+    // ── Zamówienie w pełnych paletach ─────────────────
+    // Materiał sprzedawany jest w całych paletach, więc zamówienie (i jego koszt)
+    // zaokrąglamy w górę do najbliższej pełnej palety. Akcesoria montażowe nadal
+    // liczone są od realnego zapotrzebowania (materialM2), bez zmian.
     const palletSize      = product.pallet;
-    const palletsNeeded    = Math.ceil(materialM2 / palletSize);
-    const materialOrdered  = palletsNeeded * palletSize; // ilość faktycznie zamawiana
-    const palletSurplus    = materialOrdered - materialM2; // nadwyżka ponad realne zapotrzebowanie
+    const palletsNeeded   = Math.ceil(materialM2 / palletSize);
+    const materialOrdered = palletsNeeded * palletSize;
+    const palletSurplus   = materialOrdered - materialM2;
 
-    // ── Koszty podstawowe (liczone od zamówionej ilości z pełnych palet) ──
+    // ── Koszty podstawowe ────────────────────────────
     const costMaterial = materialOrdered * priceM2;
 
     let totalNetto = costMaterial;
@@ -2218,28 +2215,29 @@
     // ── Akcesoria (jeśli checkbox zaznaczony) ────────
     let accSection   = '';
     let costAccTotal = 0;
-    let rfCost = 0, rtCost = 0, rvCost = 0; // udostępnione też dla generatePdf()
+    // Zahoistowane, żeby były dostępne też przy zapisie do lastCalc (dla PDF)
+    let rfPacks = 0, rfCost = 0, rtRolls = 0, rtCost = 0, rvRolls = 0, rvCost = 0;
 
     if (withAcc) {
-      // Rectifix
+      // Rectifix — liczone od realnego zapotrzebowania (materialM2), bez zmian
       const rfCol       = rectifixCol(thickness);
       const rfRow       = rectifixRow(angle);
       const rfPerM2     = RECTIFIX_TABLE[rfRow][rfCol];
       const rfTotalQty  = materialM2 * rfPerM2;
-      const rfPacks     = ceilPacks(rfTotalQty, RECTIFIX_PACK);
+      rfPacks           = ceilPacks(rfTotalQty, RECTIFIX_PACK);
       rfCost            = rfPacks * RECTIFIX_PRICE_PACK;
       costAccTotal     += rfCost;
 
       // Rectitape
       const rtMb        = materialM2 * RECTITAPE_PER_M2;
-      const rtRolls     = ceilPacks(rtMb, RECTITAPE_ROLL);
-      rtCost            = rtRolls * RECTITAPE_PRICE_ROLL;
-      costAccTotal     += rtCost;
+      rtRolls            = ceilPacks(rtMb, RECTITAPE_ROLL);
+      rtCost             = rtRolls * RECTITAPE_PRICE_ROLL;
+      costAccTotal      += rtCost;
 
       // Rectivent (tylko wersje zwykłe, nie MAX)
-      const rvRolls     = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
-      rvCost            = rvRolls * RECTIVENT_PRICE_ROLL;
-      costAccTotal     += rvCost;
+      rvRolls            = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
+      rvCost             = rvRolls * RECTIVENT_PRICE_ROLL;
+      costAccTotal      += rvCost;
 
       totalNetto       += costAccTotal;
 
@@ -2263,6 +2261,7 @@
 
     // ── Wyświetl wyniki ────────────────────────────────
     document.getElementById('calcResultsBelow').style.display = 'block';
+    document.getElementById('calcIllustration').style.display = 'none';
     document.getElementById('resultsEmpty').style.display     = 'none';
     document.getElementById('resultsContent').style.display   = 'block';
 
@@ -2270,24 +2269,13 @@
     document.getElementById('resSurface').textContent      = roofSurface.toFixed(1) + ' m²';
     document.getElementById('resMaterial').textContent     = materialM2.toFixed(1) + ' m²';
     document.getElementById('resPallets').textContent      =
-      palletsNeeded + ' × ' + palletSize.toFixed(2) + ' m² = ' + materialOrdered.toFixed(1) + ' m² (nadwyżka +' + palletSurplus.toFixed(1) + ' m²)';
+      `${palletsNeeded} palet × ${palletSize} m² = ${materialOrdered.toFixed(1)} m² (nadwyżka +${palletSurplus.toFixed(1)} m²)`;
     document.getElementById('resThickness').textContent    = thickness + ' mm';
     document.getElementById('resMaterialCost').textContent = fmt(costMaterial) + ' netto';
     document.getElementById('resTotalNetto').textContent   = fmt(totalNetto);
     document.getElementById('resTotalBrutto').textContent  = fmt(totalBrutto) + ' brutto (z VAT 23%)';
     document.getElementById('btnQuote').style.display      = 'block';
     document.getElementById('btnPdf').style.display        = 'block';
-
-    // ── Zapisz dane do wygenerowania PDF ──────────────
-    lastCalc = {
-      L, W, angle, selectedRoof,
-      roofLabel: selectedRoof.charAt(0).toUpperCase() + selectedRoof.slice(1),
-      productName: product.name, thickness,
-      footprint, roofSurface, materialM2,
-      palletSize, palletsNeeded, materialOrdered, palletSurplus,
-      costMaterial, withAcc, rfCost, rtCost, rvCost, costAccTotal,
-      totalNetto, totalBrutto,
-    };
 
     // ── Wypełnij formularz kontaktowy ─────────────────
     const accInfo = withAcc ? '\nAkcesoria: TAK (Rectivent + Rectitape + Rectifix)' : '';
@@ -2298,6 +2286,16 @@
       `Zamówienie: ${palletsNeeded} palet (${materialOrdered.toFixed(1)} m²)\n` +
       `Orientacyjny koszt: ~${fmt(totalNetto)} netto` + accInfo;
 
+    // ── Zapamiętaj dane ostatniego obliczenia do PDF ──
+    lastCalc = {
+      L, W, angle, selectedRoof, product, thickness,
+      footprint, roofSurface, materialM2,
+      palletSize, palletsNeeded, materialOrdered, palletSurplus,
+      costMaterial, withAcc, costAccTotal,
+      totalNetto, totalBrutto,
+      rfPacks, rfCost, rtRolls, rtCost, rvRolls, rvCost,
+    };
+
     // ── Scroll do wyników ─────────────────────────────
     document.getElementById('calcResultsBelow').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -2307,88 +2305,60 @@
   // ══════════════════════════════════════════════════
   function generatePdf() {
     if (!lastCalc) return;
-    const c = lastCalc;
-
-    document.getElementById('pdfDate').textContent = new Date().toLocaleDateString('pl-PL');
-    document.getElementById('pdfYear').textContent  = new Date().getFullYear();
-    document.getElementById('pdfSubtitle').textContent =
-      `Dach ${c.roofLabel.toLowerCase()} · ${c.L} × ${c.W} m · kąt ${c.angle}°`;
-    document.getElementById('pdfRoofLabel').textContent = c.roofLabel;
-    document.getElementById('pdfCrossDims').textContent =
-      `L ${c.L} m · W ${c.W} m · kąt ${c.angle}°`;
-
-    // Ikona wybranego typu dachu — kopiujemy aktywny kafelek z formularza
-    const iconContainer = document.getElementById('pdfRoofIcon');
-    iconContainer.innerHTML = '';
-    const activeTileSvg = document.querySelector('.roof-tile.active svg');
-    if (activeTileSvg) {
-      const clone = activeTileSvg.cloneNode(true);
-      clone.setAttribute('width', '70');
-      clone.setAttribute('height', '52');
-      clone.style.color = '#4A7060';
-      iconContainer.appendChild(clone);
-    }
-
-    document.getElementById('pdfProduct').textContent      = c.productName;
-    document.getElementById('pdfFootprint').textContent    = c.footprint.toFixed(1) + ' m²';
-    document.getElementById('pdfSurface').textContent      = c.roofSurface.toFixed(1) + ' m²';
-    document.getElementById('pdfMaterial').textContent     = c.materialM2.toFixed(1) + ' m²';
-    document.getElementById('pdfPallets').textContent      =
-      `${c.palletsNeeded} × ${c.palletSize.toFixed(2)} m² = ${c.materialOrdered.toFixed(1)} m²`;
-    document.getElementById('pdfThickness').textContent    = c.thickness + ' mm';
-    document.getElementById('pdfMaterialCost').textContent = fmtPln(c.costMaterial);
-
-    const accRow = document.getElementById('pdfAccRow');
-    if (c.withAcc) {
-      accRow.style.display = 'block';
-      document.getElementById('pdfRectifix').textContent  = fmtPln(c.rfCost);
-      document.getElementById('pdfRectitape').textContent = fmtPln(c.rtCost);
-      document.getElementById('pdfRectivent').textContent = fmtPln(c.rvCost);
-    } else {
-      accRow.style.display = 'none';
-    }
-
-    document.getElementById('pdfTotalNetto').textContent  = fmtPln(c.totalNetto);
-    document.getElementById('pdfTotalBrutto').textContent = fmtPln(c.totalBrutto) + ' brutto (z VAT 23%)';
-
+    const c   = lastCalc;
     const btn = document.getElementById('btnPdf');
-    const originalLabel = btn.textContent;
-    btn.textContent = 'GENEROWANIE PDF...';
+    const originalText = btn.textContent;
+    btn.textContent = 'GENEROWANIE...';
     btn.disabled = true;
 
-    html2canvas(document.getElementById('pdfTemplate'), { scale: 2, backgroundColor: '#ffffff', useCORS: true })
-      .then(canvas => {
-        const { jsPDF } = window.jspdf;
-        const pdf        = new jsPDF('p', 'mm', 'a4');
-        const pageWidth   = pdf.internal.pageSize.getWidth();
-        const pageHeight  = pdf.internal.pageSize.getHeight();
-        const imgWidth    = pageWidth;
-        const imgHeight   = canvas.height * imgWidth / canvas.width;
-        const imgData     = canvas.toDataURL('image/png');
+    const fmt = n => Math.round(n).toLocaleString('pl-PL') + ' zł';
 
-        let heightLeft = imgHeight;
-        let position   = 0;
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+    document.getElementById('pdfDate').textContent =
+      'Data: ' + new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('pdfProduct').textContent = c.product.name;
+    document.getElementById('pdfRoofInfo').textContent =
+      `${ROOF_NAMES[c.selectedRoof] || c.selectedRoof} · ${c.L}×${c.W} m · kąt ${c.angle}°`;
+    document.getElementById('pdfRoofIcon').innerHTML =
+      `<img src="images/roof-${c.selectedRoof}.webp" alt="" style="width:100%;height:100%;object-fit:cover;">`;
 
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
+    document.getElementById('pdfFootprint').textContent = c.footprint.toFixed(1) + ' m²';
+    document.getElementById('pdfSurface').textContent   = c.roofSurface.toFixed(1) + ' m²';
+    document.getElementById('pdfMaterial').textContent  = c.materialM2.toFixed(1) + ' m²';
+    document.getElementById('pdfPallets').textContent   =
+      `${c.palletsNeeded} palet (${c.materialOrdered.toFixed(1)} m², nadwyżka +${c.palletSurplus.toFixed(1)} m²)`;
+    document.getElementById('pdfThickness').textContent    = c.thickness + ' mm';
+    document.getElementById('pdfMaterialCost').textContent = fmt(c.costMaterial) + ' netto';
 
-        const fileDate = new Date().toISOString().slice(0, 10);
-        pdf.save(`wycena-nakrokwiowo-${fileDate}.pdf`);
-      })
-      .catch(err => {
-        console.error('Błąd generowania PDF:', err);
-        alert('Nie udało się wygenerować PDF. Spróbuj ponownie lub napisz do nas na nakrokwiowo@gmail.com.');
-      })
-      .finally(() => {
-        btn.textContent = originalLabel;
-        btn.disabled = false;
-      });
+    if (c.withAcc) {
+      document.getElementById('pdfAccSection').style.display = 'block';
+      document.getElementById('pdfRectifix').textContent  = `${c.rfPacks} op. × ${RECTIFIX_PACK} szt. ≈ ${fmt(c.rfCost)} netto`;
+      document.getElementById('pdfRectitape').textContent = `${c.rtRolls} rol. × ${RECTITAPE_ROLL} mb ≈ ${fmt(c.rtCost)} netto`;
+      document.getElementById('pdfRectivent').textContent = `${c.rvRolls} rol. ≈ ${fmt(c.rvCost)} netto`;
+    } else {
+      document.getElementById('pdfAccSection').style.display = 'none';
+    }
+
+    document.getElementById('pdfTotalNetto').textContent  = fmt(c.totalNetto);
+    document.getElementById('pdfTotalBrutto').textContent = fmt(c.totalBrutto) + ' brutto (z VAT 23%)';
+
+    const el = document.getElementById('pdfTemplate');
+
+    html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+      const { jsPDF } = window.jspdf;
+      const pdf       = new jsPDF('p', 'mm', 'a4');
+      const pageWidth  = pdf.internal.pageSize.getWidth();
+      const imgWidth   = pageWidth;
+      const imgHeight  = canvas.height * imgWidth / canvas.width;
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
+      const fileName = `wycena-nakrokwiowo-${c.selectedRoof}-${new Date().toISOString().slice(0,10)}.pdf`;
+      pdf.save(fileName);
+    }).catch(err => {
+      console.error('Błąd generowania PDF:', err);
+      alert('Nie udało się wygenerować pliku PDF. Spróbuj ponownie lub skontaktuj się z nami bezpośrednio: nakrokwiowo@gmail.com');
+    }).finally(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+    });
   }
 
   // ══════════════════════════════════════════════════
