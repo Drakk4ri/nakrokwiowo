@@ -1092,6 +1092,40 @@
   </div>
 </section>
 
+<!-- PRODUKTY -->
+<section id="produkty">
+  <div class="reveal">
+    <div class="section-tag">Dobór izolacji</div>
+    <h2>JAKI EFEKT CHCESZ OSIĄGNĄĆ?</h2>
+    <p class="section-sub" style="max-width:620px">Wybierz swój cel, a pokażemy rekomendowaną grubość izolacji PIR Recticel.</p>
+  </div>
+
+  <div class="goal-grid reveal">
+    <button type="button" class="tile-btn goal-tile" data-goal="pasywny" onclick="selectGoal(this,'pasywny')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8 6 4 10 4 15a8 8 0 0016 0c0-5-4-9-8-13z"/><path d="M12 8v13"/></svg>
+      <div class="goal-tile-name">Dom pasywny</div>
+      <div class="goal-tile-tagline">Maksymalna efektywność energetyczna</div>
+    </button>
+    <button type="button" class="tile-btn goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      <div class="goal-tile-name">Dom standardowy</div>
+      <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
+    </button>
+    <button type="button" class="tile-btn goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
+      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg>
+      <div class="goal-tile-name">Docieplenie / remont</div>
+      <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
+    </button>
+  </div>
+
+  <div class="goal-panel" id="goalPanel" style="display:none">
+    <div class="goal-panel-heading" id="goalHeading"></div>
+    <div class="goal-panel-body" id="goalBody"></div>
+    <div id="goalProducts"></div>
+    <a href="#kalkulator" class="btn-primary" style="margin-top:0.5rem;display:inline-block">Przejdź do kalkulatora →</a>
+  </div>
+</section>
+
 <!-- KALKULATOR -->
 <section id="kalkulator">
   <div class="reveal">
@@ -1152,10 +1186,12 @@
             <option value="euroroof-120" selected>Euroroof 120mm (popularny)</option>
             <option value="euroroof-140">Euroroof 140mm</option>
             <option value="euroroof-160">Euroroof 160mm</option>
+            <option value="euroroof-200">Euroroof 200mm (Euroroof 100mm x2)</option>
           </optgroup>
           <optgroup label="Recticel Powerroof (bez membrany)">
             <option value="powerroof-100">Powerroof 100mm</option>
             <option value="powerroof-120">Powerroof 120mm</option>
+            <option value="powerroof-200">Powerroof 200mm (Powerroof 100mm x2)</option>
           </optgroup>
         </select>
       </div>
@@ -1281,98 +1317,64 @@
 <!-- ══════════════════════════════════════════════════
      SZABLON PDF WYCENY — poza ekranem, wypełniany przez generatePdf()
      ══════════════════════════════════════════════════ -->
-<div id="pdfTemplate" style="position:fixed; top:0; left:-9999px; width:794px; background:#ffffff; padding:40px; font-family:'Inter',system-ui,sans-serif; color:#1C1C1C;">
-  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #4A7060; padding-bottom:16px; margin-bottom:24px;">
-    <div style="font-family:'Playfair Display',Georgia,serif; font-size:26px; letter-spacing:-0.01em;">NAKROKWIOWO<span style="color:#6B7280">.PL</span></div>
-    <div style="text-align:right; font-size:12px; color:#6B7280; line-height:1.5;">
+<div id="pdfTemplate" style="position:fixed; top:0; left:-9999px; width:794px; background:#ffffff; padding:28px; font-family:'Inter',system-ui,sans-serif; color:#1C1C1C;">
+  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #4A7060; padding-bottom:10px; margin-bottom:16px;">
+    <div style="font-family:'Playfair Display',Georgia,serif; font-size:23px; letter-spacing:-0.01em;">NAKROKWIOWO<span style="color:#6B7280">.PL</span></div>
+    <div style="text-align:right; font-size:11px; color:#6B7280; line-height:1.4;">
       <div>Orientacyjna wycena izolacji dachu</div>
       <div id="pdfDate">–</div>
     </div>
   </div>
 
-  <div style="display:flex; gap:20px; align-items:center; margin-bottom:24px;">
-    <div id="pdfRoofIcon" style="width:96px; height:72px; flex-shrink:0; border-radius:6px; overflow:hidden; background:#F5F3EE;"></div>
+  <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
+    <div id="pdfRoofIcon" style="width:80px; height:60px; flex-shrink:0; border-radius:6px; overflow:hidden; background:#F5F3EE;"></div>
     <div>
-      <div style="font-family:'Playfair Display',Georgia,serif; font-size:19px; margin-bottom:4px;" id="pdfProduct">–</div>
-      <div style="font-size:13px; color:#6B7280;" id="pdfRoofInfo">–</div>
+      <div style="font-family:'Playfair Display',Georgia,serif; font-size:17px; margin-bottom:3px;" id="pdfProduct">–</div>
+      <div style="font-size:12px; color:#6B7280;" id="pdfRoofInfo">–</div>
     </div>
   </div>
 
   <!-- placeholder na grafikę przekroju z wymiarami — do podmiany na docelowe obrazki -->
-  <div style="border:1.5px dashed #C8850A; border-radius:6px; padding:24px; text-align:center; color:#8a876e; font-size:12px; margin-bottom:24px;">
+  <div style="border:1.5px dashed #C8850A; border-radius:6px; padding:14px; text-align:center; color:#8a876e; font-size:11px; margin-bottom:16px;">
     [Miejsce na grafikę przekroju dachu z wymiarami — do podmiany]
   </div>
 
-  <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:6px;">Dane techniczne</div>
-  <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:20px;">
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia rzutu poziomego</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfFootprint">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Powierzchnia połaci dachu</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfSurface">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Zapotrzebowanie materiału (+10% odpad)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterial">–</td></tr>
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Zamówienie w pełnych paletach</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfPallets">–</td></tr>
-    <tr><td style="padding:8px 0; color:#6B7280">Wybrana grubość</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfThickness">–</td></tr>
+  <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:4px;">Dane techniczne</div>
+  <table style="width:100%; border-collapse:collapse; font-size:12px; margin-bottom:14px;">
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Powierzchnia rzutu poziomego</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfFootprint">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Powierzchnia połaci dachu</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfSurface">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Zapotrzebowanie materiału (+10% odpad)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfMaterial">–</td></tr>
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Zamówienie w pełnych paletach</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfPallets">–</td></tr>
+    <tr><td style="padding:5px 0; color:#6B7280">Wybrana grubość</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfThickness">–</td></tr>
   </table>
 
-  <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:6px;">Kosztorys orientacyjny</div>
-  <table style="width:100%; border-collapse:collapse; font-size:13px;">
-    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Materiał PIR (z marżą)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfMaterialCost">–</td></tr>
+  <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#4A7060; margin-bottom:4px;">Kosztorys orientacyjny</div>
+  <table style="width:100%; border-collapse:collapse; font-size:12px;">
+    <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Materiał PIR (z marżą)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfMaterialCost">–</td></tr>
   </table>
-  <div id="pdfAccSection" style="display:none; margin-top:4px;">
-    <table style="width:100%; border-collapse:collapse; font-size:13px;">
-      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectifix (wkręty)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
-      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectitape (taśma)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectitape">–</td></tr>
-      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:8px 0; color:#6B7280">Rectivent (membrana)</td><td style="padding:8px 0; text-align:right; font-weight:600" id="pdfRectivent">–</td></tr>
+  <div id="pdfAccSection" style="display:none; margin-top:3px;">
+    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectifix (wkręty)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectitape (taśma)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectitape">–</td></tr>
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectivent (membrana)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectivent">–</td></tr>
     </table>
   </div>
 
-  <div style="background:#F5F3EE; border-left:3px solid #4A7060; border-radius:4px; padding:16px 18px; margin:18px 0;">
-    <div style="font-size:11px; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">Łączny koszt netto</div>
-    <div style="font-family:'Playfair Display',Georgia,serif; font-size:30px; color:#C8850A; line-height:1;" id="pdfTotalNetto">–</div>
-    <div style="font-size:12px; color:#6B7280; margin-top:4px;" id="pdfTotalBrutto">–</div>
+  <div style="background:#F5F3EE; border-left:3px solid #4A7060; border-radius:4px; padding:12px 14px; margin:14px 0;">
+    <div style="font-size:10px; text-transform:uppercase; color:#6B7280; margin-bottom:3px;">Łączny koszt netto</div>
+    <div style="font-family:'Playfair Display',Georgia,serif; font-size:25px; color:#C8850A; line-height:1;" id="pdfTotalNetto">–</div>
+    <div style="font-size:11px; color:#6B7280; margin-top:3px;" id="pdfTotalBrutto">–</div>
   </div>
 
-  <div style="font-size:10px; color:#6B7280; line-height:1.55; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:10px 12px; margin-bottom:20px;">
+  <div style="font-size:9.5px; color:#6B7280; line-height:1.5; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:8px 10px; margin-bottom:14px;">
     Powyższa kalkulacja ma charakter wyłącznie orientacyjny i informacyjny. Nie stanowi oferty w rozumieniu art. 66 i nast. Kodeksu cywilnego. Wynik został wyliczony na podstawie danych podanych przez użytkownika. Wiążąca wycena zostanie przygotowana indywidualnie po kontakcie przez formularz na stronie nakrokwiowo.pl.
   </div>
 
-  <div style="border-top:1px solid #E8E4DD; padding-top:12px; font-size:11px; color:#6B7280; display:flex; justify-content:space-between;">
+  <div style="border-top:1px solid #E8E4DD; padding-top:8px; font-size:10px; color:#6B7280; display:flex; justify-content:space-between;">
     <span>nakrokwiowo.pl</span>
     <span>+48 574 455 271 · nakrokwiowo@gmail.com</span>
   </div>
 </div>
-
-<!-- PRODUKTY -->
-<section id="produkty">
-  <div class="reveal">
-    <div class="section-tag">Dobór izolacji</div>
-    <h2>JAKI EFEKT CHCESZ OSIĄGNĄĆ?</h2>
-    <p class="section-sub" style="max-width:620px">Wybierz swój cel, a pokażemy rekomendowaną grubość izolacji PIR Recticel.</p>
-  </div>
-
-  <div class="goal-grid reveal">
-    <button type="button" class="tile-btn goal-tile" data-goal="pasywny" onclick="selectGoal(this,'pasywny')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8 6 4 10 4 15a8 8 0 0016 0c0-5-4-9-8-13z"/><path d="M12 8v13"/></svg>
-      <div class="goal-tile-name">Dom pasywny</div>
-      <div class="goal-tile-tagline">Maksymalna efektywność energetyczna</div>
-    </button>
-    <button type="button" class="tile-btn goal-tile" data-goal="standard" onclick="selectGoal(this,'standard')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      <div class="goal-tile-name">Dom standardowy</div>
-      <div class="goal-tile-tagline">Zgodnie z aktualnymi przepisami WT2021</div>
-    </button>
-    <button type="button" class="tile-btn goal-tile" data-goal="docieplenie" onclick="selectGoal(this,'docieplenie')">
-      <svg class="goal-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg>
-      <div class="goal-tile-name">Docieplenie / remont</div>
-      <div class="goal-tile-tagline">Ocieplasz istniejący dach przy wymianie pokrycia</div>
-    </button>
-  </div>
-
-  <div class="goal-panel" id="goalPanel" style="display:none">
-    <div class="goal-panel-heading" id="goalHeading"></div>
-    <div class="goal-panel-body" id="goalBody"></div>
-    <div id="goalProducts"></div>
-    <a href="#kalkulator" class="btn-primary" style="margin-top:0.5rem;display:inline-block">Przejdź do kalkulatora →</a>
-  </div>
-</section>
 
 <!-- ══════════════════════════════════════════════
      SOCIAL PROOF – ukryte, aktywować po zebraniu opinii
@@ -1973,14 +1975,20 @@
   // ══════════════════════════════════════════════════
   // KONFIGURACJA PRODUKTÓW – tu zmieniasz ceny i dane
   // Każdy produkt: id, nazwa, grubość (mm), cena netto (zł/m²), m² na palecie
+  // Warianty „x2” (200mm) = dwie warstwy płyty 100mm:
+  //   layers     – ile warstw materiału potrzeba na m² dachu (domyślnie 1)
+  //   baseThick  – grubość, z której czerpiemy stawkę Rectifix z tabeli (domyślnie = thick)
+  //   cena i dodatki dla tych wariantów liczą się automatycznie jako 2× wartości z płyty 100mm
   // ══════════════════════════════════════════════════
   const PRODUCTS = [
     { id: 'euroroof-100',  name: 'Euroroof 100mm',  thick: 100, price: 64,  pallet: 31.68 },
     { id: 'euroroof-120',  name: 'Euroroof 120mm',  thick: 120, price: 74,  pallet: 25.92 },
     { id: 'euroroof-140',  name: 'Euroroof 140mm',  thick: 140, price: 85,  pallet: 23.04 },
     { id: 'euroroof-160',  name: 'Euroroof 160mm',  thick: 160, price: 96,  pallet: 20.16 },
+    { id: 'euroroof-200',  name: 'Euroroof 200mm (Euroroof 100mm x2)', thick: 200, price: 64, pallet: 31.68, layers: 2, baseThick: 100 },
     { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 76,  pallet: 31.68 },
     { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 86,  pallet: 25.92 },
+    { id: 'powerroof-200', name: 'Powerroof 200mm (Powerroof 100mm x2)', thick: 200, price: 76, pallet: 31.68, layers: 2, baseThick: 100 },
   ];
 
   const MARZA        = 0.10;   // 10% marża wbudowana w cenę (klient widzi cenę końcową)
@@ -2027,23 +2035,24 @@
   const GOALS = {
     pasywny: {
       heading: 'Rekomendacja: dom pasywny',
-      body: 'Podwyższony standard energetyczny. Przy 160 mm R ≈ 7,27 m²K/W — minimalne koszty ogrzewania na kolejne 30–40 lat.',
+      body: 'Maksymalny standard energetyczny. Przy 200 mm (2× warstwa 100 mm) R ≈ 9,09 m²K/W — minimalne koszty ogrzewania na kolejne 30–40 lat.',
       groups: [
-        { label: 'Rekomendowany produkt', ids: ['euroroof-160'] }
+        { label: 'Euroroof 200 · pełne deskowanie, system z membraną', ids: ['euroroof-200'] },
+        { label: 'Powerroof 200 · bez pełnego deskowania', ids: ['powerroof-200'] }
       ]
     },
     standard: {
       heading: 'Rekomendacja: standard energetyczny',
-      body: 'Grubość 140 mm spełnia Warunki Techniczne WT2021 z zapasem — dobry balans ceny i efektywności energetycznej.',
+      body: 'Grubość 160 mm spełnia Warunki Techniczne WT2021 z zapasem — dobry balans ceny i efektywności energetycznej (R ≈ 7,27 m²K/W).',
       groups: [
-        { label: 'Rekomendowany produkt', ids: ['euroroof-140'] }
+        { label: 'Rekomendowany produkt', ids: ['euroroof-160'] }
       ]
     },
     docieplenie: {
       heading: 'Rekomendacja: docieplenie / remont',
       body: 'Grubość dopasowana do wysokości konstrukcji przy remoncie dachu. Euroroof to kompletny system z membraną Rectivent — sprawdzi się przy pełnym deskowaniu. Powerroof nie wymaga pełnego deskowania, co często dotyczy starszych dachów.',
       groups: [
-        { label: 'Euroroof · pełne deskowanie, system z membraną', ids: ['euroroof-100', 'euroroof-120'] },
+        { label: 'Euroroof · pełne deskowanie, system z membraną', ids: ['euroroof-100', 'euroroof-120', 'euroroof-140'] },
         { label: 'Powerroof · bez pełnego deskowania', ids: ['powerroof-100', 'powerroof-120'] }
       ]
     }
@@ -2178,6 +2187,9 @@
     const withAcc   = document.getElementById('addAccessories').checked;
     const product   = PRODUCTS.find(p => p.id === productId) || PRODUCTS[1];
     const thickness = product.thick;
+    // Warianty „x2” (np. 200mm = 2× płyta 100mm) potrzebują tylu warstw materiału
+    // ile wynosi layers — domyślnie 1 warstwa dla zwykłych produktów
+    const layers    = product.layers || 1;
     // Cena z marżą (marża już wbudowana w PRODUCTS.price jako cena zakupu,
     // więc doliczamy marżę do ceny wyjściowej)
     const priceM2   = product.price * (1 + MARZA);
@@ -2196,7 +2208,7 @@
     // ── Geometria ────────────────────────────────────
     const footprint   = L * W;
     const roofSurface = calcRoofSurface(selectedRoof, L, W, angle);
-    const materialM2  = roofSurface * 1.10; // +10% odpad — realne zapotrzebowanie na dach
+    const materialM2  = roofSurface * 1.10 * layers; // +10% odpad, ×layers dla wariantów wielowarstwowych — realne zapotrzebowanie na dach
 
     // ── Zamówienie w pełnych paletach ─────────────────
     // Materiał sprzedawany jest w całych paletach, więc zamówienie (i jego koszt)
@@ -2219,8 +2231,10 @@
     let rfPacks = 0, rfCost = 0, rtRolls = 0, rtCost = 0, rvRolls = 0, rvCost = 0;
 
     if (withAcc) {
-      // Rectifix — liczone od realnego zapotrzebowania (materialM2), bez zmian
-      const rfCol       = rectifixCol(thickness);
+      // Rectifix — stawka z tabeli brana dla baseThick (np. dla wariantu 200mm x2
+      // używamy stawki jak dla płyty 100mm), a ilość rośnie automatycznie przez
+      // materialM2 (już pomnożone ×layers) — czyli finalnie 2× ilość z płyty 100mm
+      const rfCol       = rectifixCol(product.baseThick || thickness);
       const rfRow       = rectifixRow(angle);
       const rfPerM2     = RECTIFIX_TABLE[rfRow][rfCol];
       const rfTotalQty  = materialM2 * rfPerM2;
@@ -2228,14 +2242,15 @@
       rfCost            = rfPacks * RECTIFIX_PRICE_PACK;
       costAccTotal     += rfCost;
 
-      // Rectitape
+      // Rectitape — rośnie razem z materialM2 (już ×layers)
       const rtMb        = materialM2 * RECTITAPE_PER_M2;
       rtRolls            = ceilPacks(rtMb, RECTITAPE_ROLL);
       rtCost             = rtRolls * RECTITAPE_PRICE_ROLL;
       costAccTotal      += rtCost;
 
-      // Rectivent (tylko wersje zwykłe, nie MAX)
-      rvRolls            = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
+      // Rectivent (tylko wersje zwykłe, nie MAX) — ×layers, żeby dla wariantu
+      // 200mm x2 wyszło 2× ilości jak dla pojedynczej warstwy 100mm
+      rvRolls            = ceilPacks(roofSurface * layers, RECTIVENT_EFF_M2);
       rvCost             = rvRolls * RECTIVENT_PRICE_ROLL;
       costAccTotal      += rvCost;
 
@@ -2345,11 +2360,26 @@
 
     html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
       const { jsPDF } = window.jspdf;
-      const pdf       = new jsPDF('p', 'mm', 'a4');
-      const pageWidth  = pdf.internal.pageSize.getWidth();
-      const imgWidth   = pageWidth;
-      const imgHeight  = canvas.height * imgWidth / canvas.width;
-      pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, imgWidth, imgHeight);
+      const pdf        = new jsPDF('p', 'mm', 'a4');
+      const pageWidth   = pdf.internal.pageSize.getWidth();
+      const pageHeight  = pdf.internal.pageSize.getHeight();
+      let imgWidth      = pageWidth;
+      let imgHeight     = canvas.height * imgWidth / canvas.width;
+
+      // Wentyl bezpieczeństwa: szablon jest zaprojektowany tak, żeby zmieścić się
+      // na 1 stronie A4 przy pełnej szerokości. Gdyby jednak treść kiedyś urosła
+      // (więcej dodatków, dłuższe nazwy produktów itp.) i przy pełnej szerokości
+      // nie zmieściła się na wysokości strony, całość jest proporcjonalnie
+      // pomniejszana i wyśrodkowana — PDF zawsze zmieści się na 1 stronie A4.
+      let offsetX = 0, offsetY = 0;
+      if (imgHeight > pageHeight) {
+        const shrink = pageHeight / imgHeight;
+        imgHeight = pageHeight;
+        imgWidth  = imgWidth * shrink;
+        offsetX   = (pageWidth - imgWidth) / 2;
+      }
+
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, imgWidth, imgHeight);
       const fileName = `wycena-nakrokwiowo-${c.selectedRoof}-${new Date().toISOString().slice(0,10)}.pdf`;
       pdf.save(fileName);
     }).catch(err => {
