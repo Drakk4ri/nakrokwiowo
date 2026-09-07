@@ -1154,9 +1154,9 @@
             <img src="images/roof-jednospadowy.webp" alt="Dach jednospadowy" loading="lazy">
             <span>Jednospadowy</span>
           </button>
-          <button type="button" class="tile-btn roof-tile" data-type="kopertowy" onclick="selectRoof(this)">
-            <img src="images/roof-kopertowy.webp" alt="Dach kopertowy" loading="lazy">
-            <span>Kopertowy</span>
+          <button type="button" class="tile-btn roof-tile" data-type="wielospadowy" onclick="selectRoof(this)">
+            <img src="images/roof-wielospadowy.webp" alt="Dach wielospadowy" loading="lazy">
+            <span>Wielospadowy</span>
           </button>
         </div>
       </div>
@@ -1215,6 +1215,17 @@
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <p>Wprowadź wymiary dachu<br>i kliknij „Oblicz"</p>
       </div>
+
+      <!-- Dach wielospadowy — zbyt złożona geometria dla automatycznej kalkulacji -->
+      <div id="resultsWielospadowy" style="display:none; text-align:center; padding:1rem 0.5rem">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5" style="margin-bottom:1rem"><path d="M12 2C8 6 4 10 4 15a8 8 0 0016 0c0-5-4-9-8-13z"/><path d="M12 8v13"/></svg>
+        <div style="font-family:var(--serif); font-size:1.2rem; color:var(--sage-d); margin-bottom:0.8rem">Dach wielospadowy wymaga indywidualnej wyceny</div>
+        <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7; margin-bottom:1.5rem">
+          Dach wielospadowy ma zbyt złożoną i nieregularną geometrię, aby dokładnie wyliczyć go automatycznie w kalkulatorze. Aby przygotować dokładną wycenę, prosimy o kontakt bezpośredni poprzez formularz kontaktowy — wraz z przesłaniem projektu dachu (rzut, przekrój lub inwentaryzacja) mailowo na adres <strong>nakrokwiowo@gmail.com</strong>.
+        </p>
+        <button class="btn-quote" style="display:block" onclick="scrollToContactWielospadowy()">PRZEJDŹ DO FORMULARZA KONTAKTOWEGO →</button>
+      </div>
+
       <div id="resultsContent" style="display:none">
 
         <!-- Dane techniczne -->
@@ -1998,7 +2009,7 @@
     dwuspadowy: 'Dach dwuspadowy',
     czterospadowy: 'Dach czterospadowy',
     jednospadowy: 'Dach jednospadowy',
-    kopertowy: 'Dach kopertowy',
+    wielospadowy: 'Dach wielospadowy',
   };
 
   // Dane ostatniego obliczenia — używane przez generatePdf()
@@ -2142,10 +2153,9 @@
         // Przybliżenie: rzut * 1/cos(kąt), analogicznie jak dwuspadowy
         return (L * W) / cosA;
 
-      case 'kopertowy':
-        // Cztery połacie trójkątne/trapezowe
-        // Kopertowy = czterospadowy z równą długością i szerokością proporcją
-        return (L * W) / cosA * 1.05; // +5% na bardziej złożony kształt
+      // 'wielospadowy' nie jest tu liczony — ma zbyt złożoną, nietypową geometrię.
+      // calculate() przechwytuje ten typ dachu wcześniej i pokazuje komunikat
+      // o kontakcie zamiast wyniku, więc ta funkcja nigdy nie jest dla niego wywoływana.
 
       default:
         return (L * W) / cosA;
@@ -2180,6 +2190,20 @@
   }
 
   function calculate() {
+    // Dach wielospadowy ma zbyt złożoną geometrię dla automatycznej kalkulacji —
+    // zamiast liczyć, pokazujemy komunikat z prośbą o kontakt i przesłanie projektu
+    if (selectedRoof === 'wielospadowy') {
+      lastCalc = null;
+      document.getElementById('calcResultsBelow').style.display = 'block';
+      document.getElementById('calcIllustration').style.display = 'none';
+      document.getElementById('resultsEmpty').style.display       = 'none';
+      document.getElementById('resultsContent').style.display     = 'none';
+      document.getElementById('resultsWielospadowy').style.display = 'block';
+      document.getElementById('calcResultsBelow').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    document.getElementById('resultsWielospadowy').style.display = 'none';
+
     const L         = parseFloat(document.getElementById('length').value);
     const W         = parseFloat(document.getElementById('width').value);
     const angle     = parseInt(document.getElementById('angleSlider').value);
@@ -2399,6 +2423,15 @@
     document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
   }
   function scrollToContactCalc() {
+    document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function scrollToContactWielospadowy() {
+    document.getElementById('contactProduct').value = 'Dach wielospadowy — wycena indywidualna';
+    const msgEl = document.getElementById('contactMsg');
+    if (!msgEl.value.trim()) {
+      msgEl.value = 'Proszę o wycenę izolacji dla dachu wielospadowego. Projekt dachu (rzut/przekrój) prześlę osobno mailowo na adres nakrokwiowo@gmail.com.';
+    }
     document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
   }
 
