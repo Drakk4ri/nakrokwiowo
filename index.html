@@ -1986,20 +1986,26 @@
   // ══════════════════════════════════════════════════
   // KONFIGURACJA PRODUKTÓW – tu zmieniasz ceny i dane
   // Każdy produkt: id, nazwa, grubość (mm), cena netto (zł/m²), m² na palecie
-  // Warianty „x2” (200mm) = dwie warstwy płyty 100mm:
-  //   layers     – ile warstw materiału potrzeba na m² dachu (domyślnie 1)
-  //   baseThick  – grubość, z której czerpiemy stawkę Rectifix z tabeli (domyślnie = thick)
-  //   cena i dodatki dla tych wariantów liczą się automatycznie jako 2× wartości z płyty 100mm
+  // Warianty „x2” (200mm) = dwie warstwy płyty 100mm ułożone jedna na drugiej:
+  //   layers – ile warstw materiału PIR potrzeba na m² dachu (domyślnie 1).
+  //   Dotyczy WYŁĄCZNIE samej płyty (materiał, palety, koszt materiału) —
+  //   przy montażu dwuwarstwowym faktycznie potrzeba 2× tyle płyt.
+  //   Taśma (Rectitape) i membrana (Rectivent) NIE są mnożone przez layers —
+  //   układa się je raz, niezależnie od liczby warstw płyty pod spodem.
+  //   Wkręty (Rectifix) też nie są mnożone przez layers — przy 200mm używa się
+  //   dłuższych wkrętów przechodzących przez obie warstwy naraz, więc ich ilość
+  //   na m² bierzemy wprost z kolumny „200mm” tabeli RECTIFIX_TABLE (patrz
+  //   rectifixCol), a nie z podwojonej ilości wkrętów do płyty 100mm.
   // ══════════════════════════════════════════════════
   const PRODUCTS = [
     { id: 'euroroof-100',  name: 'Euroroof 100mm',  thick: 100, price: 64,  pallet: 31.68 },
     { id: 'euroroof-120',  name: 'Euroroof 120mm',  thick: 120, price: 74,  pallet: 25.92 },
     { id: 'euroroof-140',  name: 'Euroroof 140mm',  thick: 140, price: 85,  pallet: 23.04 },
     { id: 'euroroof-160',  name: 'Euroroof 160mm',  thick: 160, price: 96,  pallet: 20.16 },
-    { id: 'euroroof-200',  name: 'Euroroof 200mm (Euroroof 100mm x2)', thick: 200, price: 64, pallet: 31.68, layers: 2, baseThick: 100 },
+    { id: 'euroroof-200',  name: 'Euroroof 200mm (Euroroof 100mm x2)', thick: 200, price: 64, pallet: 31.68, layers: 2 },
     { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 76,  pallet: 31.68 },
     { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 86,  pallet: 25.92 },
-    { id: 'powerroof-200', name: 'Powerroof 200mm (Powerroof 100mm x2)', thick: 200, price: 76, pallet: 31.68, layers: 2, baseThick: 100 },
+    { id: 'powerroof-200', name: 'Powerroof 200mm (Powerroof 100mm x2)', thick: 200, price: 76, pallet: 31.68, layers: 2 },
   ];
 
   const MARZA        = 0.10;   // 10% marża wbudowana w cenę (klient widzi cenę końcową)
@@ -2017,9 +2023,14 @@
 
   // ── AKCESORIA ─────────────────────────────────────
   // Rectifix: liczba wkrętów/m² wg grubości × kąt nachylenia
-  // Kolumny: 100mm / 120mm / 140mm / 160mm (używa kolumny 200mm z tabeli Recticel)
+  // Kolumny: 100mm / 120mm / 140mm / 160mm+200mm (ostatnia kolumna to oficjalna
+  // stawka Recticela dla wkrętów 200mm — używana zarówno dla płyty 160mm, jak i
+  // dla wariantów „x2” 200mm, patrz rectifixCol())
   // Wiersze (kąt): 25° / 30° / 35° / 40° / 45° / 50-60°
   // Dla kąta < 25° stosujemy wartości jak dla 25°
+  // UWAGA: cena za opakowanie (RECTIFIX_PRICE_PACK) jest jedna dla wszystkich
+  // długości wkrętów — w rzeczywistości dłuższe wkręty (do 200mm/dwóch warstw)
+  // kosztują więcej. Do zweryfikowania i ew. rozbicia na osobną cenę.
   const RECTIFIX_TABLE = {
     25: [2.78, 2.78, 2.78, 2.78],
     30: [2.78, 2.88, 3.29, 4.89],
@@ -2176,7 +2187,7 @@
     if (thick <= 100) return 0;
     if (thick <= 120) return 1;
     if (thick <= 140) return 2;
-    return 3; // 160mm → kolumna 200mm z tabeli Recticel
+    return 3; // 160mm i 200mm (w tym warianty x2) → kolumna 200mm z tabeli Recticel
   }
 
   // Pobiera wiersz z tabeli Rectifix dla danego kąta
@@ -2232,7 +2243,12 @@
     // ── Geometria ────────────────────────────────────
     const footprint   = L * W;
     const roofSurface = calcRoofSurface(selectedRoof, L, W, angle);
-    const materialM2  = roofSurface * 1.10 * layers; // +10% odpad, ×layers dla wariantów wielowarstwowych — realne zapotrzebowanie na dach
+    // Zapotrzebowanie na samą płytę PIR — przy wariantach wielowarstwowych (layers>1)
+    // potrzeba tylu kompletów płyt, ile jest warstw (np. 200mm = 2× płyta 100mm)
+    const materialM2  = roofSurface * 1.10 * layers; // +10% odpad, ×layers dla wariantów wielowarstwowych
+    // Zapotrzebowanie „na akcesoria” — taśma, membrana i wkręty NIE są mnożone przez
+    // layers: montuje się je raz na dach, niezależnie od liczby warstw płyty pod spodem
+    const accessoryM2 = roofSurface * 1.10;
 
     // ── Zamówienie w pełnych paletach ─────────────────
     // Materiał sprzedawany jest w całych paletach, więc zamówienie (i jego koszt)
@@ -2255,26 +2271,28 @@
     let rfPacks = 0, rfCost = 0, rtRolls = 0, rtCost = 0, rvRolls = 0, rvCost = 0;
 
     if (withAcc) {
-      // Rectifix — stawka z tabeli brana dla baseThick (np. dla wariantu 200mm x2
-      // używamy stawki jak dla płyty 100mm), a ilość rośnie automatycznie przez
-      // materialM2 (już pomnożone ×layers) — czyli finalnie 2× ilość z płyty 100mm
-      const rfCol       = rectifixCol(product.baseThick || thickness);
+      // Rectifix — kolumna z tabeli brana wprost z rzeczywistej grubości produktu.
+      // Dla wariantu 200mm (x2) thickness=200 trafia w kolumnę „200mm” tabeli
+      // (ta sama, która wcześniej była używana zastępczo dla 160mm) — to właściwa,
+      // nie podwojona stawka dla dłuższych wkrętów przechodzących przez obie warstwy.
+      // Ilość liczona od accessoryM2 (bez mnożenia przez layers).
+      const rfCol       = rectifixCol(thickness);
       const rfRow       = rectifixRow(angle);
       const rfPerM2     = RECTIFIX_TABLE[rfRow][rfCol];
-      const rfTotalQty  = materialM2 * rfPerM2;
+      const rfTotalQty  = accessoryM2 * rfPerM2;
       rfPacks           = ceilPacks(rfTotalQty, RECTIFIX_PACK);
       rfCost            = rfPacks * RECTIFIX_PRICE_PACK;
       costAccTotal     += rfCost;
 
-      // Rectitape — rośnie razem z materialM2 (już ×layers)
-      const rtMb        = materialM2 * RECTITAPE_PER_M2;
+      // Rectitape — jedna warstwa taśmy niezależnie od liczby warstw płyty
+      const rtMb        = accessoryM2 * RECTITAPE_PER_M2;
       rtRolls            = ceilPacks(rtMb, RECTITAPE_ROLL);
       rtCost             = rtRolls * RECTITAPE_PRICE_ROLL;
       costAccTotal      += rtCost;
 
-      // Rectivent (tylko wersje zwykłe, nie MAX) — ×layers, żeby dla wariantu
-      // 200mm x2 wyszło 2× ilości jak dla pojedynczej warstwy 100mm
-      rvRolls            = ceilPacks(roofSurface * layers, RECTIVENT_EFF_M2);
+      // Rectivent (tylko wersje zwykłe, nie MAX) — jedna warstwa membrany
+      // niezależnie od liczby warstw płyty pod spodem
+      rvRolls            = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
       rvCost             = rvRolls * RECTIVENT_PRICE_ROLL;
       costAccTotal      += rvCost;
 
