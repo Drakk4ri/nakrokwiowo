@@ -336,7 +336,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
-      align-items: center;
+      align-items: stretch;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -356,6 +356,9 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .form-group { margin-bottom: 1.5rem; }
     label {
@@ -899,6 +902,7 @@
       section { padding: 3.5rem 1.5rem; }
       .calc-wrapper, .contact-wrapper { grid-template-columns: 1fr; }
       .calc-results { position: static; }
+      #calcResultsBelow { margin-top: 2rem; }
       footer { padding: 2.5rem 1.5rem 0; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
       .footer-brand { justify-content: center; }
@@ -1248,7 +1252,7 @@
     </div>
 
   <!-- WYNIK - pojawia się po kliknięciu Oblicz -->
-  <div id="calcResultsBelow" style="display:none; margin-top:2rem">
+  <div id="calcResultsBelow" style="display:none">
     <div class="calc-results" style="position:static; max-width:680px; margin:0 auto">
       <div class="results-title">WYNIK KALKULACJI</div>
       <div id="resultsEmpty" class="results-empty">
