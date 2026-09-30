@@ -1755,6 +1755,7 @@
         <textarea id="contactMsg" placeholder="Opisz swój projekt, podaj wymiary dachu lub zadaj pytanie..."></textarea>
       </div>
       <button class="btn-send" onclick="sendForm()">WYŚLIJ ZAPYTANIE</button>
+      <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0.7rem; line-height:1.5">Wysyłając formularz, akceptujesz zasady przetwarzania danych opisane w <a href="polityka-prywatnosci.html" style="color:var(--sage-d)">Polityce prywatności</a>.</p>
       <div class="success-msg" id="successMsg">✅ Dziękujemy! Odezwiemy się w ciągu 24 godzin.</div>
       <div class="error-msg" id="errorMsg">⚠️ Coś poszło nie tak. Spróbuj ponownie lub napisz bezpośrednio na nakrokwiowo@gmail.com</div>
     </div>
@@ -1808,7 +1809,10 @@
 
   <div class="footer-bottom">
     <p>© 2025 Nakrokwiowo.pl · Izolacja PIR nakrokwiowa</p>
-    <p>Wszystkie ceny netto, bez VAT</p>
+    <p style="display:flex; gap:1.2rem; align-items:center">
+      <a href="polityka-prywatnosci.html" style="color:rgba(255,255,255,0.55); text-decoration:none">Polityka prywatności</a>
+      <span>Wszystkie ceny netto, bez VAT</span>
+    </p>
   </div>
 </footer>
 

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Polityka prywatności – Nakrokwiowo.pl</title>
+  <meta name="description" content="Polityka prywatności serwisu nakrokwiowo.pl — informacje o przetwarzaniu danych osobowych zgodnie z RODO."/>
+  <meta name="robots" content="noindex, follow"/>
+  <link rel="canonical" href="https://nakrokwiowo.pl/polityka-prywatnosci.html"/>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg"/>
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
+
+  <style>
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/Inter-500.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/Inter-600.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/Inter-700.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:500; font-display:swap; src:url('fonts/PlayfairDisplay-500.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:600; font-display:swap; src:url('fonts/PlayfairDisplay-600.woff2') format('woff2'); }
+    @font-face { font-family:'Playfair Display'; font-style:normal; font-weight:700; font-display:swap; src:url('fonts/PlayfairDisplay-700.woff2') format('woff2'); }
+  </style>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sage:#4A7060;--sage-l:#6B9B84;--sage-d:#2E4F3E;--sage-bg:rgba(91,123,106,.07);
+      --amber:#C8850A;--amber-d:#A86D06;--amber-l:#E4A93C;--amber-bg:#FDF6E8;
+      --charcoal:#1C1C1C;--graphite:#3A3A3A;--ash:#6B7280;
+      --snow:#FAFBF9;--paper:#F5F3EE;--warm:#E8E4DD;--ivory:#F0ECE3;
+      --serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--snow);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV (jak na stronie głównej) ── */
+    nav {
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 2.5rem;
+      background: var(--sage-d);
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(0,0,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-back {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: #fff; }
+
+    /* ── DOKUMENT ── */
+    .doc-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 6rem;
+    }
+    .doc-tag {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 0.8rem;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.1rem, 4vw, 2.9rem);
+      line-height: 1.1; letter-spacing: -0.01em;
+      color: var(--charcoal); margin-bottom: 0.6rem;
+    }
+    .doc-updated { color: var(--ash); font-size: 0.9rem; margin-bottom: 3rem; }
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      color: var(--sage-d);
+      margin-top: 2.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .doc-wrap p { margin-bottom: 1rem; color: var(--graphite); font-size: 0.98rem; }
+    .doc-wrap ul { margin: 0 0 1rem 1.3rem; color: var(--graphite); font-size: 0.98rem; }
+    .doc-wrap li { margin-bottom: 0.5rem; }
+    .doc-wrap strong { color: var(--charcoal); }
+    .doc-wrap a { color: var(--sage-d); }
+    .doc-box {
+      background: var(--paper);
+      border-left: 3px solid var(--sage);
+      border-radius: 4px;
+      padding: 1.1rem 1.4rem;
+      margin: 1.2rem 0;
+      font-size: 0.92rem;
+      color: var(--graphite);
+    }
+    .doc-box strong { display: block; margin-bottom: 0.3rem; color: var(--sage-d); }
+
+    /* ── FOOTER (jak na stronie głównej, skrócony) ── */
+    footer { background: var(--charcoal); padding: 2.5rem 3rem; }
+    .footer-bottom {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.8rem;
+    }
+    footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; }
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.78rem; }
+    footer a:hover { color: var(--amber-l); }
+
+    @media (max-width: 480px) {
+      nav { padding: 0.9rem 1.2rem; }
+      .doc-wrap { padding: 3rem 1.2rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-icon">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <polygon points="13,3 23,20 3,20" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+        <polyline points="4,20 13,4 22,20" fill="none" stroke="#C8850A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="3" y1="22.5" x2="23" y2="22.5" stroke="#6B9B84" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </a>
+  <a class="nav-back" href="index.html">← Wróć na stronę główną</a>
+</nav>
+
+<div class="doc-wrap">
+  <div class="doc-tag">Nakrokwiowo.pl</div>
+  <h1>Polityka prywatności</h1>
+  <p class="doc-updated">Ostatnia aktualizacja: 30 września 2026</p>
+
+  <h2>1. Administrator danych</h2>
+  <p>Administratorem danych osobowych przetwarzanych w związku z korzystaniem z serwisu nakrokwiowo.pl jest <strong>Martyna Załoga</strong>. Serwis jest obecnie prowadzony jako projekt prywatny — działalność gospodarcza nie została jeszcze formalnie zarejestrowana.</p>
+  <p>Kontakt w sprawach związanych z ochroną danych osobowych: <a href="mailto:nakrokwiowo@gmail.com">nakrokwiowo@gmail.com</a>.</p>
+
+  <h2>2. Jakie dane zbieramy i w jakim celu</h2>
+  <p><strong>Kalkulator izolacji.</strong> Kalkulator dostępny na stronie działa w całości w przeglądarce użytkownika. Wpisywane w nim wymiary dachu i wybrane opcje nie są wysyłane na żaden serwer ani zapisywane przez nas — służą wyłącznie do wyliczenia orientacyjnego kosztorysu i wygenerowania pliku PDF bezpośrednio na urządzeniu użytkownika.</p>
+  <p><strong>Formularz kontaktowy.</strong> Jeśli skorzystasz z formularza kontaktowego, przetwarzamy podane przez Ciebie dane — imię i nazwisko, adres e-mail lub numer telefonu oraz treść wiadomości — w celu odpowiedzi na zapytanie i przygotowania wyceny izolacji.</p>
+
+  <h2>3. Podstawa prawna przetwarzania</h2>
+  <p>Dane podane w formularzu kontaktowym przetwarzamy na podstawie art. 6 ust. 1 lit. b) RODO — w celu podjęcia działań przed zawarciem umowy, na żądanie osoby, której dane dotyczą (przygotowanie wyceny) — a w zakresie danych technicznych niezbędnych do prawidłowego i bezpiecznego działania serwisu — na podstawie art. 6 ust. 1 lit. f) RODO (prawnie uzasadniony interes administratora).</p>
+
+  <h2>4. Komu przekazujemy dane</h2>
+  <p>Wiadomości z formularza kontaktowego są obsługiwane za pośrednictwem zewnętrznego dostawcy usług — <strong>Formspree, Inc.</strong> (Stany Zjednoczone), który działa jako podmiot przetwarzający dane na nasze zlecenie. Formspree przechowuje dane na serwerach zlokalizowanych w USA (infrastruktura AWS), a transfer danych poza Europejski Obszar Gospodarczy odbywa się w oparciu o Standardowe Klauzule Umowne (SCC) zatwierdzone przez Komisję Europejską. Formspree posiada certyfikat SOC 2 Type II i deklaruje zgodność z RODO oraz CCPA.</p>
+  <p>Strona korzysta również z zewnętrznej sieci CDN (cdnjs.cloudflare.com) do wczytania bibliotek technicznych odpowiedzialnych za generowanie plików PDF. W trakcie wczytywania tych plików Twój adres IP jest technicznie widoczny dla dostawcy CDN — jest to standardowy, niezbędny element działania takich usług i nie wiąże się z przekazywaniem innych danych osobowych.</p>
+  <p>Nie sprzedajemy ani nie udostępniamy Twoich danych osobowych podmiotom trzecim w celach marketingowych.</p>
+
+  <h2>5. Pliki cookies i podobne technologie</h2>
+  <p>Serwis nakrokwiowo.pl <strong>obecnie nie wykorzystuje plików cookies</strong> ani narzędzi analitycznych czy marketingowych (np. Google Analytics, pikseli reklamowych). Nie prowadzimy profilowania ani śledzenia zachowań użytkowników.</p>
+  <div class="doc-box">
+    <strong>Jeśli to się zmieni</strong>
+    Gdyby w przyszłości serwis zaczął wykorzystywać cookies analityczne, marketingowe lub inne technologie śledzące, poinformujemy o tym w zaktualizowanej wersji niniejszej polityki i — tam, gdzie wymaga tego prawo — wyświetlimy baner z prośbą o zgodę, zanim takie technologie zostaną uruchomione.</div>
+
+  <h2>6. Okres przechowywania danych</h2>
+  <p>Dane przekazane w formularzu kontaktowym przechowujemy przez czas niezbędny do udzielenia odpowiedzi i obsługi zapytania, a następnie — jeśli doszło do dalszej współpracy lub istnieje uzasadniony interes w zachowaniu korespondencji (np. na wypadek reklamacji) — przez okres nie dłuższy niż wynika to z przepisów o przedawnieniu roszczeń.</p>
+
+  <h2>7. Twoje prawa</h2>
+  <p>W związku z przetwarzaniem danych osobowych przysługuje Ci prawo do:</p>
+  <ul>
+    <li>dostępu do swoich danych oraz uzyskania ich kopii,</li>
+    <li>sprostowania (poprawienia) danych,</li>
+    <li>usunięcia danych,</li>
+    <li>ograniczenia przetwarzania,</li>
+    <li>wniesienia sprzeciwu wobec przetwarzania,</li>
+    <li>przenoszenia danych,</li>
+    <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (UODO), jeśli uznasz, że przetwarzanie narusza przepisy RODO.</li>
+  </ul>
+  <p>Aby skorzystać z powyższych praw, napisz do nas na adres <a href="mailto:nakrokwiowo@gmail.com">nakrokwiowo@gmail.com</a>.</p>
+
+  <h2>8. Bezpieczeństwo danych</h2>
+  <p>Dokładamy starań, aby dane osobowe były przetwarzane w sposób bezpieczny, w tym poprzez korzystanie z zaufanych, certyfikowanych dostawców usług (opisanych w pkt 4) oraz ograniczenie zakresu zbieranych danych do niezbędnego minimum.</p>
+
+  <h2>9. Zmiany polityki prywatności</h2>
+  <p>Niniejsza polityka prywatności może być okresowo aktualizowana, w szczególności w związku ze zmianami w funkcjonowaniu serwisu (np. wprowadzeniem narzędzi analitycznych) lub zmianami przepisów prawa. Aktualna wersja jest zawsze dostępna pod tym adresem, wraz z datą ostatniej aktualizacji widoczną na górze dokumentu.</p>
+
+  <h2>10. Kontakt</h2>
+  <p>W razie pytań dotyczących niniejszej polityki prywatności lub przetwarzania Twoich danych, napisz do nas: <a href="mailto:nakrokwiowo@gmail.com">nakrokwiowo@gmail.com</a>.</p>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2025 Nakrokwiowo.pl · Izolacja PIR nakrokwiowa</p>
+    <a href="index.html">Strona główna</a>
+  </div>
+</footer>
+
+</body>
+</html>
