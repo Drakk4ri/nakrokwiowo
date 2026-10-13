@@ -1312,8 +1312,11 @@
         <div id="resAccessoriesSection" style="display:none">
           <div class="results-section-label" style="margin-top:1rem">Akcesoria montażowe</div>
           <div class="result-row">
-            <span class="result-label">Rectifix (wkręty)</span>
+            <span class="result-label" id="resRectifixLabel">Rectifix (wkręty)</span>
             <span class="result-value" id="resRectifix">–</span>
+          </div>
+          <div class="result-note" id="resRectifixWarning" style="display:none; margin-top:0.4rem; margin-bottom:0.6rem">
+            <strong>Do zweryfikowania:</strong> <span id="resRectifixWarningText"></span>
           </div>
           <div class="result-row">
             <span class="result-label">Rectitape (taśma)</span>
@@ -1404,10 +1407,13 @@
   </table>
   <div id="pdfAccSection" style="display:none; margin-top:3px;">
     <table style="width:100%; border-collapse:collapse; font-size:12px;">
-      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectifix (wkręty)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
+      <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280" id="pdfRectifixLabel">Rectifix (wkręty)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectifix">–</td></tr>
       <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectitape (taśma)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectitape">–</td></tr>
       <tr style="border-bottom:1px solid #E8E4DD"><td style="padding:5px 0; color:#6B7280">Rectivent (membrana)</td><td style="padding:5px 0; text-align:right; font-weight:600" id="pdfRectivent">–</td></tr>
     </table>
+    <div id="pdfRectifixWarning" style="display:none; font-size:9.5px; color:#6B7280; line-height:1.5; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:7px 9px; margin-top:6px;">
+      <strong>Do zweryfikowania:</strong> <span id="pdfRectifixWarningText"></span>
+    </div>
   </div>
 
   <div style="background:#F5F3EE; border-left:3px solid #4A7060; border-radius:4px; padding:12px 14px; margin:14px 0;">
@@ -2160,9 +2166,9 @@
   // dla wariantów „x2” 200mm, patrz rectifixCol())
   // Wiersze (kąt): 25° / 30° / 35° / 40° / 45° / 50-60°
   // Dla kąta < 25° stosujemy wartości jak dla 25°
-  // UWAGA: cena za opakowanie (RECTIFIX_PRICE_PACK) jest jedna dla wszystkich
-  // długości wkrętów — w rzeczywistości dłuższe wkręty (do 200mm/dwóch warstw)
-  // kosztują więcej. Do zweryfikowania i ew. rozbicia na osobną cenę.
+  // Ta tabela to zużycie (ILOŚĆ sztuk/m²) i NIE zależy od konkretnej długości
+  // wkrętu — długość (i jej cena) dobierane są osobno, patrz RECTIFIX_SKUS,
+  // RECTIFIX_RECOMMENDED i pickRectifixSku() niżej.
   const RECTIFIX_TABLE = {
     25: [2.78, 2.78, 2.78, 2.78],
     30: [2.78, 2.88, 3.29, 4.89],
@@ -2173,8 +2179,54 @@
     55: [3.55, 4.14, 4.74, 6.69],
     60: [3.55, 4.14, 4.74, 6.69],
   };
-  const RECTIFIX_PACK       = 50;   // sztuk w opakowaniu
-  const RECTIFIX_PRICE_PACK = 85;   // zł netto / opakowanie (orientacyjnie)
+  const RECTIFIX_PACK = 50; // sztuk w opakowaniu (jednakowo dla każdej długości)
+
+  // ── Rectifix: dobór DŁUGOŚCI wkrętu ──────────────────────────────────
+  // 1) Zalecenia producenta (dane od klientki, 2026-10-13) — mają pierwszeństwo.
+  //    Producent podaje dla danej grubości izolacji parę długości (krótsza /
+  //    dłuższa); kalkulator bierze DŁUŻSZĄ z pary (bezpieczniejsza, zgodna z
+  //    założeniem kontrłaty 40 mm). Zmiana na krótszą = zamiana [-1] na [0] w
+  //    pickRectifixSku().
+  const RECTIFIX_RECOMMENDED = {
+    140: [230, 250],
+    160: [250, 270],
+    180: [270, 290],
+    200: [290],        // 200 mm = 2 × 100 mm, wkręt przez obie warstwy naraz
+  };
+  // 2) Dla grubości bez danych producenta (100, 120 mm) zostaje wzór ze slajdu
+  //    produktowego Rectifix:
+  //      długość = wysokość kontrłaty + grubość płyty + min. 60 mm
+  //    (kontrłata = przyjęte założenie 40 mm, osadzenie w krokwi min. 60 mm).
+  const KONTRLATA_MM       = 40;
+  const RECTIFIX_MIN_EMBED = 60;
+
+  // Długości Rectifix w ofercie — ceny netto za opakowanie 50 szt.
+  // UWAGA: cena 290 mm NIE została jeszcze podana — tymczasowo przyjęta cena
+  // 270 mm (310 zł) i oznaczona priceConfirmed:false → kalkulator pokazuje
+  // ostrzeżenie. Po podaniu realnej ceny wpisz ją tutaj i ustaw true.
+  const RECTIFIX_SKUS = [
+    { length: 230, pricePack: 260, priceConfirmed: true  },
+    { length: 250, pricePack: 290, priceConfirmed: true  },
+    { length: 270, pricePack: 310, priceConfirmed: true  },
+    { length: 290, pricePack: 310, priceConfirmed: false },
+  ];
+
+  // Zwraca { length, pricePack, priceConfirmed, insufficient }.
+  // insufficient:true tylko gdy żaden dostępny wkręt nie spełnia wymagań
+  // (po dodaniu 290 mm obecnie nie występuje, mechanizm zostaje na przyszłość).
+  function pickRectifixSku(thicknessMm) {
+    const sorted = [...RECTIFIX_SKUS].sort((a, b) => a.length - b.length);
+    const rec = RECTIFIX_RECOMMENDED[thicknessMm];
+    if (rec) {
+      const wanted = rec[rec.length - 1];
+      const sku = sorted.find(x => x.length === wanted);
+      if (sku) return { length: sku.length, pricePack: sku.pricePack, priceConfirmed: sku.priceConfirmed, insufficient: false };
+    }
+    const required = KONTRLATA_MM + thicknessMm + RECTIFIX_MIN_EMBED;
+    const fit = sorted.find(x => x.length >= required);
+    const sku = fit || sorted[sorted.length - 1];
+    return { length: sku.length, pricePack: sku.pricePack, priceConfirmed: sku.priceConfirmed, insufficient: !fit };
+  }
 
   const RECTITAPE_PER_M2    = 1.25; // mb taśmy na m² połaci
   const RECTITAPE_ROLL      = 25;   // mb w rolce
@@ -2332,6 +2384,13 @@
     return 50;
   }
 
+  // Tekst ostrzeżenia przy Rectifixie ('' = brak ostrzeżenia)
+  function rectifixWarningText(length, insufficient, priceUnconfirmed) {
+    if (insufficient) return 'wyliczona długość wkrętu przekracza najdłuższy dostępny obecnie Rectifix — długość dobrana tymczasowo, wymaga potwierdzenia przed zamówieniem.';
+    if (priceUnconfirmed) return `cena wkrętów Rectifix ${length} mm jest orientacyjna i wymaga potwierdzenia.`;
+    return '';
+  }
+
   function calculate() {
     // Dach wielospadowy ma zbyt złożoną geometrię dla automatycznej kalkulacji —
     // zamiast liczyć, pokazujemy komunikat z prośbą o kontakt i przesłanie projektu
@@ -2400,7 +2459,7 @@
     let accSection   = '';
     let costAccTotal = 0;
     // Zahoistowane, żeby były dostępne też przy zapisie do lastCalc (dla PDF)
-    let rfPacks = 0, rfCost = 0, rtRolls = 0, rtCost = 0, rvRolls = 0, rvCost = 0;
+    let rfPacks = 0, rfCost = 0, rfLength = 0, rfInsufficient = false, rfPriceUnconfirmed = false, rtRolls = 0, rtCost = 0, rvRolls = 0, rvCost = 0;
 
     if (withAcc) {
       // Rectifix — kolumna z tabeli brana wprost z rzeczywistej grubości produktu.
@@ -2413,7 +2472,11 @@
       const rfPerM2     = RECTIFIX_TABLE[rfRow][rfCol];
       const rfTotalQty  = accessoryM2 * rfPerM2;
       rfPacks           = ceilPacks(rfTotalQty, RECTIFIX_PACK);
-      rfCost            = rfPacks * RECTIFIX_PRICE_PACK;
+      const rfSku       = pickRectifixSku(thickness);
+      rfLength          = rfSku.length;
+      rfInsufficient    = rfSku.insufficient;
+      rfPriceUnconfirmed = !rfSku.priceConfirmed;
+      rfCost            = rfPacks * rfSku.pricePack;
       costAccTotal     += rfCost;
 
       // Rectitape — jedna warstwa taśmy niezależnie od liczby warstw płyty
@@ -2432,6 +2495,10 @@
 
       const fmt2 = n => Math.round(n).toLocaleString('pl-PL') + ' zł';
       document.getElementById('resAccessoriesSection').style.display = 'block';
+      document.getElementById('resRectifixLabel').textContent = `Rectifix (wkręty, dł. ${rfLength} mm)`;
+      const rfWarn = rectifixWarningText(rfLength, rfInsufficient, rfPriceUnconfirmed);
+      document.getElementById('resRectifixWarning').style.display = rfWarn ? 'block' : 'none';
+      document.getElementById('resRectifixWarningText').textContent = rfWarn;
       document.getElementById('resRectifix').textContent   =
         `${rfPacks} op. × ${RECTIFIX_PACK} szt. ≈ ${fmt2(rfCost)} netto`;
       document.getElementById('resRectitape').textContent  =
@@ -2482,7 +2549,7 @@
       palletSize, palletsNeeded, materialOrdered, palletSurplus,
       costMaterial, withAcc, costAccTotal,
       totalNetto, totalBrutto,
-      rfPacks, rfCost, rtRolls, rtCost, rvRolls, rvCost,
+      rfPacks, rfCost, rfLength, rfInsufficient, rfPriceUnconfirmed, rtRolls, rtCost, rvRolls, rvCost,
     };
 
     // ── Scroll do wyników ─────────────────────────────
@@ -2525,6 +2592,10 @@
 
     if (c.withAcc) {
       document.getElementById('pdfAccSection').style.display = 'block';
+      document.getElementById('pdfRectifixLabel').textContent = `Rectifix (wkręty, dł. ${c.rfLength} mm)`;
+      const rfWarn = rectifixWarningText(c.rfLength, c.rfInsufficient, c.rfPriceUnconfirmed);
+      document.getElementById('pdfRectifixWarning').style.display = rfWarn ? 'block' : 'none';
+      document.getElementById('pdfRectifixWarningText').textContent = rfWarn;
       document.getElementById('pdfRectifix').textContent  = `${c.rfPacks} op. × ${RECTIFIX_PACK} szt. ≈ ${fmt(c.rfCost)} netto`;
       document.getElementById('pdfRectitape').textContent = `${c.rtRolls} rol. × ${RECTITAPE_ROLL} mb ≈ ${fmt(c.rtCost)} netto`;
       document.getElementById('pdfRectivent').textContent = `${c.rvRolls} rol. ≈ ${fmt(c.rvCost)} netto`;
