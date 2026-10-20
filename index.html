@@ -1066,6 +1066,9 @@
     }
 
   </style>
+
+  <!-- Statystyki odwiedzin: Umami (bez cookies, bez banera zgody) -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="eaa0cc55-9558-476a-8be3-90960824b66d" data-domains="nakrokwiowo.pl"></script>
 </head>
 <body>
 
@@ -1227,9 +1230,9 @@
         <select id="thickness">
           <optgroup label="Recticel Euroroof (system z membraną)">
             <option value="euroroof-100">Euroroof 100mm</option>
-            <option value="euroroof-120" selected>Euroroof 120mm (popularny)</option>
+            <option value="euroroof-120">Euroroof 120mm</option>
             <option value="euroroof-140">Euroroof 140mm</option>
-            <option value="euroroof-160">Euroroof 160mm</option>
+            <option value="euroroof-160" selected>Euroroof 160mm (popularny)</option>
             <option value="euroroof-200">Euroroof 200mm (Euroroof 100mm x2)</option>
           </optgroup>
           <optgroup label="Recticel Powerroof (bez membrany)">
@@ -1267,7 +1270,7 @@
         <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7; margin-bottom:1.5rem">
           Dach wielospadowy ma zbyt złożoną i nieregularną geometrię, aby dokładnie wyliczyć go automatycznie w kalkulatorze. Aby przygotować dokładną wycenę, napisz do nas bezpośrednio na adres <strong>nakrokwiowo@gmail.com</strong> i dołącz projekt dachu (rzut, przekrój lub inwentaryzację) — odpowiadamy w ciągu 24 godzin.
         </p>
-        <a class="btn-quote" style="display:block; text-decoration:none" href="mailto:nakrokwiowo@gmail.com?subject=Wycena%20dachu%20wielospadowego&body=Dzie%C5%84%20dobry%2C%0A%0AProsz%C4%99%20o%20przygotowanie%20wyceny%20izolacji%20dla%20dachu%20wielospadowego.%20W%20za%C5%82%C4%85czniku%20przesy%C5%82am%20projekt%20dachu%20(rzut%2C%20przekr%C3%B3j%20lub%20inwentaryzacj%C4%99).%0A%0APozdrawiam">NAPISZ DO NAS →</a>
+        <a class="btn-quote" data-umami-event="mail-wielospadowy" style="display:block; text-decoration:none" href="mailto:nakrokwiowo@gmail.com?subject=Wycena%20dachu%20wielospadowego&body=Dzie%C5%84%20dobry%2C%0A%0AProsz%C4%99%20o%20przygotowanie%20wyceny%20izolacji%20dla%20dachu%20wielospadowego.%20W%20za%C5%82%C4%85czniku%20przesy%C5%82am%20projekt%20dachu%20(rzut%2C%20przekr%C3%B3j%20lub%20inwentaryzacj%C4%99).%0A%0APozdrawiam">NAPISZ DO NAS →</a>
       </div>
 
       <div id="resultsContent" style="display:none">
@@ -1911,8 +1914,8 @@
         <h2>Jaką grubość wybrać w praktyce?</h2>
         <div class="article-highlight">
           <strong>100 mm</strong> – R ≈ 4,55 m²K/W. Minimalna grubość, odpowiednia przy renowacji gdzie grubość jest ograniczona konstrukcją dachu.<br><br>
-          <strong>120 mm</strong> – R ≈ 5,45 m²K/W. Najpopularniejszy wybór. Spełnia WT 2021 z zapasem, dobra relacja jakości do ceny.<br><br>
-          <strong>160 mm</strong> – R ≈ 7,27 m²K/W. Dla domów o podwyższonym standardzie energetycznym, klasy NF40.<br><br>
+          <strong>120 mm</strong> – R ≈ 5,45 m²K/W. Spełnia WT 2021 z zapasem, dobra relacja jakości do ceny.<br><br>
+          <strong>160 mm</strong> – R ≈ 7,27 m²K/W. Najpopularniejszy wybór. Dla domów o podwyższonym standardzie energetycznym, klasy NF40.<br><br>
           <strong>200 mm</strong> – R ≈ 9,09 m²K/W. Standard domu pasywnego. Minimalne koszty ogrzewania przez kolejne 30–40 lat.
         </div>
 
@@ -2269,6 +2272,7 @@
     el.classList.add('active');
 
     const g = GOALS[key];
+    trackEvent('wybor-celu', { cel: key });
     document.getElementById('goalHeading').textContent = g.heading;
     document.getElementById('goalBody').textContent = g.body;
 
@@ -2287,6 +2291,7 @@
 
   function goToCalculatorWithProduct(id) {
     document.getElementById('thickness').value = id;
+    trackEvent('wybor-produktu', { produkt: id });
     document.getElementById('kalkulator').scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -2294,6 +2299,16 @@
   // STAN APLIKACJI
   // ══════════════════════════════════════════════════
   let selectedRoof = 'dwuspadowy';
+
+  // ══════════════════════════════════════════════════
+  // STATYSTYKI (Umami) — zdarzenia bez danych osobowych.
+  // Gdy skrypt Umami nie wczytał się (np. adblock), nic się nie dzieje.
+  // ══════════════════════════════════════════════════
+  function trackEvent(name, data) {
+    try {
+      if (window.umami && typeof window.umami.track === 'function') window.umami.track(name, data);
+    } catch (e) { /* statystyki nie mogą psuć strony */ }
+  }
 
   // ══════════════════════════════════════════════════
   // SCROLL REVEAL
@@ -2402,6 +2417,7 @@
       document.getElementById('resultsContent').style.display     = 'none';
       document.getElementById('resultsWielospadowy').style.display = 'block';
       document.getElementById('calcResultsBelow').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      trackEvent('obliczenie', { dach: 'wielospadowy' });
       return;
     }
     document.getElementById('resultsWielospadowy').style.display = 'none';
@@ -2552,6 +2568,8 @@
       rfPacks, rfCost, rfLength, rfInsufficient, rfPriceUnconfirmed, rtRolls, rtCost, rvRolls, rvCost,
     };
 
+    trackEvent('obliczenie', { dach: selectedRoof, produkt: product.name, akcesoria: withAcc ? 'tak' : 'nie' });
+
     // ── Scroll do wyników ─────────────────────────────
     document.getElementById('calcResultsBelow').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -2639,6 +2657,7 @@
       pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', offsetX, offsetY, imgWidth, imgHeight);
       const fileName = `wycena-nakrokwiowo-${c.selectedRoof}-${new Date().toISOString().slice(0,10)}.pdf`;
       pdf.save(fileName);
+      trackEvent('pobranie-pdf', { dach: c.selectedRoof, produkt: c.product.name });
     }).catch(err => {
       console.error('Błąd generowania PDF:', err);
       alert('Nie udało się wygenerować pliku PDF. Spróbuj ponownie lub skontaktuj się z nami bezpośrednio: nakrokwiowo@gmail.com');
@@ -2691,6 +2710,7 @@
       });
 
       if (res.ok) {
+        trackEvent('wyslanie-formularza');
         document.getElementById('successMsg').style.display = 'block';
         document.getElementById('contactName').value    = '';
         document.getElementById('contactContact').value = '';
