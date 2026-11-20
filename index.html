@@ -1376,7 +1376,7 @@
             <p><strong>Koszt transportu</strong><br>
             Kalkulator nie zawiera kosztu transportu. Koszt dostawy zależy od regionu i wielkości zamówienia i jest wyliczany indywidualnie dla każdej dostawy — podamy go w wiążącej wycenie po kontakcie przez formularz.</p>
             <p><strong>Aktualność cen</strong><br>
-            Ceny przyjęte w kalkulatorze mają charakter orientacyjny i mogą ulec zmianie. Wiążąca cena potwierdzana jest w indywidualnej ofercie po kontakcie przez formularz.</p>
+            Ceny przyjęte w kalkulatorze (cennik z dnia <span class="price-list-date">1.11.2026</span>) mają charakter orientacyjny i mogą ulec zmianie. Wiążąca cena potwierdzana jest w indywidualnej ofercie po kontakcie przez formularz.</p>
           </div>
         </details>
 
@@ -1446,6 +1446,7 @@
   <div style="font-size:11px; color:#3a3a3a; line-height:1.5; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:9px 12px; margin-bottom:10px;">
     <strong>Wycena nie zawiera kosztu transportu.</strong> Koszt dostawy wyliczamy indywidualnie dla regionu i zamówienia — podamy go w wiążącej ofercie po kontakcie.
   </div>
+  <div style="font-size:10px; color:#6B7280; margin:-4px 0 10px;">Ceny netto według cennika z dnia <span class="price-list-date">1.11.2026</span>.</div>
 
   <div style="font-size:9.5px; color:#6B7280; line-height:1.5; background:#FDF6E8; border-left:3px solid #C8850A; border-radius:4px; padding:8px 10px; margin-bottom:14px;">
     Powyższa kalkulacja ma charakter wyłącznie orientacyjny i informacyjny. Nie stanowi oferty w rozumieniu art. 66 i nast. Kodeksu cywilnego. Wynik został wyliczony na podstawie danych podanych przez użytkownika. Wiążącą wycenę przygotuje indywidualnie nasz partner handlowy Geosynt-Trade Sp. z o.o. po wysłaniu zapytania przez formularz na stronie nakrokwiowo.pl.
@@ -2111,9 +2112,11 @@
   // ══════════════════════════════════════════════════
   // KONFIGURACJA PRODUKTÓW – tu zmieniasz ceny i dane
   // Każdy produkt: id, nazwa, grubość (mm), cena netto (zł/m²), m² na palecie
-  // CENNIK: Geosynt-Trade, 2026-10-20 — ceny zakupu NETTO, ważne do 31.10.2026.
-  // !!! Od 1.11.2026 RĘCZNIE podnieść WSZYSTKIE ceny o 4% (płyty, Rectifix,
-  // !!! Rectivent, Rectitape). Do każdej ceny kalkulator dolicza MARZA.
+  // CENY: aktualne ceny wczytywane są z pliku ceny.csv (katalog główny strony)
+  // — patrz loadPrices() niżej. Wartości poniżej to ceny ZAPASOWE, używane gdy
+  // plik się nie wczyta albo dana cena jest w nim błędna.
+  // Ceny NETTO z wliczoną marżą (kalkulator NIE dolicza żadnej marży).
+  // Zapasowe = cennik Geosynt od 1.11.2026 (cennik z 20.10.2026 + 4%, zaokr. do zł).
   // Warianty „x2” (200mm) = dwie warstwy płyty 100mm ułożone jedna na drugiej:
   //   layers – ile warstw materiału PIR potrzeba na m² dachu (domyślnie 1).
   //   Dotyczy WYŁĄCZNIE samej płyty (materiał, palety, koszt materiału) —
@@ -2126,17 +2129,16 @@
   //   rectifixCol), a nie z podwojonej ilości wkrętów do płyty 100mm.
   // ══════════════════════════════════════════════════
   const PRODUCTS = [
-    { id: 'euroroof-100',  name: 'Euroroof 100mm',  thick: 100, price: 69,  pallet: 31.68 },
-    { id: 'euroroof-120',  name: 'Euroroof 120mm',  thick: 120, price: 79,  pallet: 25.92 },
-    { id: 'euroroof-140',  name: 'Euroroof 140mm',  thick: 140, price: 94,  pallet: 23.04 },
-    { id: 'euroroof-160',  name: 'Euroroof 160mm',  thick: 160, price: 96,  pallet: 20.16 },
-    { id: 'euroroof-200',  name: 'Euroroof 200mm (Euroroof 100mm x2)', thick: 200, price: 69, pallet: 31.68, layers: 2 },
-    { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 79,  pallet: 31.68 },
-    { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 92,  pallet: 25.92 },
-    { id: 'powerroof-200', name: 'Powerroof 200mm (Powerroof 100mm x2)', thick: 200, price: 79, pallet: 31.68, layers: 2 },
+    { id: 'euroroof-100',  name: 'Euroroof 100mm',  thick: 100, price: 72,  pallet: 31.68 },
+    { id: 'euroroof-120',  name: 'Euroroof 120mm',  thick: 120, price: 82,  pallet: 25.92 },
+    { id: 'euroroof-140',  name: 'Euroroof 140mm',  thick: 140, price: 98,  pallet: 23.04 },
+    { id: 'euroroof-160',  name: 'Euroroof 160mm',  thick: 160, price: 100,  pallet: 20.16 },
+    { id: 'euroroof-200',  name: 'Euroroof 200mm (Euroroof 100mm x2)', thick: 200, price: 72, pallet: 31.68, layers: 2 },
+    { id: 'powerroof-100', name: 'Powerroof 100mm', thick: 100, price: 82,  pallet: 31.68 },
+    { id: 'powerroof-120', name: 'Powerroof 120mm', thick: 120, price: 96,  pallet: 25.92 },
+    { id: 'powerroof-200', name: 'Powerroof 200mm (Powerroof 100mm x2)', thick: 200, price: 82, pallet: 31.68, layers: 2 },
   ];
 
-  const MARZA        = 0.10;   // 10% marża doliczana do WSZYSTKICH pozycji (płyty, wkręty, membrana, taśma) — klient widzi cenę końcową
   const VAT          = 0.23;
 
   const ROOF_NAMES = {
@@ -2146,43 +2148,50 @@
     wielospadowy: 'Dach wielospadowy',
   };
 
-  // Grafiki techniczne dachu do baneru w PDF — puste ramki A/B/X na obrazku
-  // wypełniane są wartościami z kalkulatora (A = szerokość, B = długość, X = kąt).
-  // Dach czterospadowy ma na razie duplikat grafiki dwuspadowego pod osobną
-  // nazwą pliku (images/pdf-diagram-czterospadowy.webp) — docelowo wystarczy
-  // podmienić ten jeden plik na właściwą grafikę, bez zmian w kodzie.
+  // Grafiki techniczne dachu do baneru w PDF: po lewej rzut z góry, po prawej
+  // przekrój (images/pdf-diagram-*.webp). Na puste miejsca z rysunku nakładane są
+  // wartości z kalkulatora (białe etykiety zasłaniają kreski „___ m” i „___°”):
+  //   W = szerokość budynku (wymiar pod rzutem), Lg = długość budynku (pionowy
+  //   wymiar obok rzutu), angle = kąt (strzałki spadku na rzucie i przekroju),
+  //   slope = długość połaci od okapu do kalenicy, wyliczana i zaokrąglana do 0,1 m.
+  // left/top = środek etykiety w % szerokości/wysokości obrazka, rot = obrót w stopniach.
   const PDF_DIAGRAMS = {
     dwuspadowy: {
       img: 'images/pdf-diagram-dwuspadowy.webp',
-      boxes: (W, L, angle) => [
-        { left: '31.1%', top: '12.8%', text: W + ' m' },
-        { left: '7.1%',  top: '61.1%', text: L + ' m' },
-        { left: '22.7%', top: '51.7%', text: angle + '°' },
-        { left: '35.5%', top: '51.7%', text: angle + '°' },
-        { left: '59.0%', top: '33.6%', text: angle + '°' },
-        { left: '87.4%', top: '33.6%', text: angle + '°' },
-        { left: '73.7%', top: '84.8%', text: W + ' m' },
+      boxes: (W, Lg, angle, slope) => [
+        { left: '15.0%', top: '92.3%', text: W + ' m' },
+        { left: '28.4%', top: '48.5%', text: Lg + ' m', rot: -90 },
+        { left: '10.1%', top: '50.7%', text: angle + '°' },
+        { left: '20.1%', top: '50.7%', text: angle + '°' },
+        { left: '48.8%', top: '39.6%', text: slope + ' m', rot: -41.6 },
+        { left: '84.2%', top: '45.8%', text: slope + ' m', rot: 41.6 },
+        { left: '44.6%', top: '56.1%', text: angle + '°', rot: -41.6 },
+        { left: '85.9%', top: '56.6%', text: angle + '°', rot: 41.6 },
       ],
     },
     jednospadowy: {
       img: 'images/pdf-diagram-jednospadowy.webp',
-      boxes: (W, L, angle) => [
-        { left: '31.4%', top: '16.6%', text: W + ' m' },
-        { left: '7.3%',  top: '58.9%', text: L + ' m' },
-        { left: '80.0%', top: '40.4%', text: angle + '°' },
-        { left: '74.3%', top: '87.4%', text: W + ' m' },
+      boxes: (W, Lg, angle, slope) => [
+        { left: '17.6%', top: '92.3%', text: W + ' m' },
+        { left: '33.4%', top: '48.5%', text: Lg + ' m', rot: -90 },
+        { left: '18.0%', top: '49.8%', text: angle + '°' },
+        { left: '66.9%', top: '41.4%', text: slope + ' m', rot: -30.8 },
+        { left: '50.6%', top: '65.8%', text: angle + '°', rot: -30.8 },
       ],
     },
     czterospadowy: {
       img: 'images/pdf-diagram-czterospadowy.webp',
-      boxes: (W, L, angle) => [
-        { left: '31.1%', top: '12.8%', text: W + ' m' },
-        { left: '7.1%',  top: '61.1%', text: L + ' m' },
-        { left: '22.7%', top: '51.7%', text: angle + '°' },
-        { left: '35.5%', top: '51.7%', text: angle + '°' },
-        { left: '59.0%', top: '33.6%', text: angle + '°' },
-        { left: '87.4%', top: '33.6%', text: angle + '°' },
-        { left: '73.7%', top: '84.8%', text: W + ' m' },
+      boxes: (W, Lg, angle, slope) => [
+        { left: '15.1%', top: '92.3%', text: W + ' m' },
+        { left: '28.5%', top: '48.5%', text: Lg + ' m', rot: -90 },
+        { left: '10.1%', top: '51.0%', text: angle + '°' },
+        { left: '20.1%', top: '51.0%', text: angle + '°' },
+        { left: '14.5%', top: '22.1%', text: angle + '°' },
+        { left: '14.5%', top: '74.4%', text: angle + '°' },
+        { left: '48.8%', top: '39.6%', text: slope + ' m', rot: -41.6 },
+        { left: '84.3%', top: '45.8%', text: slope + ' m', rot: 41.6 },
+        { left: '44.6%', top: '56.1%', text: angle + '°', rot: -41.6 },
+        { left: '86.0%', top: '56.6%', text: angle + '°', rot: 41.6 },
       ],
     },
   };
@@ -2231,14 +2240,14 @@
   const KONTRLATA_MM       = 40;
   const RECTIFIX_MIN_EMBED = 60;
 
-  // Długości Rectifix w ofercie — ceny zakupu netto za opakowanie 50 szt.
-  // (cennik Geosynt-Trade 2026-10-20, ważny do 31.10.2026; marża doliczana w calculate()).
+  // Długości Rectifix w ofercie — ceny netto (z marżą) za opakowanie 50 szt.
+  // Zapasowe; aktualne z ceny.csv (klucze rectifix-230 … rectifix-290).
   // priceConfirmed:false → kalkulator pokazuje ostrzeżenie "do zweryfikowania".
   const RECTIFIX_SKUS = [
-    { length: 230, pricePack: 280, priceConfirmed: true },
-    { length: 250, pricePack: 300, priceConfirmed: true },
-    { length: 270, pricePack: 320, priceConfirmed: true },
-    { length: 290, pricePack: 340, priceConfirmed: true },
+    { length: 230, pricePack: 291, priceConfirmed: true },
+    { length: 250, pricePack: 312, priceConfirmed: true },
+    { length: 270, pricePack: 333, priceConfirmed: true },
+    { length: 290, pricePack: 354, priceConfirmed: true },
   ];
 
   // Zwraca { length, pricePack, priceConfirmed, insufficient }.
@@ -2260,10 +2269,85 @@
 
   const RECTITAPE_PER_M2    = 1.25; // mb taśmy na m² połaci
   const RECTITAPE_ROLL      = 25;   // mb w rolce
-  const RECTITAPE_PRICE_ROLL= 70;   // zł netto / rolka 25 mb (cennik 2026-10-20)
+  let   RECTITAPE_PRICE_ROLL= 73;   // zł netto / rolka 25 mb (zapasowa; aktualna z ceny.csv)
 
   const RECTIVENT_EFF_M2    = 67.5; // m² krycia efektywnego / rolka (z 10% zapasem) — ZAŁOŻENIE, do potwierdzenia u dostawcy
-  const RECTIVENT_PRICE_ROLL= 350;  // zł netto / rolka (cennik 2026-10-20)
+  let   RECTIVENT_PRICE_ROLL= 364;  // zł netto / rolka (zapasowa; aktualna z ceny.csv)
+
+  // ══════════════════════════════════════════════════
+  // CENNIK Z PLIKU ceny.csv
+  // Plik edytowany w Excelu (średniki lub przecinki jako separator, przecinek
+  // lub kropka w liczbach). Kolumny: klucz;produkt;cena_netto_zl;jednostka;m2_na_palecie
+  // Liczy się tylko klucz i liczby — nazwa produktu w pliku to opis dla człowieka.
+  // Błędna/pusta cena → zostaje cena zapasowa z kodu (ostrzeżenie w konsoli).
+  // Warianty 200 mm (2×100) biorą cenę i paletę płyty 100 mm.
+  // ══════════════════════════════════════════════════
+  let PRICE_LIST_DATE = '1.11.2026';   // data cennika (zapasowa; aktualna z ceny.csv)
+
+  function parsePlNumber(v) {
+    if (v == null) return NaN;
+    const t = String(v).replace(/\s|zł|zl/gi, '').replace(',', '.');
+    return t === '' ? NaN : Number(t);
+  }
+  function parseCsv(text) {
+    const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter(l => l.trim() !== '');
+    if (!lines.length) return [];
+    const sep = (lines[0].split(';').length >= lines[0].split(',').length) ? ';' : ',';
+    return lines.map(l => {
+      const cells = []; let cur = '', q = false;
+      for (const ch of l) {
+        if (ch === '"') q = !q;
+        else if (ch === sep && !q) { cells.push(cur.trim()); cur = ''; }
+        else cur += ch;
+      }
+      cells.push(cur.trim());
+      return cells;
+    });
+  }
+  function applyPriceRows(rows) {
+    const ok = (n, max) => Number.isFinite(n) && n > 0 && n < max;
+    let applied = 0;
+    rows.slice(1).forEach(r => {
+      const key = (r[0] || '').toLowerCase();
+      if (!key) return;
+      if (key === 'data_cennika') { if (r[2]) PRICE_LIST_DATE = r[2]; return; }
+      const price = parsePlNumber(r[2]);
+      const prod = PRODUCTS.find(p => p.id === key && !p.layers);
+      if (prod) {
+        if (ok(price, 1000)) { prod.price = price; applied++; } else console.warn('ceny.csv: błędna cena dla', key, r[2]);
+        const pal = parsePlNumber(r[4]);
+        if (r[4] && ok(pal, 200)) prod.pallet = pal;
+        return;
+      }
+      const sku = key.startsWith('rectifix-') && RECTIFIX_SKUS.find(x => x.length === parseInt(key.slice(9), 10));
+      if (sku) { if (ok(price, 5000)) { sku.pricePack = price; sku.priceConfirmed = true; applied++; } else console.warn('ceny.csv: błędna cena dla', key, r[2]); return; }
+      if (key === 'rectivent') { if (ok(price, 5000)) { RECTIVENT_PRICE_ROLL = price; applied++; } else console.warn('ceny.csv: błędna cena dla', key, r[2]); return; }
+      if (key === 'rectitape') { if (ok(price, 5000)) { RECTITAPE_PRICE_ROLL = price; applied++; } else console.warn('ceny.csv: błędna cena dla', key, r[2]); return; }
+      console.warn('ceny.csv: nieznany klucz', key);
+    });
+    // warianty 200 mm = 2 × płyta 100 mm tego samego typu
+    PRODUCTS.filter(p => p.layers).forEach(p => {
+      const base = PRODUCTS.find(b => b.id === p.id.replace(/-\d+$/, '-100'));
+      if (base) { p.price = base.price; p.pallet = base.pallet; }
+    });
+    return applied;
+  }
+  async function loadPrices() {
+    try {
+      const res = await fetch('ceny.csv', { cache: 'no-cache' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const n = applyPriceRows(parseCsv(await res.text()));
+      console.info('ceny.csv: wczytano', n, 'cen, cennik z', PRICE_LIST_DATE);
+    } catch (e) {
+      console.warn('ceny.csv: nie udało się wczytać — używam cen zapasowych.', e);
+    }
+    showPriceDate();
+    if (lastCalc) calculate();   // ktoś zdążył policzyć przed wczytaniem cen
+  }
+  function showPriceDate() {
+    document.querySelectorAll('.price-list-date').forEach(el => el.textContent = PRICE_LIST_DATE);
+  }
+  loadPrices();
 
   // ══════════════════════════════════════════════════
   // WYBÓR CELU OCIEPLENIA (sekcja Produkty)
@@ -2469,9 +2553,8 @@
     // Warianty „x2” (np. 200mm = 2× płyta 100mm) potrzebują tylu warstw materiału
     // ile wynosi layers — domyślnie 1 warstwa dla zwykłych produktów
     const layers    = product.layers || 1;
-    // Cena z marżą (marża już wbudowana w PRODUCTS.price jako cena zakupu,
-    // więc doliczamy marżę do ceny wyjściowej)
-    const priceM2   = product.price * (1 + MARZA);
+    // Ceny w cenniku mają już wliczoną marżę — bez dodatkowych narzutów
+    const priceM2   = product.price;
 
     // Walidacja
     if (!L || !W || L <= 0 || W <= 0 || L > 200 || W > 200) {
@@ -2529,19 +2612,19 @@
       rfLength          = rfSku.length;
       rfInsufficient    = rfSku.insufficient;
       rfPriceUnconfirmed = !rfSku.priceConfirmed;
-      rfCost            = rfPacks * rfSku.pricePack * (1 + MARZA);
+      rfCost            = rfPacks * rfSku.pricePack;
       costAccTotal     += rfCost;
 
       // Rectitape — jedna warstwa taśmy niezależnie od liczby warstw płyty
       const rtMb        = accessoryM2 * RECTITAPE_PER_M2;
       rtRolls            = ceilPacks(rtMb, RECTITAPE_ROLL);
-      rtCost             = rtRolls * RECTITAPE_PRICE_ROLL * (1 + MARZA);
+      rtCost             = rtRolls * RECTITAPE_PRICE_ROLL;
       costAccTotal      += rtCost;
 
       // Rectivent (tylko wersje zwykłe, nie MAX) — jedna warstwa membrany
       // niezależnie od liczby warstw płyty pod spodem
       rvRolls            = ceilPacks(roofSurface, RECTIVENT_EFF_M2);
-      rvCost             = rvRolls * RECTIVENT_PRICE_ROLL * (1 + MARZA);
+      rvCost             = rvRolls * RECTIVENT_PRICE_ROLL;
       costAccTotal      += rvCost;
 
       totalNetto       += costAccTotal;
@@ -2631,8 +2714,13 @@
       `${ROOF_NAMES[c.selectedRoof] || c.selectedRoof} · ${c.L}×${c.W} m · kąt ${c.angle}°`;
 
     const diagram = PDF_DIAGRAMS[c.selectedRoof] || PDF_DIAGRAMS.dwuspadowy;
-    const boxesHtml = diagram.boxes(c.W, c.L, c.angle).map(b =>
-      `<div style="position:absolute; left:${b.left}; top:${b.top}; transform:translate(-50%,-50%); font-family:'Inter',system-ui,sans-serif; font-weight:700; font-size:15px; color:#1C1C1C; text-align:center; white-space:nowrap;">${b.text}</div>`
+    // Długość połaci (okap → kalenica): dach jednospadowy = cała szerokość,
+    // dwu- i czterospadowy = połowa szerokości; zaokrąglenie do 0,1 m
+    const run      = c.selectedRoof === 'jednospadowy' ? c.W : c.W / 2;
+    const slopeLen = run / Math.cos(c.angle * Math.PI / 180);
+    const plNum    = n => String(n).replace('.', ',');
+    const boxesHtml = diagram.boxes(plNum(c.W), plNum(c.L), c.angle, slopeLen.toFixed(1).replace('.', ',')).map(b =>
+      `<div style="position:absolute; left:${b.left}; top:${b.top}; transform:translate(-50%,-50%)${b.rot ? ` rotate(${b.rot}deg)` : ''}; font-family:'Inter',system-ui,sans-serif; font-weight:700; font-size:12px; line-height:1; color:#1C1C1C; background:#fff; padding:2px 4px; border-radius:3px; text-align:center; white-space:nowrap;">${b.text}</div>`
     ).join('');
     document.getElementById('pdfDiagramBox').innerHTML =
       `<img src="${diagram.img}" alt="" style="display:block; width:100%; height:auto;">` + boxesHtml;
